@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  mysql-image:
+    container_name: sharebook_mysql
+    build:
+      context: .
+      dockerfile: docker/mysql/Dockerfile
+    ports:
+      - 33018:3306
+    environment:
+      MYSQL_USER: sharebook_user
+      MYSQL_PASSWORD: sharebook_password
+      MYSQL_DATABASE: sharebook
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
