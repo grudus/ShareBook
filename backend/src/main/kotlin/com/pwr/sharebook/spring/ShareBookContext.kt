@@ -27,7 +27,7 @@ class ShareBookContext : WebMvcConfigurer {
             BCryptPasswordEncoder(12)
 
     @Bean
-    fun corsConfigurationSource(@Value("\${songbook.frontend.origin}") origin: String): CorsConfigurationSource {
+    fun corsConfigurationSource(@Value("\${sharebook.frontend.origin}") origin: String): CorsConfigurationSource {
         val configuration = CorsConfiguration()
         configuration.allowedOrigins = listOf(origin)
         configuration.allowedMethods = asList("GET", "POST", "PUT", "DELETE")
@@ -50,7 +50,7 @@ class ShareBookContext : WebMvcConfigurer {
             val student = roleRepository.findByName(RoleType.STUDENT)!!
 
             userRepository.deleteAll()
-            userRepository.save(user("user", passwordEncoder.encode("psswd"), student))
+            userRepository.save(user("admin", passwordEncoder.encode("admin"), student))
             userRepository.save(user("user2", passwordEncoder.encode("psswd2"), student))
             userRepository.save(user("user3", passwordEncoder.encode("psswd3"), student))
 
