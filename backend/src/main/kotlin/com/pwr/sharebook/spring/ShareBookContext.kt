@@ -44,15 +44,21 @@ class ShareBookContext : WebMvcConfigurer {
 
 
     @Bean
-    fun commandLineRunner(userRepository: UserRepository, roleRepository: RoleRepository): CommandLineRunner = CommandLineRunner {
-        println("no siemanko")
+    fun commandLineRunner(userRepository: UserRepository, passwordEncoder: PasswordEncoder, roleRepository: RoleRepository): CommandLineRunner {
+        return CommandLineRunner {
+            println("Start")
+            val student = roleRepository.findByName(RoleType.STUDENT)!!
 
-        if (userRepository.findAll().isEmpty()) {
-            val findByName: RoleEntity? = roleRepository.findByName(RoleType.STUDENT)
-            userRepository.save(UserEntity(null, "mama@tata.com", "abc",  null, "Jakub", "Gruda", findByName))
+            userRepository.deleteAll()
+            userRepository.save(user("user", passwordEncoder.encode("psswd"), student))
+            userRepository.save(user("user2", passwordEncoder.encode("psswd2"), student))
+            userRepository.save(user("user3", passwordEncoder.encode("psswd3"), student))
+
+            println(userRepository.findAll())
         }
-
-        println("Users: ${userRepository.findAll()}")
     }
+
+    private fun user(email: String, password: String, role: RoleEntity): UserEntity =
+            UserEntity(null, email, password, null, null, null, role)
 
 }
