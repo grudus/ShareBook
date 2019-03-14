@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from "react-router-dom";
-import Login from "./app/auth/Login";
-import logo from './logo.svg';
 import './App.css';
+import Login from "./app/auth/login/Login";
+import logo from './logo.svg';
 
 class App extends Component {
     render() {

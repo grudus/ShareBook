@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from "react-router-dom";
-import Login from "../auth/Login";
+import Login from "../auth/login/Login";
 import User from "../user/User";
 
 
