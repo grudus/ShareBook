@@ -62,3 +62,32 @@
   width: 150px;
   padding: .5rem 0;
 }
+
+
+@media (max-width: 900px) {
+  .img {
+    display: none;
+  }
+
+  .loginCard {
+    width: 90%;
+  }
+
+  .loginWrapper {
+    padding: 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .buttonWrapper {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    height: 90px;
+  }
+
+  .button {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
