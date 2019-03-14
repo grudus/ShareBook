@@ -20,9 +20,15 @@ class Login extends Component {
         this.setState({ [field]: event.target.value });
     };
 
-    submitForm = (e) => {
+    submitForm = async (e) => {
         e.preventDefault();
-        login(this.state.email, this.state.password)
+        try {
+            await login(this.state.email, this.state.password);
+            alert("Success")
+        } catch (e) {
+            alert("Invalid credentials")
+        }
+
     };
 
     render() {
@@ -39,6 +45,7 @@ class Login extends Component {
                         </div>
                         <form noValidate autoComplete="on" className={css.form} onSubmit={this.submitForm}>
                             <TextField
+                                required
                                 label="email"
                                 value={this.state.email}
                                 onChange={this.handleChange('email')}
@@ -46,6 +53,7 @@ class Login extends Component {
                             />
 
                             <TextField
+                                required
                                 label="password"
                                 value={this.state.password}
                                 type="password"
