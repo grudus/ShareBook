@@ -1,13 +1,20 @@
+import { MuiThemeProviderOld } from "@material-ui/core/es/styles/MuiThemeProvider";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import BrowserRouter from "react-router-dom/es/BrowserRouter";
 import IndexRoute from "./app/routes/IndexRoute";
 import './index.css';
 import * as serviceWorker from './serviceWorker';
+import createMuiTheme from './app/theme/createMuiTheme'
+
+const theme = createMuiTheme();
+
 
 ReactDOM.render(
     <BrowserRouter>
-        <IndexRoute/>
+        <MuiThemeProviderOld theme={theme}>
+            <IndexRoute/>
+        </MuiThemeProviderOld>
     </BrowserRouter>,
     document.getElementById('root'));
 
