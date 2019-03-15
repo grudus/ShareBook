@@ -2,7 +2,7 @@ import { Button, Checkbox, FormControlLabel, Typography } from "@material-ui/cor
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { login } from "../AuthApi";
 import css from './login.module.scss';
 import img from '../res/loginimg.png'
@@ -17,14 +17,18 @@ class Login extends Component {
     };
 
     handleChange = (field) => (event) => {
-        this.setState({ [field]: event.target.value });
+        if (field === 'rememberMe')
+            this.setState(state => ({ ...state, rememberMe: !state.rememberMe }));
+        else
+            this.setState({ [field]: event.target.value });
     };
 
     submitForm = async (e) => {
         e.preventDefault();
         try {
-            await login(this.state.email, this.state.password);
-            alert("Success")
+            await login(this.state.email, this.state.password, this.state.rememberMe);
+            console.log(this.props);
+            this.props.history.push("/");
         } catch (e) {
             alert("Invalid credentials")
         }
@@ -62,7 +66,7 @@ class Login extends Component {
                             />
                             <div className={css.rememberWrapper}>
                                 <FormControlLabel control={
-                                    <Checkbox value={true} onChange={this.handleChange('rememberMe')}/>
+                                    <Checkbox value='true' onChange={this.handleChange('rememberMe')}/>
                                 } label="Remember me"/>
                                 <Link to={"#"}>
                                     Forgot password
@@ -91,4 +95,4 @@ class Login extends Component {
 }
 
 
-export default Login;
+export default withRouter(Login);
