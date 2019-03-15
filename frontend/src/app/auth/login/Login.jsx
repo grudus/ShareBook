@@ -1,4 +1,4 @@
-import { Button, Checkbox, Typography } from "@material-ui/core";
+import { Button, Checkbox, FormControlLabel, Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 import React, { Component } from 'react';
@@ -61,9 +61,9 @@ class Login extends Component {
                                 margin="normal"
                             />
                             <div className={css.rememberWrapper}>
-                                <Link to={"#"}>
-                                    Remember me
-                                </Link>
+                                <FormControlLabel control={
+                                    <Checkbox value={true} onChange={this.handleChange('rememberMe')}/>
+                                } label="Remember me"/>
                                 <Link to={"#"}>
                                     Forgot password
                                 </Link>
