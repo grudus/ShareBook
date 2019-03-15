@@ -47,6 +47,10 @@ class ShareBookContext : WebMvcConfigurer {
     fun commandLineRunner(userRepository: UserRepository, passwordEncoder: PasswordEncoder, roleRepository: RoleRepository): CommandLineRunner {
         return CommandLineRunner {
             println("Start")
+
+            if (roleRepository.findAll().isEmpty()) {
+                roleRepository.save(RoleEntity(null, RoleType.STUDENT))
+            }
             val student = roleRepository.findByName(RoleType.STUDENT)!!
 
             userRepository.deleteAll()
