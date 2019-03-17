@@ -36,7 +36,7 @@ internal class JwtLoginFilter(defaultFilterProcessesUrl: String,
     override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain?, authResult: Authentication) {
         val username = authResult.name
         jwtLogger.info("User [$username] successfully authenticated")
-        jwtUtils.addJwtToResponse(authResult, response)
+        jwtUtils.addJwtToResponse(authResult, response, request)
 
         SecurityContextHolder.getContext().authentication = authResult
     }

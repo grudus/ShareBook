@@ -15,8 +15,12 @@ export default () => createMuiTheme({
         },
     },
     palette: {
-        primary: indigo,
-        secondary: orange,
+        primary: {
+            main: '#43425D'
+        },
+        secondary: {
+            main: '#3B86FF'
+        },
         background: {
             default: '#fafafa',
             paper: '#fff',

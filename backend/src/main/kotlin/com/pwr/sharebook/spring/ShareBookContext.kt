@@ -51,7 +51,6 @@ class ShareBookContext : WebMvcConfigurer {
             if (roleRepository.findAll().isEmpty()) {
                 roleRepository.save(RoleEntity(null, RoleType.STUDENT))
             }
-
             val student = roleRepository.findByName(RoleType.STUDENT)!!
 
             userRepository.deleteAll()

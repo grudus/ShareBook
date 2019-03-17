@@ -17,25 +17,28 @@ constructor(private val jwtProvider: JwtProvider) {
     fun getJwtFromRequest(request: HttpServletRequest): Optional<String> {
         return Optional.ofNullable(request.cookies)
                 .flatMap<Cookie> { cookies -> Stream.of(*cookies).filter { cookie -> cookie.name == AUTHORIZATION_HEADER }.findAny() }
-                .map{ it.value }
+                .map { it.value }
     }
 
-    fun addJwtToResponse(authentication: Authentication, response: HttpServletResponse) {
+    fun addJwtToResponse(authentication: Authentication, response: HttpServletResponse, request: HttpServletRequest) {
         val jwt = jwtProvider.generateJwtToken(authentication)
-        response.addCookie(authCookie(jwt))
+        val rememberMe = request.getParameter(REMEMBER_ME_PARAM)?.toBoolean() ?: false
+        response.addCookie(authCookie(jwt, rememberMe))
     }
 
-    private fun authCookie(jwt: String): Cookie {
+    private fun authCookie(jwt: String, rememberMe: Boolean): Cookie {
         val cookie = Cookie(AUTHORIZATION_HEADER, jwt)
         cookie.path = "/"
-        cookie.maxAge = AUTH_COOKIE_MAX_AGE
         cookie.isHttpOnly = true
+        if (rememberMe)
+            cookie.maxAge = AUTH_COOKIE_MAX_AGE
+
         return cookie
     }
 
-
     companion object {
         private const val AUTHORIZATION_HEADER = "Authorization"
+        private const val REMEMBER_ME_PARAM = "rememberMe"
         private const val AUTH_COOKIE_MAX_AGE = 60 * 60 * 24 * 10 // 10 days
     }
 }
