@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route } from "react-router-dom";
 import './App.css';
 import Login from "./app/auth/login/Login";
+import Register from "./app/auth/register/Register";
 import logo from './logo.svg';
 
 class App extends Component {
@@ -10,6 +11,7 @@ class App extends Component {
             <div className="App">
 
                 <Route path="/auth/login" exact component={Login}/>
+                <Route path="/auth/register" exact component={Register}/>
 
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
