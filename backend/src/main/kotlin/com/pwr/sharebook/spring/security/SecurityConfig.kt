@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import com.pwr.sharebook.user.auth.UserDetailsServiceImpl
+import org.springframework.beans.factory.annotation.Value
 
 @Configuration
 @EnableWebSecurity
@@ -21,7 +22,10 @@ class SecurityConfig
 constructor(private val passwordEncoder: PasswordEncoder,
             private val userDetailsService: UserDetailsServiceImpl,
             private val jwtUtils: JwtUtils,
-            private val jwtProvider: JwtProvider) : WebSecurityConfigurerAdapter() {
+            private val jwtProvider: JwtProvider,
+            @Value("\${sharebook.frontend.origin}")
+            private val frontendOrigin: String
+            ) : WebSecurityConfigurerAdapter() {
 
 
     @Throws(Exception::class)
@@ -41,6 +45,7 @@ constructor(private val passwordEncoder: PasswordEncoder,
                 .and()
                 .cors()
                 .and()
+                .addFilterBefore(CorsFilter(frontendOrigin), UsernamePasswordAuthenticationFilter::class.java)
                 .addFilterBefore(JwtLoginFilter("/auth/login", userDetailsService, passwordEncoder, jwtUtils), UsernamePasswordAuthenticationFilter::class.java)
                 .addFilterBefore(JwtAuthTokenFilter(jwtProvider, userDetailsService, jwtUtils), UsernamePasswordAuthenticationFilter::class.java)
     }

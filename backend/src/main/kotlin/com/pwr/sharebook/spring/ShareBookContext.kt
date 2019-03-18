@@ -12,11 +12,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.CorsConfigurationSource
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
-import java.util.Arrays.asList
 
 
 @Configuration
@@ -26,16 +22,6 @@ class ShareBookContext : WebMvcConfigurer {
     fun passwordEncoder(): PasswordEncoder =
             BCryptPasswordEncoder(12)
 
-    @Bean
-    fun corsConfigurationSource(@Value("\${sharebook.frontend.origin}") origin: String): CorsConfigurationSource {
-        val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf(origin)
-        configuration.allowedMethods = asList("GET", "POST", "PUT", "DELETE")
-        configuration.allowCredentials = true
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration)
-        return source
-    }
 
     @Bean
     fun jwtProvider(@Value("\${jwt.secret}") secret: String, @Value("\${jwt.expiration}") expiration: Int): JwtProvider {

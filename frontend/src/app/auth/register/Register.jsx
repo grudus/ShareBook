@@ -2,13 +2,13 @@ import Card from "@material-ui/core/Card";
 import css from './register.module.scss';
 import TextField from "@material-ui/core/TextField";
 import img from "../res/loginimg.png";
-import {Button, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
-import React, {Component} from "react";
-import {register} from "../AuthApi";
+import { Button, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import { register } from "../AuthApi";
 
 
-class Register extends Component{
+class Register extends Component {
 
     state = {
         firstName: '',
@@ -26,12 +26,11 @@ class Register extends Component{
     submitForm = async (e) => {
         e.preventDefault();
         try {
-            await register(this.state.firstName, this.state.lastName, this.state.email, this.state.password, this.state.confirmPassword, this.state.confirmPassword= true);
+            await register(this.state);
             alert("Success")
         } catch (e) {
             alert("Invalid credentials")
         }
-
     };
 
     render() {
@@ -48,25 +47,25 @@ class Register extends Component{
                         </div>
                         <form noValidate autoComplete="on" className={css.form} onSubmit={this.submitForm}>
                             <div className={css.fullName}>
-                            <div className={css.fullName1}>
-                            <TextField
-                                required
-                                label="First Name"
-                                value={this.state.firstName}
-                                onChange={this.handleChange('firstName')}
-                                margin="normal"
-                            />
-                            </div>
+                                <div className={css.fullName1}>
+                                    <TextField
+                                        required
+                                        label="First Name"
+                                        value={this.state.firstName}
+                                        onChange={this.handleChange('firstName')}
+                                        margin="normal"
+                                    />
+                                </div>
                                 <div className={css.fullName2}>
-                            <TextField
-                                required
-                                label="Last Name"
-                                value={this.state.lastName}
-                                onChange={this.handleChange('lastName')}
-                                margin="normal"
+                                    <TextField
+                                        required
+                                        label="Last Name"
+                                        value={this.state.lastName}
+                                        onChange={this.handleChange('lastName')}
+                                        margin="normal"
 
-                            />
-                            </div>
+                                    />
+                                </div>
                             </div>
                             <TextField
                                 required
@@ -105,11 +104,11 @@ class Register extends Component{
                                     Sign up
                                 </Button>
                             </div>
-                                <div className={css.signIn}>
+                            <div className={css.signIn}>
                                 <Link to="/auth/login">
                                     Already have an account? Sign in.
                                 </Link>
-                                </div>
+                            </div>
                         </form>
                     </div>
                 </Card>
@@ -117,4 +116,5 @@ class Register extends Component{
         );
     }
 }
+
 export default Register;

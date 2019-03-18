@@ -1,9 +1,9 @@
-import { httpPostForm } from "../http/httpClient";
+import { httpPost, httpPostForm } from "../http/httpClient";
 
 
 export const login = (email, password, rememberMe) => {
   return httpPostForm("auth/login", {email, password, rememberMe});
 };
- export const register = () => {
-  return httpPostForm("auth/register", {});
+ export const register = (state) => {
+  return httpPost("auth/register", state);
 };
