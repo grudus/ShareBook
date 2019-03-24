@@ -1,14 +1,10 @@
 package com.pwr.sharebook.spring.security
 
-import io.jsonwebtoken.ExpiredJwtException
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.MalformedJwtException
+import io.jsonwebtoken.*
 import io.jsonwebtoken.SignatureAlgorithm.HS512
-import io.jsonwebtoken.UnsupportedJwtException
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
-import java.security.SignatureException
 import java.util.*
 
 class JwtProvider(private val jwtSecret: String, private val jwtExpiration: Int?) {
@@ -29,16 +25,16 @@ class JwtProvider(private val jwtSecret: String, private val jwtExpiration: Int?
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken)
             return true
-        } catch (e: SignatureException) {
-            logger.error("Invalid JWT signature -> Message: {} ", e)
+        } catch (e: SignatureException  ) {
+            logger.info("Invalid JWT signature -> Message: {} ", e.message)
         } catch (e: MalformedJwtException) {
-            logger.error("Invalid JWT token -> Message: {}", e)
+            logger.info("Invalid JWT token -> Message: {}", e.message)
         } catch (e: ExpiredJwtException) {
-            logger.error("Expired JWT token -> Message: {}", e)
+            logger.info("Expired JWT token -> Message: {}", e.message)
         } catch (e: UnsupportedJwtException) {
-            logger.error("Unsupported JWT token -> Message: {}", e)
+            logger.info("Unsupported JWT token -> Message: {}", e.message)
         } catch (e: IllegalArgumentException) {
-            logger.error("JWT claims string is empty -> Message: {}", e)
+            logger.info("JWT claims string is empty -> Message: {}", e.message)
         }
 
         return false

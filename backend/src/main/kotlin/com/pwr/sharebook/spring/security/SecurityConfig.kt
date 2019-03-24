@@ -39,8 +39,9 @@ constructor(private val passwordEncoder: PasswordEncoder,
     override fun configure(http: HttpSecurity) {
         http
                 .csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
+                .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
+                .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .cors()
