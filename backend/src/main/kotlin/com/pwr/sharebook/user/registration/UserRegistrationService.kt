@@ -10,6 +10,7 @@ import javax.transaction.Transactional
 
 
 @Service
+@Transactional
 class UserRegistrationService
 @Autowired
 constructor(
@@ -19,12 +20,14 @@ constructor(
         )
 {
 
-    @Transactional
     fun createUser(createUserRequest: CreateUserRequest): Long {
         val user = mapCreateUserRequestToUserEntity(createUserRequest)
         userRepository.save(user)
         return user.id ?: throw IllegalStateException("Cannot obtain newly created user id")
     }
+
+    fun emailExists(email: String): Boolean = userRepository.existsByEmail(email)
+
 
     private fun mapCreateUserRequestToUserEntity(request: CreateUserRequest) =
             UserEntity(
