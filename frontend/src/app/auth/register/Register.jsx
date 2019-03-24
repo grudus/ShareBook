@@ -21,6 +21,7 @@ const formValid = ({formErrors, ...rest}) => {
     return valid;
 };
 
+
 const emailRegex = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 
 class Register extends Component {
@@ -46,9 +47,10 @@ class Register extends Component {
         };
     }
 
-
-    handleChange = (field) => (event) => {
-        this.setState({ [field]: event.target.value });
+    passwordMatches = () => {
+        const { form } = this.state;
+        const matches = form.password.value === form.confirmPassword.value;
+        return matches;
     };
 
     handleChange2 = (field) => (event) => {
@@ -73,7 +75,7 @@ class Register extends Component {
                 formErrors.password = value.length < 6 && value.length > 0 ? "Minimum 6 characters required" : "";
                 break;
             case "confirmPassword":
-                formErrors.confirmPassword = value.length < 6 ? "Minimum 6 characters required" : "";
+                formErrors.confirmPassword = this.passwordMatches=false ? "Hasła nie są tożsame" : "";
                 break;
             default:
                 break;
@@ -168,7 +170,7 @@ class Register extends Component {
                             <TextField
                                 required
                                 label="Confirm Password"
-                                className={formErrors.confirmPassword.length > 6 ? "error" : null}
+                                className={formErrors.passwordMatches=false ? "error" : null}
                                 onChange={this.handleChange2('confirmPassword')}
                                 type="password"
                                 noValidate
