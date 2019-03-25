@@ -51,11 +51,10 @@ class Register extends Component {
     passwordMatches = (confirm) =>
         this.state.password === confirm;
 
-    handleChange2 = () => (event) => {
+    handleChange = () => (event) => {
         event.preventDefault();
         const { name, value } = event.target;
-        let formErrors = { ...this.state.formErrors };
-
+        const formErrors = { ...this.state.formErrors };
 
         switch (name) {
             case "firstName":
@@ -108,7 +107,7 @@ class Register extends Component {
                                         type="text"
                                         name="firstName"
                                         noValidate
-                                        onChange={this.handleChange2('firstName')}
+                                        onChange={this.handleChange('firstName')}
                                     />
                                     {formErrors.firstName.length > 0 && (
                                         <span className={css.error}>{formErrors.firstName}</span>
@@ -122,7 +121,7 @@ class Register extends Component {
                                         type="text"
                                         name="lastName"
                                         noValidate
-                                        onChange={this.handleChange2('lastName')}
+                                        onChange={this.handleChange('lastName')}
                                     />
                                     {formErrors.lastName.length > 0 && (
                                         <span className={css.error}>{formErrors.lastName}</span>
@@ -136,7 +135,7 @@ class Register extends Component {
                                 type="email"
                                 name="email"
                                 noValidate
-                                onChange={this.handleChange2('email')}
+                                onChange={this.handleChange('email')}
                             />
                             {formErrors.email.length > 0 && (
                                 <span className={css.error}>{formErrors.email}</span>
@@ -147,7 +146,7 @@ class Register extends Component {
                                 label="Password"
                                 name="password"
                                 noValidate
-                                onChange={this.handleChange2('password')}
+                                onChange={this.handleChange('password')}
                                 type="password"
                                 margin="normal"
                             />
@@ -157,7 +156,7 @@ class Register extends Component {
                             <TextField
                                 required
                                 label="Confirm Password"
-                                onChange={this.handleChange2('confirmPassword')}
+                                onChange={this.handleChange('confirmPassword')}
                                 type="password"
                                 noValidate
                                 name="confirmPassword"
