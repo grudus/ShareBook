@@ -39,7 +39,7 @@ abstract class AbstractControllerTest : SpringBasedTest() {
         SecurityContextHolder.clearContext()
     }
 
-    private fun toJson(o: Any): ByteArray =
+    protected fun toJson(o: Any): ByteArray =
             objectMapper.writeValueAsBytes(o)
 
     protected fun buildUrlEncodedFormEntity(vararg params: String): String {
