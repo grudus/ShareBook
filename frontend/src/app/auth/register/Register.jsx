@@ -7,20 +7,6 @@ import { Link, withRouter } from "react-router-dom";
 import React, { Component } from "react";
 import { register } from "../AuthApi";
 
-const formValid = ({ formErrors, ...rest }) => {
-    let valid = true;
-
-    Object.values(formErrors).forEach(val => {
-        val && val.length > 0 && (valid = false);
-    });
-
-    Object.values(rest).forEach(val => {
-        val == null && (valid = false);
-    });
-
-    return valid;
-};
-
 
 const emailRegex = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 
@@ -46,6 +32,21 @@ class Register extends Component {
             }
         };
     }
+
+    formValid = () => {
+        let valid = true;
+        const { formErrors, ...rest } = this.state;
+
+        Object.values(formErrors).forEach(val => {
+            val && val.length > 0 && (valid = false);
+        });
+
+        Object.values(rest).forEach(val => {
+            val == null && (valid = false);
+        });
+
+        return valid;
+    };
 
     passwordMatches = (confirm) =>
         this.state.password === confirm;
@@ -156,7 +157,6 @@ class Register extends Component {
                             <TextField
                                 required
                                 label="Confirm Password"
-                                className={formErrors.passwordMatches = false ? "error" : null}
                                 onChange={this.handleChange2('confirmPassword')}
                                 type="password"
                                 noValidate
@@ -176,6 +176,7 @@ class Register extends Component {
                                 <Button variant="contained"
                                         color="primary"
                                         className={css.button}
+                                        disabled={!this.formValid()}
                                         type="submit">
                                     Sign up
                                 </Button>
