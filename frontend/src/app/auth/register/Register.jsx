@@ -3,7 +3,7 @@ import css from './register.module.scss';
 import TextField from "@material-ui/core/TextField";
 import img from "../res/loginimg.png";
 import { Button, Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import React, { Component } from "react";
 import { register } from "../AuthApi";
 
@@ -81,7 +81,7 @@ class Register extends Component {
     submitForm = async (e) => {
         e.preventDefault();
         await register(this.state);
-        alert("Registered!");
+        this.props.history.push("/auth/login")
     };
 
     render() {
@@ -193,4 +193,4 @@ class Register extends Component {
     }
 }
 
-export default Register;
+export default withRouter(Register);
