@@ -1,1 +1,2 @@
-CREATE schema if not exists sharebook_test;
+CREATE DATABASE IF NOT EXISTS `sharebook_test`;
+GRANT ALL ON *.* TO 'sharebook_user'@'%'; # TODO: DRY - Use username in one place

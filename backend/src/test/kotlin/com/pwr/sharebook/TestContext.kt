@@ -10,7 +10,6 @@ import javax.sql.DataSource
 
 @Configuration
 @Import(ShareBookContext::class)
-@PropertySource("classpath:/test.properties")
 @ComponentScan("com.pwr.sharebook")
 class TestContext {
 

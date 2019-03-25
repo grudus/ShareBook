@@ -3,6 +3,7 @@ package com.pwr.sharebook.user.registration
 import com.pwr.sharebook.common.IdResponse
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus.CREATED
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -17,9 +18,8 @@ constructor(private val userRegistrationService: UserRegistrationService,
     private val logger = LoggerFactory.getLogger(UserRegistrationController::class.java)
 
 
-
-
     @PostMapping("/register")
+    @ResponseStatus(CREATED)
     fun createUser(@RequestBody @Valid createUserRequest: CreateUserRequest): IdResponse {
         logger.info("Creating user ${createUserRequest.email}")
         return IdResponse(userRegistrationService.createUser(createUserRequest))
