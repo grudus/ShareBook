@@ -67,10 +67,10 @@ class Register extends Component {
                 formErrors.email = emailRegex.test(value) ? "" : "Invalid email address";
                 break;
             case "password":
-                formErrors.password = value.length < 6 && value.length > 0 ? "Minimum 6 characters required" : "";
+                formErrors.password = value.length < 6 && value.length > 0 ? "Min. 6 characters required" : "";
                 break;
             case "confirmPassword":
-                formErrors.confirmPassword = !this.passwordMatches(value) ? "Hasła nie są tożsame" : "";
+                formErrors.confirmPassword = !this.passwordMatches(value) ? "Password not matches" : "";
                 break;
             default:
                 break;
