@@ -7,11 +7,11 @@ import { Link } from "react-router-dom";
 import React, { Component } from "react";
 import { register } from "../AuthApi";
 
-const formValid = ({formErrors, ...rest}) => {
+const formValid = ({ formErrors, ...rest }) => {
     let valid = true;
 
     Object.values(formErrors).forEach(val => {
-        val.length > 0 && (valid = false);
+        val && val.length > 0 && (valid = false);
     });
 
     Object.values(rest).forEach(val => {
@@ -26,7 +26,7 @@ const emailRegex = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 
 class Register extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -36,7 +36,7 @@ class Register extends Component {
             password: null,
             confirmPassword: null,
             conditions: false,
-            formErrors:{
+            formErrors: {
                 firstName: "",
                 lastName: "",
                 email: "",
@@ -47,21 +47,16 @@ class Register extends Component {
         };
     }
 
-    passwordMatches = () => {
-        const { form } = this.state;
-        const matches = form.password.value === form.confirmPassword.value;
-        return matches;
-    };
+    passwordMatches = (confirm) =>
+        this.state.password === confirm;
 
-    handleChange2 = (field) => (event) => {
+    handleChange2 = () => (event) => {
         event.preventDefault();
-        const{name, value} = event.target;
-        let formErrors = {...this.state.formErrors};
+        const { name, value } = event.target;
+        let formErrors = { ...this.state.formErrors };
 
-        console.log("Name: ", name);
-        console.log("value:", value);
 
-        switch (name){
+        switch (name) {
             case "firstName":
                 formErrors.firstName = value.length < 1 ? "First name is required" : "";
                 break;
@@ -75,31 +70,22 @@ class Register extends Component {
                 formErrors.password = value.length < 6 && value.length > 0 ? "Minimum 6 characters required" : "";
                 break;
             case "confirmPassword":
-                formErrors.confirmPassword = this.passwordMatches=false ? "Hasła nie są tożsame" : "";
+                formErrors.confirmPassword = !this.passwordMatches(value) ? "Hasła nie są tożsame" : "";
                 break;
             default:
                 break;
         }
-        this.setState({formErrors, [name]: value}, () => console.log(this.state));
+        this.setState({ formErrors, [name]: value }, () => console.log(this.state));
     };
 
     submitForm = async (e) => {
         e.preventDefault();
-        if(formValid(this.state)){
-            console.log(`
-        --SUBMITTING--
-        First Name: ${this.state.firstName}
-        Last Name: ${this.state.lastName}
-        Email: ${this.state.email}
-        Password: ${this.state.password}
-      `);
-        } else{
-            console.error('FORM INVALID- DISPLAY ERROR MESSAGE');
-        }
+        await register(this.state);
+        alert("Registered!");
     };
 
     render() {
-        const{formErrors} = this.state;
+        const { formErrors } = this.state;
         return (
             <div>
                 <Card className={css.registerCard}>
@@ -142,18 +128,18 @@ class Register extends Component {
                                     )}
                                 </div>
                             </div>
-                                <TextField
-                                    required
-                                    className={formErrors.email.length > 0 ? "error" : null}
-                                    label="Email"
-                                    type="email"
-                                    name="email"
-                                    noValidate
-                                    onChange={this.handleChange2('email')}
-                                />
-                                {formErrors.email.length > 0 && (
-                                    <span className={css.error}>{formErrors.email}</span>
-                                )}
+                            <TextField
+                                required
+                                className={formErrors.email.length > 0 ? "error" : null}
+                                label="Email"
+                                type="email"
+                                name="email"
+                                noValidate
+                                onChange={this.handleChange2('email')}
+                            />
+                            {formErrors.email.length > 0 && (
+                                <span className={css.error}>{formErrors.email}</span>
+                            )}
                             <TextField
                                 required
                                 className={formErrors.password.length > 6 ? "error" : null}
@@ -170,7 +156,7 @@ class Register extends Component {
                             <TextField
                                 required
                                 label="Confirm Password"
-                                className={formErrors.passwordMatches=false ? "error" : null}
+                                className={formErrors.passwordMatches = false ? "error" : null}
                                 onChange={this.handleChange2('confirmPassword')}
                                 type="password"
                                 noValidate
