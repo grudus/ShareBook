@@ -11,4 +11,6 @@ class AuthSecurityUserService {
     fun getCurrentUser(): UserEntity {
         return ((SecurityContextHolder.getContext().authentication as UsernamePasswordAuthenticationToken).principal as UserDetailsImpl).user
     }
+
+    fun getCurrentUserId(): Long = getCurrentUser().id ?: throw RuntimeException("Cannot obtain current user id")
 }
