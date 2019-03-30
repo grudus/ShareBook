@@ -37,13 +37,13 @@ class ShareBookContext : WebMvcConfigurer {
             if (roleRepository.findAll().isEmpty()) {
                 roleRepository.save(RoleEntity(null, RoleType.STUDENT))
             }
-            val student = roleRepository.findByName(RoleType.STUDENT)!!
 
-            userRepository.deleteAll()
-            userRepository.save(user("admin", passwordEncoder.encode("admin"), student))
-            userRepository.save(user("user2", passwordEncoder.encode("psswd2"), student))
-            userRepository.save(user("user3", passwordEncoder.encode("psswd3"), student))
-
+            if (userRepository.findAll().isEmpty()) {
+                val student = roleRepository.findByName(RoleType.STUDENT)!!
+                userRepository.save(user("admin", passwordEncoder.encode("admin"), student))
+                userRepository.save(user("user2", passwordEncoder.encode("psswd2"), student))
+                userRepository.save(user("user3", passwordEncoder.encode("psswd3"), student))
+            }
             println(userRepository.findAll())
         }
     }

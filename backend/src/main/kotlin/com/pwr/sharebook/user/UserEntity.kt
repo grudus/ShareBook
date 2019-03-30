@@ -21,5 +21,6 @@ class UserEntity(
         @JoinColumn(name = "role_id")
         val roleEntity: RoleEntity?
 ) {
-    constructor(): this(null, null, null, null, null, null, null)
+    constructor(): this(id = null)
+    constructor(id: Long?): this(id, null, null, null, null, null, null)
 }
