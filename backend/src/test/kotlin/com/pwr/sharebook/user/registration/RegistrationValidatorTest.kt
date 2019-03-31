@@ -9,13 +9,11 @@ import com.pwr.sharebook.common.RestKeys.PASSWORD_NOT_MATCHES
 import com.pwr.sharebook.utils.RandomUtils.randomEmail
 import com.pwr.sharebook.utils.RandomUtils.randomText
 import com.pwr.sharebook.utils.ValidatorUtils.assertErrorCodes
-import com.pwr.sharebook.utils.ValidatorUtils.getErrors
-import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyString
-import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -23,7 +21,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class RegistrationValidatorTest {
 
-    @InjectMocks
     lateinit var validator: RegistrationValidator
 
     @Mock
@@ -32,6 +29,7 @@ class RegistrationValidatorTest {
     @Before
     fun init() {
         Mockito.`when`(userRegistrationService.emailExists(anyString())).thenReturn(false)
+        validator = RegistrationValidator(userRegistrationService)
     }
 
     @Test
@@ -39,10 +37,9 @@ class RegistrationValidatorTest {
         val password = randomText()
         val request = CreateUserRequest(randomEmail(), password, password, randomText(), randomText())
 
-        val errors = getErrors(request)
-        validator.validate(request, errors)
+        val errors = validator.validate(request)
 
-        assertFalse(errors.hasErrors())
+        assertTrue(errors.isEmpty())
     }
 
 
@@ -51,8 +48,7 @@ class RegistrationValidatorTest {
         val password = randomText()
         val request = CreateUserRequest(randomText(), password, password, randomText(), randomText())
 
-        val errors = getErrors(request)
-        validator.validate(request, errors)
+        val errors = validator.validate(request)
 
         assertErrorCodes(errors, INVALID_EMAIL)
     }
@@ -62,8 +58,7 @@ class RegistrationValidatorTest {
         val password = randomText()
         val request = CreateUserRequest("", password, password, randomText(), randomText())
 
-        val errors = getErrors(request)
-        validator.validate(request, errors)
+        val errors = validator.validate(request)
 
         assertErrorCodes(errors, EMPTY_EMAIL)
     }
@@ -72,8 +67,7 @@ class RegistrationValidatorTest {
     fun `should fail validation when password not matches`() {
         val request = CreateUserRequest(randomEmail(), randomText(11), randomText(12), randomText(), randomText())
 
-        val errors = getErrors(request)
-        validator.validate(request, errors)
+        val errors = validator.validate(request)
 
         assertErrorCodes(errors, PASSWORD_NOT_MATCHES)
     }
@@ -83,8 +77,7 @@ class RegistrationValidatorTest {
         val password = randomText()
         val request = CreateUserRequest(randomEmail(), "", password, randomText(), randomText())
 
-        val errors = getErrors(request)
-        validator.validate(request, errors)
+        val errors = validator.validate(request)
 
         assertErrorCodes(errors, EMPTY_PASSWORD)
     }
@@ -94,8 +87,7 @@ class RegistrationValidatorTest {
         val password = randomText()
         val request = CreateUserRequest(randomEmail(), password, password, "", randomText())
 
-        val errors = getErrors(request)
-        validator.validate(request, errors)
+        val errors = validator.validate(request)
 
         assertErrorCodes(errors, EMPTY_NAME)
     }
@@ -106,8 +98,7 @@ class RegistrationValidatorTest {
         val password = randomText()
         val request = CreateUserRequest(randomEmail(), password, password, randomText(), randomText())
 
-        val errors = getErrors(request)
-        validator.validate(request, errors)
+        val errors = validator.validate(request)
 
         assertErrorCodes(errors, EMAIL_EXISTS)
     }
@@ -116,8 +107,7 @@ class RegistrationValidatorTest {
     fun `should fail validation when no data`() {
         val request = CreateUserRequest("", "", "", "", "")
 
-        val errors = getErrors(request)
-        validator.validate(request, errors)
+        val errors = validator.validate(request)
 
         assertErrorCodes(errors, EMPTY_PASSWORD, EMPTY_EMAIL, EMPTY_NAME)
     }

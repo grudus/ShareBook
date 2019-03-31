@@ -1,18 +1,13 @@
 package com.pwr.sharebook.utils
 
-import junit.framework.Assert.assertTrue
-import org.springframework.validation.BeanPropertyBindingResult
-import org.springframework.validation.Errors
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+
 
 object ValidatorUtils {
 
-    fun <T> getErrors(request: T): Errors = BeanPropertyBindingResult(request, "request")
-
-    fun assertErrorCodes(error: Errors, vararg codes: String) {
-        assertTrue(codes.size == error.errorCount)
-        assertTrue(errorCodes(error).containsAll(listOf(*codes)))
+    fun assertErrorCodes(errors: List<String>, vararg codes: String) {
+        assertEquals(codes.size, errors.size)
+        assertTrue(errors.containsAll(listOf(*codes)))
     }
-
-    private fun errorCodes(errors: Errors): List<String> =
-            errors.allErrors.map { it.code!! }
 }
