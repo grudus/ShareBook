@@ -26,6 +26,11 @@ constructor(private val jwtProvider: JwtProvider) {
         response.addCookie(authCookie(jwt, rememberMe))
     }
 
+    fun authCookie(authentication: Authentication): Cookie {
+        val jwt = jwtProvider.generateJwtToken(authentication)
+        return authCookie(jwt, false)
+    }
+
     private fun authCookie(jwt: String, rememberMe: Boolean): Cookie {
         val cookie = Cookie(AUTHORIZATION_HEADER, jwt)
         cookie.path = "/"
