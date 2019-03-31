@@ -4,10 +4,10 @@ import * as querystring from 'querystring';
 const BASE_URL = "http://localhost:8080";
 
 export const httpPost = (path, args) => axios.post(`${BASE_URL}/${path}`, args, { withCredentials: true })
-    .then(({data}) => data)
     .catch(e => {
         catchForbiddenError(e)
-    });
+    })
+    .then(({data}) => data);
 
 export const httpPostForm = (path, args) => axios.post(`${BASE_URL}/${path}`, querystring.stringify(args), {
     withCredentials: true,
@@ -19,13 +19,17 @@ export const httpPostForm = (path, args) => axios.post(`${BASE_URL}/${path}`, qu
 });
 
 function catchForbiddenError(e) {
-    if (e.response.status === 403)
+    if (!e.response) {
+        alert("Wystąpił nieoczekiwany błąd - brak internetu lub niedostępny serwer")
+    }
+    else if (e.response.status === 403)
         window.location.href = '/auth/login';
     throw e;
 }
 
 export const httpGet = (path, args) => axios.get(`${BASE_URL}/${path}`, { withCredentials: true })
-    .then(({data}) => data)
     .catch(e => {
         catchForbiddenError(e);
-    });
+    })
+    .then(({data}) => data);
+
