@@ -4,6 +4,7 @@ import * as querystring from 'querystring';
 const BASE_URL = "http://localhost:8080";
 
 export const httpPost = (path, args) => axios.post(`${BASE_URL}/${path}`, args, { withCredentials: true })
+    .then(({data}) => data)
     .catch(e => {
         catchForbiddenError(e)
     });
@@ -24,6 +25,7 @@ function catchForbiddenError(e) {
 }
 
 export const httpGet = (path, args) => axios.get(`${BASE_URL}/${path}`, { withCredentials: true })
+    .then(({data}) => data)
     .catch(e => {
         catchForbiddenError(e);
     });
