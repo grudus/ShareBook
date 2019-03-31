@@ -6,11 +6,9 @@ class User extends Component {
 
     state = { user: {} };
 
-    componentDidMount() {
-        getCurrentUser()
-            .then(({data}) => {
-                this.setState({ user: data })
-            })
+    async componentDidMount() {
+        const user = await getCurrentUser();
+        this.setState({ user })
 
     }
 

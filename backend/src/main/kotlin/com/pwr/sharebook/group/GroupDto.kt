@@ -3,7 +3,7 @@ package com.pwr.sharebook.group
 import com.pwr.sharebook.user.UserIdentification
 import java.time.LocalDateTime
 
-data class GroupDto(val id: Long, val name: String, val createdAt: LocalDateTime, val createdBy: UserIdentification) {
+data class GroupDto(val id: Long, val name: String, val photoUrl: String?, val createdAt: LocalDateTime, val createdBy: UserIdentification) {
 
 
     companion object {
@@ -12,7 +12,7 @@ data class GroupDto(val id: Long, val name: String, val createdAt: LocalDateTime
             require(group.name != null) { "Group name cannot be null!" }
             require(group.createdAt != null) { "Group createdBy cannot be null!" }
             require(group.userEntity != null) { "Group user entity cannot be null!" }
-            return GroupDto(group.id!!, group.name!!, group.createdAt!!,
+            return GroupDto(group.id!!, group.name!!, group.photoUrl, group.createdAt!!,
                     UserIdentification(group.userEntity!!.id!!, group.userEntity.email!!))
         }
     }

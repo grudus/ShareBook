@@ -16,7 +16,7 @@ constructor(private val groupRepository: GroupRepository) {
                     .map { GroupDto.fromEntity(it) }
 
     fun create(request: CreateGroupRequest, userId: Long): Long {
-        val entity = GroupEntity(null, request.name, now(), UserEntity(userId))
+        val entity = GroupEntity(null, request.name, request.photoUrl, now(), UserEntity(userId))
         groupRepository.save(entity)
         return entity.id ?: throw CannotFindIdException()
     }

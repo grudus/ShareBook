@@ -20,7 +20,15 @@ class GroupControllerTest : AuthenticatedControllerTest() {
 
     @Test
     fun shouldCreateGroup() {
-        val request = CreateGroupRequest(randomText())
+        val request = randomCreateGroupRequest()
+        authPost(baseUrl, request)
+                .andExpect(status().isCreated)
+                .andExpect(jsonPath("$.id", notNullValue()))
+    }
+
+    @Test
+    fun shouldBeAbleToCreateGroupWithoutPhoto() {
+        val request = CreateGroupRequest(randomText(), photoUrl = null)
         authPost(baseUrl, request)
                 .andExpect(status().isCreated)
                 .andExpect(jsonPath("$.id", notNullValue()))
@@ -29,7 +37,7 @@ class GroupControllerTest : AuthenticatedControllerTest() {
     @Test
     fun shouldReturnAllUserGroups() {
         (0 until 5)
-                .forEach { _ -> authPost(baseUrl, CreateGroupRequest(randomText())) }
+                .forEach { _ -> authPost(baseUrl, randomCreateGroupRequest()) }
 
         flush()
 
@@ -42,12 +50,12 @@ class GroupControllerTest : AuthenticatedControllerTest() {
     @Test
     fun shouldOnlyGetGroupsFromCurrentUser() {
         (0 until 5)
-                .forEach { _ -> authPost(baseUrl, CreateGroupRequest(randomText())) }
+                .forEach { _ -> authPost(baseUrl, randomCreateGroupRequest()) }
 
         logInAnotherUser()
 
         (0 until 10)
-                .forEach { _ -> authPost(baseUrl, CreateGroupRequest(randomText())) }
+                .forEach { _ -> authPost(baseUrl, randomCreateGroupRequest()) }
 
         flush()
 
@@ -55,6 +63,8 @@ class GroupControllerTest : AuthenticatedControllerTest() {
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("$.[*]", hasSize<Int>(10)))
     }
+
+    private fun randomCreateGroupRequest() = CreateGroupRequest(randomText(), randomText())
 
     @Test
     fun shouldNotBeAbleToCreateInvalidGroup() {

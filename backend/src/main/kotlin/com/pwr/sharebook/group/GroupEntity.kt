@@ -13,10 +13,11 @@ class GroupEntity(
         @Column(name = "class_group_id")
         val id: Long?,
         val name: String?,
+        val photoUrl: String?,
         val createdAt: LocalDateTime?,
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "created_by")
         val userEntity: UserEntity?
 ) {
-    constructor(): this(null, null, null, null)
+    constructor(): this(null, null, null, null, null)
 }
