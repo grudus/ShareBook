@@ -4,7 +4,7 @@ import * as GroupApi from './GroupApi'
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import UserGroupList from "./UserGroupList";
-
+import "./group.module.scss";
 
 class Group extends Component {
 
@@ -20,11 +20,11 @@ class Group extends Component {
     }
 
 
-    addGroup = async (name) => {
-        const { id } = await GroupApi.addGroup(name);
+    addGroup = async (name, photoUrl) => {
+        const { id } = await GroupApi.addGroup(name, photoUrl);
         this.setState(state => ({
             ...state,
-            groups: [...state.groups, { id, name }]
+            groups: [...state.groups, { id, name, photoUrl }]
         }));
     };
 

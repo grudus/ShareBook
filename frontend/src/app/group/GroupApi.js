@@ -5,6 +5,6 @@ export const getAllGroups = () => {
     return httpGet("groups");
 };
 
-export const addGroup = (name) => {
-    return httpPost("groups", { name })
+export const addGroup = (name, photoUrl) => {
+    return httpPost("groups", { name, photoUrl })
 };
