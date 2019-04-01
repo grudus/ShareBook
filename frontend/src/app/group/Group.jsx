@@ -43,7 +43,7 @@ class Group extends Component {
             <div className={css.topBar}>
                 <label className={css.title}>Sharebook</label>
             </div>
-                <div>
+                <div className={css.groups}>
                 Dostępne grupy:
                 <UserGroupList groups={this.state.groups}/>
                 </div>
