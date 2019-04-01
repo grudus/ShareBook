@@ -5,6 +5,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import UserGroupList from "./UserGroupList";
 import "./group.module.scss";
+import css from './group.module.scss';
 
 class Group extends Component {
 
@@ -39,9 +40,14 @@ class Group extends Component {
     render() {
         return (
             <div>
-                Grupy użytkownika:
+            <div className={css.topBar}>
+                <label className={css.title}>Sharebook</label>
+            </div>
+                <div>
+                Dostępne grupy:
                 <UserGroupList groups={this.state.groups}/>
-
+                </div>
+                <div className={css.button}>
                 <AddGroupDialog
                     open={this.state.showDialog}
                     onClose={this.hideDialog}
@@ -52,8 +58,9 @@ class Group extends Component {
                 <Fab color={"primary"} onClick={this.showDialog}>
                     <AddIcon/>
                 </Fab>
-            </div>
+                </div>
 
+            </div>
         );
     }
 }
