@@ -8,6 +8,7 @@ import "./group.module.scss";
 import css from './group.module.scss';
 import Avatar from "./Avatar";
 import MenuList from "./Menu";
+import {Card} from "@material-ui/core";
 
 class Group extends Component {
 
@@ -51,6 +52,7 @@ class Group extends Component {
                 Dostępne grupy:
                 <UserGroupList groups={this.state.groups}/>
                 </div>
+                <Card className={css.Card}></Card>
                 <div className={css.button}>
                 <AddGroupDialog
                     open={this.state.showDialog}

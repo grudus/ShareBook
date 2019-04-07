@@ -53,4 +53,14 @@
   color: #ffffff;
 }
 
+.Card{
+  display: flex;
+  width: 1100px;
+  height: 90vh;
+  position: absolute;
+  top: 60%;
+  left: 53%;
+  transform: translate(-50%, -50%);
+  background: white;
+}
 
