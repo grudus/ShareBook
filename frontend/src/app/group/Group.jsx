@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import AddGroupDialog from "./AddGroupDialog";
-import * as GroupApi from './GroupApi'
+import * as GroupApi from './GroupApi';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import UserGroupList from "./UserGroupList";
 import "./group.module.scss";
 import css from './group.module.scss';
+import Avatar from "./Avatar";
 
 class Group extends Component {
 
@@ -41,7 +42,8 @@ class Group extends Component {
         return (
             <div>
             <div className={css.topBar}>
-                <label className={css.title}>Sharebook</label>
+                <label className={css.title} width="100">Sharebook</label>
+                <Avatar/>
             </div>
                 <div className={css.groups}>
                 Dostępne grupy:

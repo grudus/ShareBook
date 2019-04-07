@@ -5,7 +5,8 @@ import TextField from "@material-ui/core/TextField";
 import React, {Component, useState} from 'react';
 import css from './group.module.scss'
 import * as PropTypes from "prop-types";
-import {register} from "../auth/AuthApi";
+
+
 
 const defaultPhotoUrl = "https://3ie87c2dond928rt2e2zzo8o-wpengine.netdna-ssl.com/wp-content/themes/gonzo/images/no-image-featured-image.png";
 
@@ -62,6 +63,8 @@ class AddGroupDialog extends Component {
         this.props.onClose();
 
     };
+
+
 
     render() {
         let {open, onSubmit, onClose} = this.props;
