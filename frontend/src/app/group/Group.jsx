@@ -7,6 +7,7 @@ import UserGroupList from "./UserGroupList";
 import "./group.module.scss";
 import css from './group.module.scss';
 import Avatar from "./Avatar";
+import MenuList from "./Menu";
 
 class Group extends Component {
 
@@ -43,6 +44,7 @@ class Group extends Component {
             <div>
             <div className={css.topBar}>
                 <label className={css.title} width="100">Sharebook</label>
+                <MenuList/>
                 <Avatar/>
             </div>
                 <div className={css.groups}>
