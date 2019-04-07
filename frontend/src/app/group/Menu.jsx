@@ -8,7 +8,9 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from "react-router-dom";
 import css from './group.module.scss';
+import * as AuthApi from '../auth/AuthApi'
 
 const styles = theme => ({
     root: {
@@ -34,6 +36,12 @@ class MenuListComposition extends React.Component {
         }
 
         this.setState({ open: false });
+    };
+
+    logout = async (event) => {
+        await AuthApi.logout();
+        this.handleClose(event);
+        this.props.history.push("/auth/login");
     };
 
     render() {
@@ -66,7 +74,7 @@ class MenuListComposition extends React.Component {
                                         <MenuList>
                                             <MenuItem onClick={this.handleClose}>My account</MenuItem>
                                             <MenuItem onClick={this.handleClose}>My groups</MenuItem>
-                                            <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                                            <MenuItem onClick={this.logout}>Logout</MenuItem>
                                         </MenuList>
                                     </ClickAwayListener>
                                 </Paper>
@@ -83,4 +91,4 @@ MenuListComposition.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MenuListComposition);
+export default withStyles(styles)(withRouter(MenuListComposition));

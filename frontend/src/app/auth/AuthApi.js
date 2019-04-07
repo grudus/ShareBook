@@ -7,3 +7,7 @@ export const login = (email, password, rememberMe) => {
  export const register = (state) => {
   return httpPost("auth/register", state);
 };
+
+ export const logout = () => {
+     return httpPost("auth/logout");
+ };

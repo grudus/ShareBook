@@ -42,8 +42,8 @@ constructor(private val jwtProvider: JwtProvider) {
     }
 
     companion object {
-        private const val AUTHORIZATION_HEADER = "Authorization"
-        private const val REMEMBER_ME_PARAM = "rememberMe"
-        private const val AUTH_COOKIE_MAX_AGE = 60 * 60 * 24 * 10 // 10 days
+        const val AUTHORIZATION_HEADER = "Authorization"
+        const val REMEMBER_ME_PARAM = "rememberMe"
+        const val AUTH_COOKIE_MAX_AGE = 60 * 60 * 24 * 10 // 10 days
     }
 }
