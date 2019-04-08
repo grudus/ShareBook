@@ -9,6 +9,7 @@ import "./group.module.scss";
 import css from './group.module.scss';
 import * as GroupApi from './GroupApi';
 import UserGroupList from "./UserGroupList";
+import ImageAvatars from "../group/GroupAvatar"
 
 class Group extends Component {
 

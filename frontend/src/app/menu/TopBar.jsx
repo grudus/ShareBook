@@ -5,6 +5,7 @@ import MenuList from "../group/Menu";
 import pathsWithoutTopBar from "./pathsWithoutTopBar";
 
 
+
 const shouldRender = !pathsWithoutTopBar.includes(document.location.pathname);
 
 const TopBar = ({ children }) => (
