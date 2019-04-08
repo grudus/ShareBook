@@ -16,9 +16,16 @@ internal class JwtAuthTokenFilter(private val jwtProvider: JwtProvider,
                                   private val jwtUtils: JwtUtils) : OncePerRequestFilter() {
     private val jwtLogger = LoggerFactory.getLogger(JwtAuthTokenFilter::class.java)
 
+    private val whiteListRegex = Regex(".*auth.*")
+
     override fun doFilterInternal(httpServletRequest: HttpServletRequest, httpServletResponse: HttpServletResponse, filterChain: FilterChain) {
+        if (httpServletRequest.requestURI.matches(whiteListRegex)) {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+            return
+        }
+
         val authentication = jwtUtils.getJwtFromRequest(httpServletRequest)
-                .filter{ jwtProvider.validateJwtToken(it) }
+                .filter { jwtProvider.validateJwtToken(it) }
                 .map { jwtProvider.getUserNameFromJwtToken(it) }
                 .map { userDetailsService.loadUserByUsername(it) }
                 .map { user -> usernameToken(user, httpServletRequest) }

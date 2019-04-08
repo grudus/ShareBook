@@ -1,4 +1,4 @@
-import { Card } from "@material-ui/core";
+import { Card, CardMedia } from "@material-ui/core";
 import React, { Component } from 'react';
 import css from "./single-group.module.scss";
 import PropTypes from 'prop-types';
@@ -13,10 +13,14 @@ class SingleGroup extends Component {
         const { currentGroup } = this.props;
 
         return (
-            <Card className={css.Card}>
-                {currentGroup ? "Wybrana grupa to: " + currentGroup.name : "Nie wybrano grupy"}
-            </Card>
-
+            <>
+                <Card>
+                    {currentGroup && <CardMedia image={currentGroup.photoUrl} title="Dupa"/>}
+                </Card>
+                <Card className={css.Card}>
+                    {currentGroup ? "Wybrana grupa to: " + currentGroup.name : "Nie wybrano grupy"}
+                </Card>
+            </>
         );
     }
 }
