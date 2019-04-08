@@ -1,22 +1,22 @@
-import React from 'react';
+import Avatar from "@material-ui/core/Avatar";
 import PropTypes from 'prop-types'
+import React from 'react';
 import { Link } from "react-router-dom";
-import ImageAvatars from "./GroupAvatar";
 import css from './group.module.scss';
 
 const UserGroupList = ({ groups }) => (
     <ul>
-
         {groups.map(group => (
-            <div className={css.groupItem}>
-            <ImageAvatars/>
-            <li key={group.id}>
-
+            <li key={group.id} className={css.groupItem}>
                 <Link to={`/groups/${group.id}`}>
-                    {group.name}
+                    <div className={css.textAvatarWrapper}>
+                        <Avatar alt="Remy Sharp"
+                                src={group.photoUrl}
+                        className={css.userGroupAvatar}/>
+                        {group.name}
+                    </div>
                 </Link>
             </li>
-            </div>
 
         ))}
 

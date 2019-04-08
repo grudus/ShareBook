@@ -1,7 +1,7 @@
 import React from 'react';
 import LetterAvatar from "../group/LetterAvatar";
 import css from "./menu.module.scss";
-import MenuList from "../group/Menu";
+import MenuList from "./Menu";
 import pathsWithoutTopBar from "./pathsWithoutTopBar";
 
 

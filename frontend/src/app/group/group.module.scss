@@ -24,6 +24,11 @@
   margin-right: 15vh;
 }
 
+.textAvatarWrapper {
+  display: flex;
+  align-items: center;
+}
+
 
 .menuButton{
   color: #ffffff !important;
@@ -49,4 +54,9 @@
 
 .groupItem{
   width: 50px;
+  margin-top: 1rem;
+}
+
+.userGroupAvatar {
+  margin-right: 1rem;
 }

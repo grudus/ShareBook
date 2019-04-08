@@ -3,13 +3,11 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
-import TopBar from "../menu/TopBar";
 import AddGroupDialog from "./AddGroupDialog";
 import "./group.module.scss";
 import css from './group.module.scss';
 import * as GroupApi from './GroupApi';
 import UserGroupList from "./UserGroupList";
-import ImageAvatars from "../group/GroupAvatar"
 
 class Group extends Component {
 
@@ -20,37 +18,14 @@ class Group extends Component {
     };
 
 
+    // noinspection JSCheckFunctionSignatures
     async componentDidMount() {
-        // const groups = await GroupApi.getAllGroups();
-        const groups = [
-            {
-                id: 1,
-                name: "Grupa1",
-                photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa4tG8WJkzRsq8GsHtuxFtcpmXrp89GffQSYAkP-HQscRIR8IC8A"
-            },
-            {
-                id: 2,
-                name: "Grupa2",
-                photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa4tG8WJkzRsq8GsHtuxFtcpmXrp89GffQSYAkP-HQscRIR8IC8A"
-            },
-            {
-                id: 3,
-                name: "Grupa3",
-                photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa4tG8WJkzRsq8GsHtuxFtcpmXrp89GffQSYAkP-HQscRIR8IC8A"
-            },
-            {
-                id: 4,
-                name: "Grupa4",
-                photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa4tG8WJkzRsq8GsHtuxFtcpmXrp89GffQSYAkP-HQscRIR8IC8A"
-            },
-
-
-        ];
-
+        const groups = await GroupApi.getAllGroups();
         this.setState({ groups });
         this.changeCurrentGroup();
     }
 
+    // noinspection JSCheckFunctionSignatures
     componentDidUpdate(prevProps) {
         if (this.props.location !== prevProps.location) {
             this.changeCurrentGroup();

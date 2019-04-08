@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button/index';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener/index';
+import Grow from '@material-ui/core/Grow/index';
+import Paper from '@material-ui/core/Paper/index';
+import Popper from '@material-ui/core/Popper/index';
+import MenuItem from '@material-ui/core/MenuItem/index';
+import MenuList from '@material-ui/core/MenuList/index';
+import { withStyles } from '@material-ui/core/styles/index';
 import { withRouter } from "react-router-dom";
-import css from './group.module.scss';
+import css from '../group/group.module.scss';
 import * as AuthApi from '../auth/AuthApi'
 
 const styles = theme => ({
