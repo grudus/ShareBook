@@ -41,10 +41,13 @@ constructor(private val passwordEncoder: PasswordEncoder,
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/h2/**").permitAll() // todo remove when deploys
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .cors()
+                .and()
+                .headers().frameOptions().sameOrigin()
                 .and()
                 .addFilterBefore(CorsFilter(frontendOrigin), UsernamePasswordAuthenticationFilter::class.java)
                 .addFilterBefore(JwtLoginFilter("/auth/login", userDetailsService, passwordEncoder, jwtUtils), UsernamePasswordAuthenticationFilter::class.java)
