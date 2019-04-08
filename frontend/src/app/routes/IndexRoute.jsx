@@ -9,7 +9,7 @@ import User from "../user/User";
 const IndexRoute = () => (
     <>
         <Route exact path="/" component={User}/>
-        <Route exact path="/groups" component={Group}/>
+        <Route path="/groups/:id?" component={Group}/>
         <Route exact path="/auth/login" component={Login} />
         <Route exact path="/auth/register" component={Register} />
     </>

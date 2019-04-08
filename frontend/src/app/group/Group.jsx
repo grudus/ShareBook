@@ -2,6 +2,7 @@ import { Card } from "@material-ui/core";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import React, { Component } from 'react';
+import { withRouter } from "react-router-dom";
 import TopBar from "../menu/TopBar";
 import AddGroupDialog from "./AddGroupDialog";
 import "./group.module.scss";
@@ -13,7 +14,8 @@ class Group extends Component {
 
     state = {
         groups: [],
-        showDialog: false
+        showDialog: false,
+        currentGroup: null,
     };
 
 
@@ -43,8 +45,28 @@ class Group extends Component {
 
 
         ];
-        this.setState({ groups })
+
+        this.setState({ groups });
+        this.changeCurrentGroup();
     }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.location !== prevProps.location) {
+            this.changeCurrentGroup();
+        }
+    }
+
+
+    changeCurrentGroup = () => {
+        const currentGroupId = this.props.match.params.id;
+        const groups = this.state.groups;
+        const currentGroup = currentGroupId === null
+            ? null
+            : groups.find(({ id }) => id === parseInt(currentGroupId, 10));
+
+        this.setState({ currentGroup })
+
+    };
 
 
     addGroup = async (name, photoUrl) => {
@@ -64,15 +86,19 @@ class Group extends Component {
     };
 
     render() {
+        const { currentGroup, groups, showDialog } = this.state;
+
         return (
             <div className={css.mainPageWrapper}>
                 <div className={css.groups}>
                     Dostępne grupy:
-                    <UserGroupList groups={this.state.groups}/>
+                    <UserGroupList groups={groups}/>
                 </div>
-                <Card className={css.Card}/>
+                <Card className={css.Card}>
+                    {currentGroup ? "Wybrana grupa to: " + currentGroup.name : "Nie wybrano grupy"}
+                </Card>
                 <AddGroupDialog
-                    open={this.state.showDialog}
+                    open={showDialog}
                     onClose={this.hideDialog}
                     onSubmit={this.addGroup}
                 />
@@ -80,7 +106,7 @@ class Group extends Component {
 
                 <div className={css.addGroupFab}>
                     <Fab
-                         color={"primary"} onClick={this.showDialog}>
+                        color={"primary"} onClick={this.showDialog}>
                         <AddIcon/>
                     </Fab>
                 </div>
@@ -91,4 +117,4 @@ class Group extends Component {
 }
 
 
-export default Group;
+export default withRouter(Group);
