@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button/index';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener/index';
 import Grow from '@material-ui/core/Grow/index';
-import Paper from '@material-ui/core/Paper/index';
-import Popper from '@material-ui/core/Popper/index';
 import MenuItem from '@material-ui/core/MenuItem/index';
 import MenuList from '@material-ui/core/MenuList/index';
+import Paper from '@material-ui/core/Paper/index';
+import Popper from '@material-ui/core/Popper/index';
 import { withStyles } from '@material-ui/core/styles/index';
-import { withRouter } from "react-router-dom";
-import css from '../group/group.module.scss';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Link, withRouter } from "react-router-dom";
 import * as AuthApi from '../auth/AuthApi'
+import css from './menu.module.scss';
 
 const styles = theme => ({
     root: {
@@ -45,11 +45,10 @@ class MenuListComposition extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
         const { open } = this.state;
 
         return (
-            <div className={css.Menu}>
+            <div>
                 <div>
                     <Button
                         className={css.menuButton}
@@ -72,9 +71,8 @@ class MenuListComposition extends React.Component {
                                 <Paper>
                                     <ClickAwayListener onClickAway={this.handleClose}>
                                         <MenuList>
-                                            <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                                            <MenuItem onClick={this.handleClose}>My groups</MenuItem>
-                                            <MenuItem onClick={this.logout}>Logout</MenuItem>
+                                            <Link to="/groups"><MenuItem>MojeGrupy</MenuItem></Link>
+                                            <MenuItem onClick={this.logout}>Wyloguj</MenuItem>
                                         </MenuList>
                                     </ClickAwayListener>
                                 </Paper>

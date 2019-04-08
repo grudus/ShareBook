@@ -1,15 +1,14 @@
 import React from 'react';
 import LetterAvatar from "../group/LetterAvatar";
 import css from "./menu.module.scss";
-import MenuList from "./Menu";
+import MenuList from "./UserDropdownMenu";
 import pathsWithoutTopBar from "./pathsWithoutTopBar";
 
 
-
-const shouldRender = !pathsWithoutTopBar.includes(document.location.pathname);
+const shouldRender = () => !pathsWithoutTopBar.includes(document.location.pathname);
 
 const TopBar = ({ children }) => (
-    shouldRender
+    shouldRender()
         ? (
             <div>
                 <nav className={css.topBar}>
