@@ -9,7 +9,6 @@ class User extends Component {
     async componentDidMount() {
         const user = await getCurrentUser();
         this.setState({ user })
-
     }
 
     render() {

@@ -46,6 +46,7 @@ class MenuListComposition extends React.Component {
 
     render() {
         const { open } = this.state;
+        const { userName } = this.props;
 
         return (
             <div>
@@ -59,7 +60,7 @@ class MenuListComposition extends React.Component {
                         aria-haspopup="true"
                         onClick={this.handleToggle}
                     >
-                        Admin
+                        {userName}
                     </Button>
                     <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
                         {({ TransitionProps, placement }) => (
@@ -71,7 +72,6 @@ class MenuListComposition extends React.Component {
                                 <Paper>
                                     <ClickAwayListener onClickAway={this.handleClose}>
                                         <MenuList>
-                                            <Link to="/groups"><MenuItem>MojeGrupy</MenuItem></Link>
                                             <MenuItem onClick={this.logout}>Wyloguj</MenuItem>
                                         </MenuList>
                                     </ClickAwayListener>
@@ -86,7 +86,7 @@ class MenuListComposition extends React.Component {
 }
 
 MenuListComposition.propTypes = {
-    classes: PropTypes.object.isRequired,
+    userName: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(withRouter(MenuListComposition));

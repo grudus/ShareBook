@@ -23,14 +23,14 @@ const styles = {
     },
 };
 
-const LetterAvatar = ({classes, name}) => (
-        <div className={css.Avatar}>
-            <Avatar className={classes.orangeAvatar}>{name[0]}</Avatar>
-        </div>
-    );
+const LetterAvatar = ({ classes, text }) => (
+    <div className={css.Avatar}>
+        <Avatar className={classes.orangeAvatar}>{text}</Avatar>
+    </div>
+);
 
 LetterAvatar.propTypes = {
-    classes: PropTypes.object.isRequired,
+    text: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(LetterAvatar);

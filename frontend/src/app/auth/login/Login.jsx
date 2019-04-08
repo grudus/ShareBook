@@ -3,6 +3,7 @@ import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 import React, { Component } from 'react';
 import { Link, withRouter } from "react-router-dom";
+import { saveCurrentUser } from "../../storage/userStorage";
 import { login } from "../AuthApi";
 import css from './login.module.scss';
 import img from '../res/loginimg.png'
@@ -27,8 +28,7 @@ class Login extends Component {
         e.preventDefault();
         try {
             await login(this.state.email, this.state.password, this.state.rememberMe);
-            console.log(this.props);
-            this.props.history.push("/");
+            this.props.history.push("/groups");
         } catch (e) {
             alert("Invalid credentials")
         }
