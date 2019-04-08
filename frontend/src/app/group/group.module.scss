@@ -55,10 +55,27 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1;
+  width: 850px;
 }
 
 
 @media (max-width: 1200px) {
+  .mainPageWrapper {
+    display: flex;
+    justify-content: space-around;
+  }
 
+  .singleGroupWrapper {
+    position: relative;
+    left: auto;
+    transform: none;
+    flex: 3;
+    padding-right: 2rem;
+  }
+  .userGroupWrapper {
+    position: relative;
+    left: auto;
+    width: auto;
+    flex: 1;
+  }
 }
