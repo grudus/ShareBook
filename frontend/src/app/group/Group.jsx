@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
-import AddGroupDialog from "./AddGroupDialog";
-import * as GroupApi from './GroupApi';
+import { Card } from "@material-ui/core";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import UserGroupList from "./UserGroupList";
+import React, { Component } from 'react';
+import TopBar from "../menu/TopBar";
+import AddGroupDialog from "./AddGroupDialog";
 import "./group.module.scss";
 import css from './group.module.scss';
-import Avatar from "./Avatar";
-import MenuList from "./Menu";
-import { Card } from "@material-ui/core";
+import * as GroupApi from './GroupApi';
+import UserGroupList from "./UserGroupList";
 
 class Group extends Component {
 
@@ -43,7 +42,7 @@ class Group extends Component {
             },
 
 
-        ]
+        ];
         this.setState({ groups })
     }
 
@@ -67,16 +66,12 @@ class Group extends Component {
     render() {
         return (
             <div>
-                <div className={css.topBar}>
-                    <label className={css.title} width="100">Sharebook</label>
-                    <MenuList/>
-                    <Avatar/>
-                </div>
+                <TopBar/>
                 <div className={css.groups}>
                     Dostępne grupy:
                     <UserGroupList groups={this.state.groups}/>
                 </div>
-                <Card className={css.Card}></Card>
+                <Card className={css.Card}/>
                 <div className={css.button}>
                     <AddGroupDialog
                         open={this.state.showDialog}
