@@ -5,8 +5,25 @@
 }
 
 .topBar{
-  height: 10%;
   width: 100%;
   background-color: #47445a;
   margin-top: 0;
+
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  top: 0;
+  height: 72px;
+}
+
+.rightPart {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.children {
+  margin-top: 72px;
 }

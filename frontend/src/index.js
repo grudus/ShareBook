@@ -2,6 +2,7 @@ import { MuiThemeProviderOld } from "@material-ui/core/es/styles/MuiThemeProvide
 import React from 'react';
 import ReactDOM from 'react-dom';
 import BrowserRouter from "react-router-dom/es/BrowserRouter";
+import TopBar from "./app/menu/TopBar";
 import IndexRoute from "./app/routes/IndexRoute";
 import './index.css';
 import * as serviceWorker from './serviceWorker';
@@ -13,7 +14,9 @@ const theme = createMuiTheme();
 ReactDOM.render(
     <BrowserRouter>
         <MuiThemeProviderOld theme={theme}>
-            <IndexRoute/>
+            <TopBar>
+                <IndexRoute/>
+            </TopBar>
         </MuiThemeProviderOld>
     </BrowserRouter>,
     document.getElementById('root')

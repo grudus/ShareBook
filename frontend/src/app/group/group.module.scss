@@ -4,11 +4,6 @@
   object-fit: cover;
 }
 
-.button {
-  position: absolute;
-  bottom: 50px;
-  right: 50px;
-  }
 
 .error{
   transform: scaleX(1);
@@ -19,39 +14,30 @@
 
 .groups{
   color: #47445a;
-  margin-top: 5%;
   margin-left: 5%;
-}
-
-.Avatar{
-  top: -5px;
-  position: absolute;
-  right: 30px;
 }
 
 .Card{
   display: flex;
   width: 1100px;
   height: 90vh;
-  position: absolute;
-  top: 60%;
-  left: 53%;
-  z-index: 1;
-  transform: translate(-50%, -50%);
   background: white;
 }
 
-.Menu{
-  top: 8px;
-  z-index: 2;
-  position: absolute;
-  right: 100px;
-
-}
 
 .menuButton{
   color: #ffffff;
 }
 
+.mainPageWrapper {
+  margin-top: 8rem;
 
+  display: flex;
+  justify-content: space-evenly;
+}
 
+.addGroupFab {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+}

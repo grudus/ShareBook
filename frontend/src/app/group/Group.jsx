@@ -65,22 +65,22 @@ class Group extends Component {
 
     render() {
         return (
-            <div>
-                <TopBar/>
+            <div className={css.mainPageWrapper}>
                 <div className={css.groups}>
                     Dostępne grupy:
                     <UserGroupList groups={this.state.groups}/>
                 </div>
                 <Card className={css.Card}/>
-                <div className={css.button}>
-                    <AddGroupDialog
-                        open={this.state.showDialog}
-                        onClose={this.hideDialog}
-                        onSubmit={this.addGroup}
-                    />
+                <AddGroupDialog
+                    open={this.state.showDialog}
+                    onClose={this.hideDialog}
+                    onSubmit={this.addGroup}
+                />
 
 
-                    <Fab color={"primary"} onClick={this.showDialog}>
+                <div className={css.addGroupFab}>
+                    <Fab
+                         color={"primary"} onClick={this.showDialog}>
                         <AddIcon/>
                     </Fab>
                 </div>
