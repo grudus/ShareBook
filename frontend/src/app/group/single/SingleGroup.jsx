@@ -14,9 +14,6 @@ class SingleGroup extends Component {
 
         return (
             <>
-                <Card>
-                    {currentGroup && <CardMedia image={currentGroup.photoUrl} title="Dupa"/>}
-                </Card>
                 <Card className={css.Card}>
                     {currentGroup ? "Wybrana grupa to: " + currentGroup.name : "Nie wybrano grupy"}
                 </Card>

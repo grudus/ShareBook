@@ -66,9 +66,12 @@ class Group extends Component {
 
         return (
             <div className={css.mainPageWrapper}>
-                <UserGroupList groups={groups}/>
-
-                <SingleGroup currentGroup={currentGroup}/>
+                <div className={css.userGroupWrapper}>
+                    <UserGroupList groups={groups}/>
+                </div>
+                <div className={css.singleGroupWrapper}>
+                    <SingleGroup currentGroup={currentGroup}/>
+                </div>
 
                 <AddGroupDialog
                     open={showDialog}
