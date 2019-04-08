@@ -1,5 +1,6 @@
 import * as PropTypes from "prop-types";
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import LetterAvatar from "../group/LetterAvatar";
 import { getCurrentUser } from "../user/UserApi";
 import css from "./menu.module.scss";
@@ -28,7 +29,10 @@ class TopBar extends Component {
                 ? (
                     <div>
                         <nav className={css.topBar}>
-                            <label className={css.title} width="100">Sharebook</label>
+                            <Link to="/">
+                                <h2 className={css.title} width="100">Sharebook</h2>
+                            </Link>
+
                             <div className={css.rightPart}>
                                 <MenuList userName={user.firstName + " " + user.lastName}/>
                                 <LetterAvatar text={user.firstName[0] + user.lastName[0]}/>
