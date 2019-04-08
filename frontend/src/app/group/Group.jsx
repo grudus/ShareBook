@@ -1,4 +1,3 @@
-import { Card } from "@material-ui/core";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import React, { Component } from 'react';
@@ -7,6 +6,7 @@ import AddGroupDialog from "./AddGroupDialog";
 import "./group.module.scss";
 import css from './group.module.scss';
 import * as GroupApi from './GroupApi';
+import SingleGroup from "./single/SingleGroup";
 import UserGroupList from "./UserGroupList";
 
 class Group extends Component {
@@ -66,13 +66,10 @@ class Group extends Component {
 
         return (
             <div className={css.mainPageWrapper}>
-                <div className={css.groups}>
-                    Dostępne grupy:
-                    <UserGroupList groups={groups}/>
-                </div>
-                <Card className={css.Card}>
-                    {currentGroup ? "Wybrana grupa to: " + currentGroup.name : "Nie wybrano grupy"}
-                </Card>
+                <UserGroupList groups={groups}/>
+
+                <SingleGroup currentGroup={currentGroup}/>
+
                 <AddGroupDialog
                     open={showDialog}
                     onClose={this.hideDialog}
