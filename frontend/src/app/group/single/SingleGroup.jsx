@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 class SingleGroup extends Component {
     static propTypes = {
-        currentGroup: PropTypes.shape().isRequired,
+        currentGroup: PropTypes.shape(),
     };
 
     render() {

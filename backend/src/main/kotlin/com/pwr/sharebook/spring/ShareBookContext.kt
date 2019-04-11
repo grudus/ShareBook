@@ -1,5 +1,8 @@
 package com.pwr.sharebook.spring
 
+import com.pwr.sharebook.group.GroupRepository
+import com.pwr.sharebook.group.usergroup.UserGroupEntity
+import com.pwr.sharebook.group.usergroup.UserGroupRepository
 import com.pwr.sharebook.spring.security.JwtProvider
 import com.pwr.sharebook.user.UserEntity
 import com.pwr.sharebook.user.UserRepository
@@ -32,7 +35,11 @@ class ShareBookContext : WebMvcConfigurer {
 
 
     @Bean
-    fun commandLineRunner(userRepository: UserRepository, passwordEncoder: PasswordEncoder, roleRepository: RoleRepository): CommandLineRunner {
+    fun commandLineRunner(userRepository: UserRepository,
+                          passwordEncoder: PasswordEncoder,
+                          roleRepository: RoleRepository,
+                          groupRepository: GroupRepository
+                          ): CommandLineRunner {
         return CommandLineRunner {
 
             if (roleRepository.findAll().isEmpty()) {
@@ -49,7 +56,7 @@ class ShareBookContext : WebMvcConfigurer {
     }
 
     private fun mockAdminUser(password: String, role: RoleEntity): UserEntity =
-            UserEntity(null, "admin", password, null, null, null, role)
+            UserEntity(null, "admin", password, null, "Admin", "Adminowy", role)
 
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {

@@ -20,9 +20,9 @@ constructor(private val groupService: GroupService,
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @GetMapping
-    fun getAllGroups(user: AuthenticatedUser): List<GroupDto> {
-        logger.info("Getting all groups for user [{}]", user.email)
-        return groupService.getAllGroups(user.id)
+    fun getAllGroupsAvailableForUser(user: AuthenticatedUser): List<GroupDto> {
+        logger.info("Getting all groups available for user [{}]", user.email)
+        return groupService.findAllUserGroups(user.id)
     }
 
     @PostMapping
@@ -30,6 +30,12 @@ constructor(private val groupService: GroupService,
     fun createGroup(@Valid @RequestBody createGroupRequest: CreateGroupRequest, user: AuthenticatedUser): IdResponse {
         logger.info("User [{}] is creating new group:", user.email, createGroupRequest)
         return IdResponse(groupService.create(createGroupRequest, user.id))
+    }
+
+    @GetMapping("/created-by")
+    fun getAllGroups(user: AuthenticatedUser): List<GroupDto> {
+        logger.info("Getting all groups created by [{}]", user.email)
+        return groupService.getAllGroupsCreatedByUser(user.id)
     }
 
 

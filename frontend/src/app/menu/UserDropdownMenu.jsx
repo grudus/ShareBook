@@ -86,7 +86,7 @@ class MenuListComposition extends React.Component {
 }
 
 MenuListComposition.propTypes = {
-    userName: PropTypes.object.isRequired,
+    userName: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(withRouter(MenuListComposition));

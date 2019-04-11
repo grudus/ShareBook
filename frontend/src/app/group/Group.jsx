@@ -18,11 +18,13 @@ class Group extends Component {
     };
 
 
-    // noinspection JSCheckFunctionSignatures
-    async componentDidMount() {
-        const groups = await GroupApi.getAllGroups();
-        this.setState({ groups });
-        this.changeCurrentGroup();
+    //noinspection JSCheckFunctionSignatures
+    componentDidMount() {
+        GroupApi.getAllGroups()
+            .then(groups => {
+                this.setState({ groups });
+                this.changeCurrentGroup();
+            });
     }
 
     // noinspection JSCheckFunctionSignatures

@@ -1,6 +1,6 @@
 import * as PropTypes from "prop-types";
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import LetterAvatar from "../group/LetterAvatar";
 import { getCurrentUser } from "../user/UserApi";
 import css from "./menu.module.scss";
@@ -16,8 +16,10 @@ class TopBar extends Component {
     };
 
     async componentDidMount() {
-        const user = await getCurrentUser();
-        this.setState({ user });
+        if (shouldRender()) {
+            const user = await getCurrentUser();
+            this.setState({ user });
+        }
     }
 
     render() {
@@ -54,4 +56,4 @@ class TopBar extends Component {
 TopBar.propTypes = { children: PropTypes.any }
 
 
-export default TopBar;
+export default withRouter(TopBar);
