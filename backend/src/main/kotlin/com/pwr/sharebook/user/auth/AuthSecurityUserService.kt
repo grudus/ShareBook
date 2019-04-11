@@ -15,8 +15,6 @@ class AuthSecurityUserService {
         return ((SecurityContextHolder.getContext().authentication as UsernamePasswordAuthenticationToken).principal as UserDetailsImpl).user
     }
 
-    fun getCurrentUserId(): Long = getCurrentUser().id ?: throw RuntimeException("Cannot obtain current user id")
-
     fun removeAuthCookie(request: HttpServletRequest, response: HttpServletResponse) {
         request.cookies
                 .filter { it.name == JwtUtils.AUTHORIZATION_HEADER }

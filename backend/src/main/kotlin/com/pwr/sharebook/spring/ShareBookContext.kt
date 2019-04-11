@@ -3,6 +3,7 @@ package com.pwr.sharebook.spring
 import com.pwr.sharebook.spring.security.JwtProvider
 import com.pwr.sharebook.user.UserEntity
 import com.pwr.sharebook.user.UserRepository
+import com.pwr.sharebook.user.auth.AuthenticatedUserArgumentResolver
 import com.pwr.sharebook.user.role.RoleEntity
 import com.pwr.sharebook.user.role.RoleRepository
 import com.pwr.sharebook.user.role.RoleType
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 
@@ -32,7 +34,6 @@ class ShareBookContext : WebMvcConfigurer {
     @Bean
     fun commandLineRunner(userRepository: UserRepository, passwordEncoder: PasswordEncoder, roleRepository: RoleRepository): CommandLineRunner {
         return CommandLineRunner {
-            println("Start")
 
             if (roleRepository.findAll().isEmpty()) {
                 roleRepository.save(RoleEntity(null, RoleType.STUDENT))
@@ -40,15 +41,19 @@ class ShareBookContext : WebMvcConfigurer {
 
             if (userRepository.findAll().isEmpty()) {
                 val student = roleRepository.findByName(RoleType.STUDENT)!!
-                userRepository.save(user("admin", passwordEncoder.encode("admin"), student))
-                userRepository.save(user("user2", passwordEncoder.encode("psswd2"), student))
-                userRepository.save(user("user3", passwordEncoder.encode("psswd3"), student))
+                userRepository.save(mockAdminUser(passwordEncoder.encode("admin"), student))
             }
-            println(userRepository.findAll())
+
+            println("_____ Application has started ______")
         }
     }
 
-    private fun user(email: String, password: String, role: RoleEntity): UserEntity =
-            UserEntity(null, email, password, null, null, null, role)
+    private fun mockAdminUser(password: String, role: RoleEntity): UserEntity =
+            UserEntity(null, "admin", password, null, null, null, role)
+
+
+    override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
+        resolvers.add(AuthenticatedUserArgumentResolver())
+    }
 
 }
