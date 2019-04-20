@@ -8,31 +8,50 @@ import MenuList from "./UserDropdownMenu";
 import pathsWithoutTopBar from "./pathsWithoutTopBar";
 
 
-const shouldRender = () => !pathsWithoutTopBar.includes(document.location.pathname);
-
 class TopBar extends Component {
+
     state = {
-        user: null
+        user: null,
+        shouldRender: false
     };
 
     async componentDidMount() {
-        if (shouldRender()) {
-            const user = await getCurrentUser();
-            this.setState({ user });
+        await this.onRouteChanged(document.location.pathname)
+    }
+
+    async componentDidUpdate(prevProps) {
+        if (this.props.location !== prevProps.location) {
+            await this.onRouteChanged(this.props.location.pathname);
         }
+    }
+
+    async onRouteChanged(location) {
+        const prevShouldRender = this.state.shouldRender;
+        const shouldRenderNow = !pathsWithoutTopBar.includes(location);
+
+        if (!prevShouldRender && shouldRenderNow)
+            await this.updateCurrentUser();
+
+        this.setState({ shouldRender: shouldRenderNow });
+    }
+
+
+    async updateCurrentUser() {
+        const user = await getCurrentUser();
+        this.setState({ user });
     }
 
     render() {
         let { children } = this.props;
-        const { user } = this.state;
+        const { user, shouldRender } = this.state;
 
         return (
-            user && shouldRender()
+            user && shouldRender
                 ? (
                     <div>
                         <nav className={css.topBar}>
                             <Link to="/">
-                                <h2 className={css.title} width="100">Sharebook</h2>
+                                <h2 className={css.title}>Sharebook</h2>
                             </Link>
 
                             <div className={css.rightPart}>

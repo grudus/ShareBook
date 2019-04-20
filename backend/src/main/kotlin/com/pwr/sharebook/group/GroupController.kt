@@ -1,6 +1,8 @@
 package com.pwr.sharebook.group
 
 import com.pwr.sharebook.common.IdResponse
+import com.pwr.sharebook.group.usergroup.AddUserToGroupRequest
+import com.pwr.sharebook.group.usergroup.AddUserToGroupRequestValidator
 import com.pwr.sharebook.user.AuthenticatedUser
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +16,8 @@ import javax.validation.Valid
 class GroupController
 @Autowired
 constructor(private val groupService: GroupService,
-            private val createGroupRequestValidator: CreateGroupRequestValidator
+            private val createGroupRequestValidator: CreateGroupRequestValidator,
+            private val addUserToGroupRequestValidator: AddUserToGroupRequestValidator
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -38,10 +41,21 @@ constructor(private val groupService: GroupService,
         return groupService.getAllGroupsCreatedByUser(user.id)
     }
 
+    @PutMapping("/add-user")
+    fun addUserToGroup(@RequestBody @Valid addUserToGroupRequest: AddUserToGroupRequest) {
+        logger.info("Adding user [{}] to group {}", addUserToGroupRequest.email, addUserToGroupRequest.groupId)
+        groupService.addUserToGroup(addUserToGroupRequest.groupId, addUserToGroupRequest.email)
+    }
+
 
     @InitBinder("createGroupRequest")
     protected fun initEditBinder(binder: WebDataBinder) {
         binder.validator = createGroupRequestValidator
+    }
+
+    @InitBinder("addUserToGroupRequest")
+    protected fun initAddUserToGroupBinder(binder: WebDataBinder) {
+        binder.validator = addUserToGroupRequestValidator
     }
 
 }

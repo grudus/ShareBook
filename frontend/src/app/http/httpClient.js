@@ -9,6 +9,13 @@ export const httpPost = (path, args) => axios.post(`${BASE_URL}/${path}`, args, 
     })
     .then(({data}) => data);
 
+export const httpPut = (path, args) => axios.put(`${BASE_URL}/${path}`, args, { withCredentials: true })
+    .catch(e => {
+        catchForbiddenError(e)
+    })
+    .then(({data}) => data);
+
+
 export const httpPostForm = (path, args) => axios.post(`${BASE_URL}/${path}`, querystring.stringify(args), {
     withCredentials: true,
     headers: {

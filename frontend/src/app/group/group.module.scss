@@ -80,6 +80,11 @@
   }
 }
 
+.addUserToGroupWrapper {
+  position: absolute;
+  right: 20px;
+}
+
 @media (max-width: 768px) {
   .userGroupWrapper {
     display: none;

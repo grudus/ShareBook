@@ -1,5 +1,6 @@
 package com.pwr.sharebook.user.auth
 
+import com.pwr.sharebook.common.exceptions.CannotFindIdException
 import com.pwr.sharebook.spring.security.JwtUtils
 import com.pwr.sharebook.user.UserEntity
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -14,6 +15,9 @@ class AuthSecurityUserService {
     fun getCurrentUser(): UserEntity {
         return ((SecurityContextHolder.getContext().authentication as UsernamePasswordAuthenticationToken).principal as UserDetailsImpl).user
     }
+
+    fun getCurrentUserId(): Long =
+            getCurrentUser().id ?: throw CannotFindIdException("Cannot find id of current user")
 
     fun removeAuthCookie(request: HttpServletRequest, response: HttpServletResponse) {
         request.cookies

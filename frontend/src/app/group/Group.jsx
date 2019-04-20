@@ -2,6 +2,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
+import AddUserToGroup from "../user-group/AddUserToGroup";
 import AddGroupDialog from "./AddGroupDialog";
 import "./group.module.scss";
 import css from './group.module.scss';
@@ -74,6 +75,10 @@ class Group extends Component {
                 <div className={css.singleGroupWrapper}>
                     <SingleGroup currentGroup={currentGroup}/>
                 </div>
+
+                {currentGroup && <div className={css.addUserToGroupWrapper}>
+                    <AddUserToGroup groupId={currentGroup.id}/>
+                </div>}
 
                 <AddGroupDialog
                     open={showDialog}
