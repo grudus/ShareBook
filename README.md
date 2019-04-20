@@ -1,4 +1,5 @@
 # ShareBook 
+![build-badge](https://travis-ci.org/grudus/ShareBook.svg?branch=master)
 
 ## Praca z Intellij IDEA
 
