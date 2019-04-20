@@ -4,8 +4,8 @@ import com.pwr.sharebook.common.exceptions.CannotObtainIdAfterSaveException
 import com.pwr.sharebook.group.usergroup.UserGroupEntity
 import com.pwr.sharebook.group.usergroup.UserGroupId
 import com.pwr.sharebook.group.usergroup.UserGroupRepository
+import com.pwr.sharebook.user.UserDto
 import com.pwr.sharebook.user.UserEntity
-import com.pwr.sharebook.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime.now
@@ -15,8 +15,7 @@ class GroupService
 @Autowired
 constructor(
         private val groupRepository: GroupRepository,
-        private val userGroupRepository: UserGroupRepository,
-        private val userService: UserService
+        private val userGroupRepository: UserGroupRepository
 ) {
 
     fun getAllGroupsCreatedByUser(userId: Long): List<GroupDto> =
@@ -35,14 +34,7 @@ constructor(
                 .map(GroupDto.Companion::fromEntity)
     }
 
-    fun addUserToGroup(id: Long, email: String) {
-        val user = userService.findByEmailUnsafe(email)
-        userGroupRepository.save(UserGroupEntity(UserGroupId(id, user.id), now()))
+    fun findUsersForGroup(groupId: Long): List<UserDto> {
+        return userGroupRepository.findUsersForGroup(groupId)
     }
-
-    fun groupWasCreatedByUser(userId: Long, groupId: Long): Boolean =
-            getAllGroupsCreatedByUser(userId).any { it.id == groupId }
-
-    fun userExistsInGroup(userId: Long, groupId: Long): Boolean =
-            findAllUserGroups(userId).any { it.id == groupId }
 }

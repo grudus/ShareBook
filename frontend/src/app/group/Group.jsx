@@ -45,6 +45,10 @@ class Group extends Component {
 
         this.setState({ currentGroup })
 
+        if (currentGroupId)
+            GroupApi.findAllUsersForGroup(currentGroupId)
+                .then(users => console.log("USERS FOR GROUP: ", users))
+
     };
 
 

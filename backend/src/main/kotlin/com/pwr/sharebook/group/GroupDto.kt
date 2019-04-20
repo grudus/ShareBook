@@ -12,8 +12,8 @@ data class GroupDto(val id: Long, val name: String, val photoUrl: String?, val c
             require(group.name != null) { "Group name cannot be null!" }
             require(group.createdAt != null) { "Group createdBy cannot be null!" }
             require(group.userEntity != null) { "Group user entity cannot be null!" }
-            return GroupDto(group.id!!, group.name!!, group.photoUrl, group.createdAt!!,
-                    UserIdentification(group.userEntity!!.id!!, group.userEntity.email!!))
+            return GroupDto(group.id, group.name, group.photoUrl, group.createdAt,
+                    UserIdentification(group.userEntity.id!!, group.userEntity.email!!))
         }
     }
 }

@@ -15,7 +15,7 @@ class AddUserToGroupRequestValidator
 @Autowired
 constructor(
         private val userService: UserService,
-        private val groupService: GroupService,
+        private val userGroupService: UserGroupService,
         private val authSecurityUserService: AuthSecurityUserService
 ) : RestValidator<AddUserToGroupRequest>() {
 
@@ -29,7 +29,7 @@ constructor(
         }
 
 
-        if (!groupService.groupWasCreatedByUser(authSecurityUserService.getCurrentUserId(), request.groupId)) {
+        if (!userGroupService.groupWasCreatedByUser(authSecurityUserService.getCurrentUserId(), request.groupId)) {
             return listOf(RestKeys.UNAUTHORIZED)
         }
 
@@ -40,7 +40,7 @@ constructor(
             return listOf(RestKeys.USER_DOES_NOT_EXISTS)
         }
 
-        if (groupService.userExistsInGroup(userToAdd.id!!, request.groupId)) {
+        if (userGroupService.userExistsInGroup(userToAdd.id!!, request.groupId)) {
             return listOf(RestKeys.USER_ALREADY_EXISTS_IN_GROUP)
         }
 

@@ -16,7 +16,7 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 
-abstract class AbstractControllerTest : SpringBasedTest() {
+abstract class AbstractControllerTest : AbstractDatabaseTest() {
 
 
     @Autowired

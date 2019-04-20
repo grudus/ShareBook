@@ -8,6 +8,8 @@ object ValidatorUtils {
 
     fun assertErrorCodes(errors: List<String>, vararg codes: String) {
         assertEquals(codes.size, errors.size)
-        assertTrue(errors.containsAll(listOf(*codes)))
+        codes.forEach {
+            assertTrue("Cannot find error [$it] in $errors", errors.contains(it))
+        }
     }
 }

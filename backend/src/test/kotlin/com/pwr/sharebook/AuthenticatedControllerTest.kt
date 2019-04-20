@@ -1,20 +1,15 @@
 package com.pwr.sharebook
 
 import com.pwr.sharebook.spring.security.JwtUtils
+import com.pwr.sharebook.user.UserEntity
+import com.pwr.sharebook.user.auth.UserDetailsImpl
 import com.pwr.sharebook.user.auth.UserDetailsServiceImpl
-import com.pwr.sharebook.user.registration.CreateUserRequest
 import com.pwr.sharebook.user.registration.UserRegistrationService
-import com.pwr.sharebook.utils.RandomUtils.randomEmail
-import com.pwr.sharebook.utils.RandomUtils.randomText
 import org.junit.Before
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import javax.persistence.EntityManager
-import javax.persistence.PersistenceContext
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import javax.servlet.http.Cookie
 
 
@@ -28,11 +23,7 @@ abstract class AuthenticatedControllerTest : AbstractControllerTest() {
 
     private lateinit var authCookie: Cookie
 
-    @PersistenceContext
-    private lateinit var entityManager: EntityManager
-
-    @Autowired
-    private lateinit var userRegistrationService: UserRegistrationService
+    protected lateinit var currentUser: UserEntity
 
     @Before
     fun initLogin() {
@@ -50,26 +41,24 @@ abstract class AuthenticatedControllerTest : AbstractControllerTest() {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(toJson(body)))
 
+    fun authPut(urlTemplate: String, body: Any) =
+            mockMvc.perform(put(urlTemplate)
+                    .cookie(authCookie)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(toJson(body)))
+
 
     private fun login() {
-        val user = CreateUserRequest(randomEmail(), "test", "test", randomText(), randomText())
-        userRegistrationService.createUser(user)
+        val user = addUser()
 
-        val userDetails: UserDetails = userDetailsService.loadUserByUsername(user.email)
+        val userDetails: UserDetailsImpl = userDetailsService.loadUserByUsername(user.email!!) as UserDetailsImpl
         val authentication = UsernamePasswordAuthenticationToken(userDetails, userDetails.password)
         authCookie = jwtUtils.authCookie(authentication)
+        currentUser = userDetails.user
     }
 
     protected fun logInAnotherUser() {
         login()
-    }
-
-    /**
-     * Clears hibernate cache. Important when saving and writing values from different transactions in one test
-     * */
-    protected fun flush() {
-        entityManager.flush()
-        entityManager.clear()
     }
 
 }

@@ -12,3 +12,7 @@ export const addGroup = (name, photoUrl) => {
 export const addUserToGroup = (groupId, email) => {
     return httpPut(`groups/add-user`, { email, groupId })
 };
+
+export const findAllUsersForGroup = (groupId) => {
+    return httpGet(`groups/${groupId}/users`)
+};
