@@ -4,6 +4,6 @@ cache:
   directories:
     - $HOME/.m2
 
-prescript: "mvn clean install -DskipTests"
+prescript: "cd backend && mvn clean install -DskipTests"
 
-script: "mvn test"
+script: "cd backend && mvn test"
