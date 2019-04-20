@@ -6,15 +6,8 @@ Po zaimportowaniu projektu jako `New Project from Version Control` należy klikn
 
 ### Uruchamianie aplikacji
 
-#### Mysql
-Na ten moment jedyną zależnościa jest mysql. Zdefiniowana jest w pliku `./docker-compose.yml`.
-Aby uruchomić należy wykonać polecenie:
-```bash
-docker-compose up -d
-```
-
-Jak się nie chce używać dockera (chociaż fajne to jest) to można samemu postawić mysql (byle port, użytkownik i hasło odpowiadały zdefiniowanym w `docker-compose.yml`)
-
+#### Baza danych
+Dla ułatwienia developmentu używamy bazy danych w pamięci (H2). Nie potrzebna jest dodatkowa konfiguracja. 
 
 #### Backend
 Z Intellij odpalić albo z terminala
