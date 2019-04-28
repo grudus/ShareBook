@@ -16,6 +16,7 @@ class Group extends Component {
         groups: [],
         showDialog: false,
         currentGroup: null,
+        usersForCurrentGroup: [],
     };
 
 
@@ -43,11 +44,11 @@ class Group extends Component {
             ? null
             : groups.find(({ id }) => id === parseInt(currentGroupId, 10));
 
-        this.setState({ currentGroup })
+        this.setState({ currentGroup, usersForCurrentGroup: [] });
 
         if (currentGroupId)
             GroupApi.findAllUsersForGroup(currentGroupId)
-                .then(users => console.log("USERS FOR GROUP: ", users))
+                .then(users => this.setState({ usersForCurrentGroup: users }))
 
     };
 
@@ -69,7 +70,7 @@ class Group extends Component {
     };
 
     render() {
-        const { currentGroup, groups, showDialog } = this.state;
+        const { currentGroup, groups, showDialog, usersForCurrentGroup } = this.state;
 
         return (
             <div className={css.mainPageWrapper}>
@@ -83,6 +84,14 @@ class Group extends Component {
                 {currentGroup && <div className={css.addUserToGroupWrapper}>
                     <AddUserToGroup groupId={currentGroup.id}/>
                 </div>}
+
+                {!!usersForCurrentGroup.length &&
+                <ul style={{ border: '1px solid red' }}>
+                    {usersForCurrentGroup.map(user => (
+                        <li key={user.id}>
+                            {user.firstName} {user.lastName}
+                        </li>))}
+                </ul>}
 
                 <AddGroupDialog
                     open={showDialog}
