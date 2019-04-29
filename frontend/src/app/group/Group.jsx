@@ -85,26 +85,31 @@ class Group extends Component {
                     <AddUserToGroup groupId={currentGroup.id}/>
                 </div>}
 
-                {!!usersForCurrentGroup.length &&
-                <ul style={{ border: '1px solid red' }}>
-                    {usersForCurrentGroup.map(user => (
-                        <li key={user.id}>
-                            {user.firstName} {user.lastName}
-                        </li>))}
-                </ul>}
-
+                <div className={css.users}>
                 <AddGroupDialog
                     open={showDialog}
                     onClose={this.hideDialog}
                     onSubmit={this.addGroup}
                 />
 
-
                 <div className={css.addGroupFab}>
                     <Fab
                         color={"primary"} onClick={this.showDialog}>
                         <AddIcon/>
                     </Fab>
+                </div>
+
+                    <div className={css.userList}>
+                        <label>Użytkownicy należący do grupy:</label>
+                        <br/><br/>
+                        {!!usersForCurrentGroup.length &&
+                        <ul>
+                            {usersForCurrentGroup.map(user => (
+                                <li key={user.id}>
+                                    {user.firstName} {user.lastName}
+                                </li>))}
+                        </ul>}
+                    </div>
                 </div>
 
             </div>
