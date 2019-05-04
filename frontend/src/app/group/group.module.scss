@@ -55,7 +55,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 850px;
+  width: 800px;
 }
 
 
@@ -88,7 +88,7 @@
   z-index: 10;
 }
 
-.userList{
+.userList {
   width: 250px;
   float: right;
   margin-right: 45px;
@@ -96,13 +96,21 @@
   color: #47445a;
 }
 
-.users{
+.users {
   float: right;
   position: relative;
   width: auto;
 }
 
 @media (max-width: 768px) {
+  .addUserToGroupWrapper {
+    display: none;
+  }
+
+  .userList {
+    display: none;
+  }
+
   .userGroupWrapper {
     display: none;
   }

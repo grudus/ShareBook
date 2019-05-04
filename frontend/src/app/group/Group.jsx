@@ -81,16 +81,28 @@ class Group extends Component {
                     <SingleGroup currentGroup={currentGroup}/>
                 </div>
 
-                {currentGroup && <div className={css.addUserToGroupWrapper}>
-                    <AddUserToGroup groupId={currentGroup.id}/>
-                </div>}
+                {currentGroup && (
+                    <>
+                        <div className={css.addUserToGroupWrapper}>
+                            <AddUserToGroup groupId={currentGroup.id}/>
+                        </div>
+                        <div className={css.users}>
+                            <div className={css.userList}>
+                                <label>Użytkownicy należący do grupy:</label>
+                                <br/><br/>
+                                {!!usersForCurrentGroup.length &&
+                                <ul>
+                                    {usersForCurrentGroup.map(user => (
+                                        <li key={user.id}>
+                                            {user.firstName} {user.lastName}
+                                        </li>))}
+                                </ul>}
+                            </div>
+                        </div>
 
-                <div className={css.users}>
-                <AddGroupDialog
-                    open={showDialog}
-                    onClose={this.hideDialog}
-                    onSubmit={this.addGroup}
-                />
+                    </>
+                )}
+
 
                 <div className={css.addGroupFab}>
                     <Fab
@@ -99,18 +111,11 @@ class Group extends Component {
                     </Fab>
                 </div>
 
-                    <div className={css.userList}>
-                        <label>Użytkownicy należący do grupy:</label>
-                        <br/><br/>
-                        {!!usersForCurrentGroup.length &&
-                        <ul>
-                            {usersForCurrentGroup.map(user => (
-                                <li key={user.id}>
-                                    {user.firstName} {user.lastName}
-                                </li>))}
-                        </ul>}
-                    </div>
-                </div>
+                <AddGroupDialog
+                    open={showDialog}
+                    onClose={this.hideDialog}
+                    onSubmit={this.addGroup}
+                />
 
             </div>
         );
