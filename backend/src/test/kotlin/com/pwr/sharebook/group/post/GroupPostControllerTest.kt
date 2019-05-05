@@ -4,6 +4,7 @@ import com.pwr.sharebook.AuthenticatedControllerTest
 import com.pwr.sharebook.group.CreateGroupRequest
 import com.pwr.sharebook.group.GroupService
 import com.pwr.sharebook.utils.RandomUtils.randomText
+import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.notNullValue
 import org.junit.Assert.*
 import org.junit.Before
@@ -29,6 +30,23 @@ class GroupPostControllerTest : AuthenticatedControllerTest() {
         authPost("/groups/$groupId/posts", randomPost())
                 .andExpect(status().isCreated)
                 .andExpect(jsonPath("$.id", notNullValue()))
+    }
+
+    @Test
+    fun shouldGetAllPostsForGroup() {
+        authPost("/groups/$groupId/posts", randomPost())
+        authPost("/groups/$groupId/posts", randomPost())
+        authPost("/groups/$groupId/posts", randomPost())
+
+        val newGroupId = groupService.create(CreateGroupRequest(randomText()), currentUser.id!!)
+
+        authPost("/groups/$newGroupId/posts", randomPost())
+
+        flush()
+
+        authGet("/groups/$groupId/posts")
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$.[*]", hasSize<Int>(3)))
     }
 
     @Test

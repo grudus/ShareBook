@@ -22,4 +22,10 @@ constructor(private val postRepository: PostRepository)
         return postEntity.id ?: throw CannotObtainIdAfterSaveException()
     }
 
+    fun getPostsForGroup(groupId: Long): List<GroupPostDto> {
+        return postRepository
+                .findAllForGroupWithCreator(groupId)
+                .map { GroupPostDto.fromEntity(it, groupId) }
+    }
+
 }

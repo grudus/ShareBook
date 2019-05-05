@@ -29,6 +29,11 @@ constructor(
         return IdResponse(groupPostService.addPost(addPostRequest, groupId, user.id))
     }
 
+    @GetMapping
+    fun getPostsForGroup(@PathVariable("groupId") groupId: Long): List<GroupPostDto> {
+        return groupPostService.getPostsForGroup(groupId)
+    }
+
     @InitBinder("addPostRequest")
     protected fun initEditBinder(binder: WebDataBinder) {
         binder.validator = addPostRequestValidator

@@ -40,6 +40,19 @@ class GroupPostServiceDatabaseTest: AbstractDatabaseTest() {
         assertEquals(2, count)
     }
 
+    @Test
+    fun shouldGetAllGroups() {
+        val groupId = groupService.create(CreateGroupRequest(randomText()), user.id!!)
+
+        groupPostService.addPost(randomPost(), groupId, user.id!!)
+        groupPostService.addPost(randomPost(), groupId, user.id!!)
+
+        flush()
+        val count = groupPostService.getPostsForGroup(groupId)
+
+        assertEquals(2, count.size)
+    }
+
     private fun randomPost() = AddPostRequest(randomText())
 
 }
