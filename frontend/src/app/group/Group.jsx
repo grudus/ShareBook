@@ -19,6 +19,7 @@ class Group extends Component {
         showAddPostDialog: false,
         currentGroup: null,
         usersForCurrentGroup: [],
+        posts: []
     };
 
 
@@ -48,9 +49,13 @@ class Group extends Component {
 
         this.setState({ currentGroup, usersForCurrentGroup: [] });
 
-        if (currentGroupId)
+        if (currentGroupId) {
             GroupApi.findAllUsersForGroup(currentGroupId)
                 .then(users => this.setState({ usersForCurrentGroup: users }))
+
+            PostApi.getPostsForGroup(currentGroupId)
+                .then(posts => this.setState({ posts }))
+        }
 
     };
 
@@ -65,6 +70,9 @@ class Group extends Component {
 
     addPost = async (postText) => {
         await PostApi.addPost(this.state.currentGroup.id, postText);
+
+        PostApi.getPostsForGroup(this.state.currentGroup.id)
+            .then(posts => this.setState({ posts }))
     };
 
     showDialog = (dialog) => {
@@ -76,15 +84,14 @@ class Group extends Component {
     };
 
     render() {
-        const { currentGroup, groups, showAddGroupDialog, showAddPostDialog, usersForCurrentGroup } = this.state;
-
+        const { currentGroup, groups, showAddGroupDialog, showAddPostDialog, usersForCurrentGroup, posts } = this.state;
         return (
             <div className={css.mainPageWrapper}>
                 <div className={css.userGroupWrapper}>
                     <UserGroupList groups={groups}/>
                 </div>
                 <div className={css.singleGroupWrapper}>
-                    <SingleGroup currentGroup={currentGroup}/>
+                    <SingleGroup currentGroup={currentGroup} posts={posts}/>
                 </div>
 
                 {currentGroup && (
@@ -123,7 +130,7 @@ class Group extends Component {
                 <AddPostDialog
                     open={showAddPostDialog}
                     onClose={() => this.hideDialog('showAddPostDialog')}
-                    onSubmit={this.addPost}
+                    onSubmit={(text) => this.addPost(text)}
                 />
 
             </div>
