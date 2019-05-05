@@ -1,11 +1,10 @@
 import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
-import TextField from "@material-ui/core/TextField";
-import React, {Component, useState} from 'react';
-import css from './group.module.scss'
+import Button from "@material-ui/core/Button/index";
+import DialogActions from "@material-ui/core/DialogActions/index";
+import TextField from "@material-ui/core/TextField/index";
 import * as PropTypes from "prop-types";
-
+import React, { Component } from 'react';
+import css from './dialogs.module.scss'
 
 
 const defaultPhotoUrl = "https://3ie87c2dond928rt2e2zzo8o-wpengine.netdna-ssl.com/wp-content/themes/gonzo/images/no-image-featured-image.png";
@@ -18,7 +17,7 @@ class AddGroupDialog extends Component {
         formErrors: {
             name: "",
         }
-    }
+    };
 
     formValid = () => {
         let valid = true;

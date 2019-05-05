@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import AddUserToGroup from "../user-group/AddUserToGroup";
 import AddMultipleButton from "./add-button/AddMultipleButton";
-import AddGroupDialog from "./AddGroupDialog";
+import AddGroupDialog from "./dialogs/AddGroupDialog";
 import "./group.module.scss";
+import AddPostDialog from "./dialogs/AddPostDialog";
 import css from './group.module.scss';
 import * as GroupApi from './GroupApi';
 import SingleGroup from "./single/SingleGroup";
@@ -61,6 +62,10 @@ class Group extends Component {
         }));
     };
 
+    addPost = async (postText) => {
+        alert("Dodajemy post! " + postText);
+    };
+
     showDialog = (dialog) => {
         this.setState({ [dialog]: true })
     };
@@ -70,7 +75,7 @@ class Group extends Component {
     };
 
     render() {
-        const { currentGroup, groups, showAddGroupDialog, usersForCurrentGroup } = this.state;
+        const { currentGroup, groups, showAddGroupDialog, showAddPostDialog, usersForCurrentGroup } = this.state;
 
         return (
             <div className={css.mainPageWrapper}>
@@ -112,6 +117,12 @@ class Group extends Component {
                     open={showAddGroupDialog}
                     onClose={() => this.hideDialog('showAddGroupDialog')}
                     onSubmit={this.addGroup}
+                />
+
+                <AddPostDialog
+                    open={showAddPostDialog}
+                    onClose={() => this.hideDialog('showAddPostDialog')}
+                    onSubmit={this.addPost}
                 />
 
             </div>
