@@ -7,6 +7,7 @@ import "./group.module.scss";
 import AddPostDialog from "./dialogs/AddPostDialog";
 import css from './group.module.scss';
 import * as GroupApi from './GroupApi';
+import * as PostApi from './posts/PostApi';
 import SingleGroup from "./single/SingleGroup";
 import UserGroupList from "./UserGroupList";
 
@@ -63,7 +64,7 @@ class Group extends Component {
     };
 
     addPost = async (postText) => {
-        alert("Dodajemy post! " + postText);
+        await PostApi.addPost(this.state.currentGroup.id, postText);
     };
 
     showDialog = (dialog) => {
