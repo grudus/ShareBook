@@ -26,11 +26,7 @@
   position: relative;
 }
 
-.addGroupFab {
-  position: fixed;
-  right: 25px;
-  bottom: 25px;
-}
+
 
 .ImageAvatar {
   float: left;
@@ -118,11 +114,5 @@
   .singleGroupWrapper {
     padding-left: 1rem;
     padding-right: 1rem;
-  }
-
-  .addGroupFab {
-    right: auto;
-    left: 50%;
-    transform: translateX(-50%);
   }
 }

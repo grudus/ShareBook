@@ -1,8 +1,7 @@
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import AddUserToGroup from "../user-group/AddUserToGroup";
+import AddMultipleButton from "./add-button/AddMultipleButton";
 import AddGroupDialog from "./AddGroupDialog";
 import "./group.module.scss";
 import css from './group.module.scss';
@@ -14,7 +13,8 @@ class Group extends Component {
 
     state = {
         groups: [],
-        showDialog: false,
+        showAddGroupDialog: false,
+        showAddPostDialog: false,
         currentGroup: null,
         usersForCurrentGroup: [],
     };
@@ -61,16 +61,16 @@ class Group extends Component {
         }));
     };
 
-    showDialog = () => {
-        this.setState({ showDialog: true })
+    showDialog = (dialog) => {
+        this.setState({ [dialog]: true })
     };
 
-    hideDialog = () => {
-        this.setState({ showDialog: false });
+    hideDialog = (dialog) => {
+        this.setState({ [dialog]: false });
     };
 
     render() {
-        const { currentGroup, groups, showDialog, usersForCurrentGroup } = this.state;
+        const { currentGroup, groups, showAddGroupDialog, usersForCurrentGroup } = this.state;
 
         return (
             <div className={css.mainPageWrapper}>
@@ -103,17 +103,14 @@ class Group extends Component {
                     </>
                 )}
 
-
-                <div className={css.addGroupFab}>
-                    <Fab
-                        color={"primary"} onClick={this.showDialog}>
-                        <AddIcon/>
-                    </Fab>
-                </div>
+                <AddMultipleButton
+                    onAddGroup={() => this.showDialog('showAddGroupDialog')}
+                    onAddPost={() => this.showDialog('showAddPostDialog')}
+                />
 
                 <AddGroupDialog
-                    open={showDialog}
-                    onClose={this.hideDialog}
+                    open={showAddGroupDialog}
+                    onClose={() => this.hideDialog('showAddGroupDialog')}
                     onSubmit={this.addGroup}
                 />
 
