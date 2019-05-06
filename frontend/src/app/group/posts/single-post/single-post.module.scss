@@ -7,6 +7,15 @@
   align-items: center;
 }
 
+.imageAvatar {
+  padding: 1rem;
+  border-radius: 50%;
+
+  & > img {
+    border-radius: 50%;
+  }
+}
+
 .postCreatedInfo {
   & > * {
     font-size: 0.9rem;
@@ -30,4 +39,5 @@
 
 .postText {
   margin-left: 1rem;
+  margin-right: 1rem;
 }

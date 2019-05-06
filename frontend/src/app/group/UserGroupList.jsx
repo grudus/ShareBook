@@ -1,5 +1,5 @@
 import Avatar from "@material-ui/core/Avatar";
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import React from 'react';
 import { Link } from "react-router-dom";
 import css from './group.module.scss';

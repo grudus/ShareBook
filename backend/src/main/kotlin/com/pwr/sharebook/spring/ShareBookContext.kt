@@ -48,7 +48,7 @@ class ShareBookContext : WebMvcConfigurer {
 
             if (userRepository.findAll().isEmpty()) {
                 val student = roleRepository.findByName(RoleType.STUDENT)!!
-                userRepository.save(mockAdminUser(passwordEncoder.encode("admin"), student))
+                userRepository.save(mockAdminUser(passwordEncoder.encode("admin@admin.com"), student))
             }
 
             println("_____ Application has started ______")
@@ -56,7 +56,7 @@ class ShareBookContext : WebMvcConfigurer {
     }
 
     private fun mockAdminUser(password: String, role: RoleEntity): UserEntity =
-            UserEntity(null, "admin", password, null, "Admin", "Adminowy", role)
+            UserEntity(null, "admin@admin.com", password, "https://pbs.twimg.com/profile_images/898948764152541184/z6y2UNbw_400x400.jpg", "Admin", "Adminowy", role)
 
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
