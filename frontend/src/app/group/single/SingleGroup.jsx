@@ -22,8 +22,12 @@ class SingleGroup extends Component {
                         {posts.map(post => (
                             <li className={css.singlePost}>
                                 <span>{post.text}</span>
+                                <br/>
                                 <span>{post.createdAt}</span>
+                                <div>
+                                <label>autor: </label>
                                 <span>{post.createdBy.email}</span>
+                                </div>
                             </li>
                         ))}
                     </ul>
