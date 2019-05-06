@@ -23,8 +23,8 @@ class SingleGroup extends Component {
                             <li className={css.singlePost}>
                                 <span>{post.text}</span>
                                 <br/>
-                                <span>{post.createdAt}</span>
-                                <div>
+                                <span style={{color:'#666666'}}>{post.createdAt}</span>
+                                <div style={{color:'#666666'}}>
                                 <label>autor: </label>
                                 <span>{post.createdBy.email}</span>
                                 </div>
