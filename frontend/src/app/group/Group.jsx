@@ -1,12 +1,13 @@
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import AddUserToGroup from "../user-group/AddUserToGroup";
-import AddGroupDialog from "./AddGroupDialog";
+import AddMultipleButton from "./add-button/AddMultipleButton";
+import AddGroupDialog from "./dialogs/AddGroupDialog";
 import "./group.module.scss";
+import AddPostDialog from "./dialogs/AddPostDialog";
 import css from './group.module.scss';
 import * as GroupApi from './GroupApi';
+import * as PostApi from './posts/PostApi';
 import SingleGroup from "./single/SingleGroup";
 import UserGroupList from "./UserGroupList";
 
@@ -14,9 +15,11 @@ class Group extends Component {
 
     state = {
         groups: [],
-        showDialog: false,
+        showAddGroupDialog: false,
+        showAddPostDialog: false,
         currentGroup: null,
         usersForCurrentGroup: [],
+        posts: []
     };
 
 
@@ -46,9 +49,13 @@ class Group extends Component {
 
         this.setState({ currentGroup, usersForCurrentGroup: [] });
 
-        if (currentGroupId)
+        if (currentGroupId) {
             GroupApi.findAllUsersForGroup(currentGroupId)
                 .then(users => this.setState({ usersForCurrentGroup: users }))
+
+            PostApi.getPostsForGroup(currentGroupId)
+                .then(posts => this.setState({ posts }))
+        }
 
     };
 
@@ -61,56 +68,70 @@ class Group extends Component {
         }));
     };
 
-    showDialog = () => {
-        this.setState({ showDialog: true })
+    addPost = async (postText) => {
+        await PostApi.addPost(this.state.currentGroup.id, postText);
+
+        PostApi.getPostsForGroup(this.state.currentGroup.id)
+            .then(posts => this.setState({ posts }))
     };
 
-    hideDialog = () => {
-        this.setState({ showDialog: false });
+    showDialog = (dialog) => {
+        this.setState({ [dialog]: true })
+    };
+
+    hideDialog = (dialog) => {
+        this.setState({ [dialog]: false });
     };
 
     render() {
-        const { currentGroup, groups, showDialog, usersForCurrentGroup } = this.state;
-
+        const { currentGroup, groups, showAddGroupDialog, showAddPostDialog, usersForCurrentGroup, posts } = this.state;
         return (
             <div className={css.mainPageWrapper}>
                 <div className={css.userGroupWrapper}>
                     <UserGroupList groups={groups}/>
                 </div>
                 <div className={css.singleGroupWrapper}>
-                    <SingleGroup currentGroup={currentGroup}/>
+                    <SingleGroup currentGroup={currentGroup} posts={posts}/>
                 </div>
 
-                {currentGroup && <div className={css.addUserToGroupWrapper}>
-                    <AddUserToGroup groupId={currentGroup.id}/>
-                </div>}
+                {currentGroup && (
+                    <>
+                        <div className={css.addUserToGroupWrapper}>
+                            <AddUserToGroup groupId={currentGroup.id}/>
+                        </div>
+                        <div className={css.users}>
+                            <div className={css.userList}>
+                                <label>Użytkownicy należący do grupy:</label>
+                                <br/><br/>
+                                {!!usersForCurrentGroup.length &&
+                                <ul>
+                                    {usersForCurrentGroup.map(user => (
+                                        <li key={user.id}>
+                                            {user.firstName} {user.lastName}
+                                        </li>))}
+                                </ul>}
+                            </div>
+                        </div>
 
-                <div className={css.users}>
+                    </>
+                )}
+
+                <AddMultipleButton
+                    onAddGroup={() => this.showDialog('showAddGroupDialog')}
+                    onAddPost={() => this.showDialog('showAddPostDialog')}
+                />
+
                 <AddGroupDialog
-                    open={showDialog}
-                    onClose={this.hideDialog}
+                    open={showAddGroupDialog}
+                    onClose={() => this.hideDialog('showAddGroupDialog')}
                     onSubmit={this.addGroup}
                 />
 
-                <div className={css.addGroupFab}>
-                    <Fab
-                        color={"primary"} onClick={this.showDialog}>
-                        <AddIcon/>
-                    </Fab>
-                </div>
-
-                    <div className={css.userList}>
-                        <label>Użytkownicy należący do grupy:</label>
-                        <br/><br/>
-                        {!!usersForCurrentGroup.length &&
-                        <ul>
-                            {usersForCurrentGroup.map(user => (
-                                <li key={user.id}>
-                                    {user.firstName} {user.lastName}
-                                </li>))}
-                        </ul>}
-                    </div>
-                </div>
+                <AddPostDialog
+                    open={showAddPostDialog}
+                    onClose={() => this.hideDialog('showAddPostDialog')}
+                    onSubmit={(text) => this.addPost(text)}
+                />
 
             </div>
         );

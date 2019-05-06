@@ -10,5 +10,6 @@ object RestKeys {
     const val USER_DOES_NOT_EXISTS = "USER_DOES_NOT_EXISTS"
     const val UNAUTHORIZED = "UNAUTHORIZED"
     const val USER_ALREADY_EXISTS_IN_GROUP = "USER_ALREADY_EXISTS_IN_GROUP"
+    const val EMPTY_TEXT = "EMPTY_TEXT"
 
 }
