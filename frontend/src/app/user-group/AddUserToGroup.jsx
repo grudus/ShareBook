@@ -27,9 +27,10 @@ class AddUserToGroup extends Component {
 
         return (
             <form onSubmit={this.addUser}>
-                <label>Add user:
+                <div>
+                <label>Dodaj urzytkownika do grupy:</label>
+                </div>
                     <input value={email} onChange={this.onChange} />
-                </label>
                 <button type="submit">Dodaj</button>
             </form>
         );
