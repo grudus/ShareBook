@@ -1,10 +1,11 @@
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import * as PropTypes from "prop-types";
 import React, { useState } from 'react';
 import css from "./add-multiple-button.module.scss";
 
 
-const AddMultipleButton = ({ onAddGroup, onAddPost }) => {
+const AddMultipleButton = ({ onAddGroup, onAddPost, addPostAvailable }) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = () => setIsOpen(!isOpen);
 
@@ -22,9 +23,10 @@ const AddMultipleButton = ({ onAddGroup, onAddPost }) => {
                     <Fab variant={"extended"} className={css.optionToSelect} onClick={() => openDialog(onAddGroup)}>
                         Dodaj grupę
                     </Fab>
+                    {addPostAvailable &&
                     <Fab variant={"extended"} className={css.optionToSelect} onClick={() => openDialog(onAddPost)}>
                         Dodaj post
-                    </Fab>
+                    </Fab>}
                 </div>
 
                 <Fab
@@ -34,6 +36,12 @@ const AddMultipleButton = ({ onAddGroup, onAddPost }) => {
             </div>
         </>
     );
+};
+
+AddMultipleButton.propTypes = {
+    onAddGroup: PropTypes.func.isRequired,
+    onAddPost: PropTypes.func.isRequired,
+    addPostAvailable: PropTypes.bool,
 };
 
 

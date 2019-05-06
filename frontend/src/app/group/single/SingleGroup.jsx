@@ -1,37 +1,36 @@
-import { Card, CardMedia } from "@material-ui/core";
-import React, { Component } from 'react';
-import css from "./single-group.module.scss";
+import Card from "@material-ui/core/Card";
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import SinglePost from "../posts/single-post/SinglePost";
+import css from "./single-group.module.scss";
 
 
 class SingleGroup extends Component {
     static propTypes = {
         currentGroup: PropTypes.shape(),
-        posts: PropTypes.shape(),
+        posts: PropTypes.arrayOf(PropTypes.shape),
     };
 
     render() {
         const { currentGroup, posts } = this.props;
 
+        const postList = <ul className={css.posts}>
+            {posts.map(post => (
+                <li key={post.id}>
+                    <SinglePost post={post}/>
+                </li>
+            ))}
+        </ul>;
+
+        const noPostsInfo = <h2 className={css.noPostsAvailable}>Brak postów w grupie :(</h2>;
         return (
             <>
-                <Card className={css.Card}>
-                    {currentGroup ? "Wybrana grupa to: " + currentGroup.name : "Nie wybrano grupy"}
+                <h1 className={css.groupNameInfo}>
+                    {currentGroup ? currentGroup.name : "Nie wybrano grupy"}
+                </h1>
 
-                    <ul className={css.posts}>
-                        {posts.map(post => (
-                            <li className={css.singlePost}>
-                                <span>{post.text}</span>
-                                <br/>
-                                <span style={{color:'#666666'}}>{post.createdAt}</span>
-                                <div style={{color:'#666666'}}>
-                                <label>autor: </label>
-                                <span>{post.createdBy.email}</span>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                </Card>
+                {currentGroup ? (posts && posts.length ? postList : noPostsInfo) : ""}
+
             </>
         );
     }

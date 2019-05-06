@@ -1,0 +1,33 @@
+.post {
+
+}
+
+.postHeaderWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.postCreatedInfo {
+  & > * {
+    font-size: 0.9rem;
+    color: #43425D;
+  }
+}
+
+.createdByHeader {
+  font-weight: 700;
+  margin: 0;
+}
+
+.createdAtHeader {
+  font-weight: 200;
+  margin: 0;
+}
+
+.postWrapper {
+  margin-top: 1rem;
+}
+
+.postText {
+  margin-left: 1rem;
+}

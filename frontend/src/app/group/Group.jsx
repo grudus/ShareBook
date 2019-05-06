@@ -119,6 +119,7 @@ class Group extends Component {
                 <AddMultipleButton
                     onAddGroup={() => this.showDialog('showAddGroupDialog')}
                     onAddPost={() => this.showDialog('showAddPostDialog')}
+                    addPostAvailable={!!currentGroup}
                 />
 
                 <AddGroupDialog
