@@ -61,7 +61,7 @@ class Notifications extends Component {
     displayNotifications = () => {
         return (<ul className={css.notificationList}>
             {this.state.notifications.map(notification => (
-                <li key={notification.id}>
+                <li className={css.singleNotificaton} key={notification.id}>
                     <SingleNotification
                         onClick={() => this.seeNotification(notification)}
                         notification={notification}

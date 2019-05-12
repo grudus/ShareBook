@@ -56,7 +56,9 @@ class TopBar extends Component {
                             </Link>
 
                             <div className={css.rightPart}>
-                                <Notifications/>
+                                <div className={css.notificationButton}>
+                                <Notifications></Notifications>
+                                </div>
                                 <MenuList userName={user.firstName + " " + user.lastName}/>
                                 <LetterAvatar text={user.firstName[0] + user.lastName[0]}/>
                             </div>
