@@ -1,6 +1,7 @@
 package com.pwr.sharebook.group.post
 
 import com.pwr.sharebook.common.IdResponse
+import com.pwr.sharebook.notification.event.NotificationEventPublisher
 import com.pwr.sharebook.user.AuthenticatedUser
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,7 +16,8 @@ class GroupPostController
 @Autowired
 constructor(
         private val groupPostService: GroupPostService,
-        private val addPostRequestValidator: AddPostRequestValidator) {
+        private val addPostRequestValidator: AddPostRequestValidator,
+        private val notificationEventPublisher: NotificationEventPublisher) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
 
@@ -26,6 +28,7 @@ constructor(
                 user: AuthenticatedUser
     ): IdResponse {
         logger.info("User [{}] adds new post", user)
+        notificationEventPublisher.publishNewPostInGroup(addPostRequest, groupId, user.id)
         return IdResponse(groupPostService.addPost(addPostRequest, groupId, user.id))
     }
 

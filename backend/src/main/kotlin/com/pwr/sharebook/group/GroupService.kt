@@ -7,6 +7,7 @@ import com.pwr.sharebook.group.usergroup.UserGroupRepository
 import com.pwr.sharebook.user.UserDto
 import com.pwr.sharebook.user.UserEntity
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime.now
 
@@ -37,4 +38,6 @@ constructor(
     fun findUsersForGroup(groupId: Long): List<UserDto> {
         return userGroupRepository.findUsersForGroup(groupId)
     }
+
+    fun findById(groupId: Long): GroupEntity? = groupRepository.findByIdOrNull(groupId)
 }
