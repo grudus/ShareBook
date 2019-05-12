@@ -1,6 +1,6 @@
 import * as PropTypes from "prop-types";
 import React, { Component } from 'react';
-
+import css from './notifications.module.scss'
 
 class SingleNotification extends Component {
     static propTypes = {
@@ -19,7 +19,7 @@ class SingleNotification extends Component {
 
         return (
             <article onClick={onClick}>
-                <h6>{notification.title}</h6>
+                <h5>{notification.title}</h5>
                 <p>{notification.text}</p>
             </article>
         );

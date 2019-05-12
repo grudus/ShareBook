@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as GroupApi from '../group/GroupApi'
-
+import css from './AddUserToGroup.scss'
 
 class AddUserToGroup extends Component {
     static propTypes = {
@@ -26,6 +26,7 @@ class AddUserToGroup extends Component {
         const { email } = this.state;
 
         return (
+            <div className={css.addUser} >
             <form onSubmit={this.addUser}>
                 <div>
                 <label>Dodaj urzytkownika do grupy:</label>
@@ -33,6 +34,7 @@ class AddUserToGroup extends Component {
                     <input value={email} onChange={this.onChange} />
                 <button type="submit">Dodaj</button>
             </form>
+            </div>
         );
     }
 }

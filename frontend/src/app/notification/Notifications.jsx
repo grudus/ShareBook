@@ -83,7 +83,7 @@ class Notifications extends Component {
                         this.anchorEl = node;
                     }}>
                     <Badge color="secondary" badgeContent={freshNotificationsCount}>
-                        <NotificationIcon color="action"/>
+                        <NotificationIcon className={css.notificationButton} color="action"/>
                     </Badge>
                 </IconButton>
 
