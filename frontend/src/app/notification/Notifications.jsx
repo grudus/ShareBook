@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import NotificationIcon from "@material-ui/icons/Notifications";
 import React, { Component } from 'react';
+import { withRouter } from "react-router-dom";
 import { connectToWebsocket } from "../websocket/websocketClient";
 import SingleNotification from "./SingleNotification";
 import css from './notifications.module.scss'
@@ -47,7 +48,14 @@ class Notifications extends Component {
 
     seeNotification = async (notification) => {
         await NotificationsApi.seeNotification(notification.id);
-        document.location.href = notification.linkHref;
+        if (notification.linkHref.includes(document.location.origin)) {
+            const link = notification.linkHref.replace(document.location.origin, "");
+
+            if (!notification.visited)
+                this.setState(state => ({ freshNotificationsCount: state.freshNotificationsCount - 1 }));
+            this.props.history.push(link);
+        } else
+            document.location.href = notification.linkHref;
     };
 
     displayNotifications = () => {
@@ -102,4 +110,4 @@ class Notifications extends Component {
 }
 
 
-export default Notifications;
+export default withRouter(Notifications);
