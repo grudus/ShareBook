@@ -3,11 +3,13 @@ package com.pwr.sharebook.notification
 import com.pwr.sharebook.common.exceptions.CannotFindIdException
 import com.pwr.sharebook.environment.EnvironmentService
 import com.pwr.sharebook.environment.FRONTEND_ORIGIN_KEY
+import com.pwr.sharebook.event.EventPublisher
 import com.pwr.sharebook.group.GroupService
 import com.pwr.sharebook.notification.event.NewPostInGroupEvent
 import com.pwr.sharebook.notification.event.UserAddedToGroupEvent
 import com.pwr.sharebook.user.UserEntity
 import com.pwr.sharebook.user.UserService
+import com.pwr.sharebook.websocket.UpdateNotificationsWebsocketEvent
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -22,7 +24,8 @@ constructor(
         private val notificationRepository: NotificationRepository,
         private val userService: UserService,
         private val groupService: GroupService,
-        private val environmentService: EnvironmentService
+        private val environmentService: EnvironmentService,
+        private val eventPublisher: EventPublisher
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -32,8 +35,10 @@ constructor(
         val group = groupService.findById(event.groupId) ?: throw CannotFindIdException()
         val notificationUrl = "${environmentService.getString(FRONTEND_ORIGIN_KEY)}/groups/${group.id}"
 
-        val notifications = groupService.findUsersForGroup(event.groupId)
-                .filter { user -> user.id != userCreator.id }
+        val usersForGroup = groupService.findUsersForGroup(event.groupId)
+//                .filter { user -> true && user.id != userCreator.id } //TODO test only
+
+        val notifications = usersForGroup
                 .map { user ->
                     NotificationEntity(
                             null,
@@ -48,6 +53,8 @@ constructor(
 
         logger.info("Inserting {} notifications for group {}", notifications.size, group.id)
         notificationRepository.saveAll(notifications)
+
+        updateNotificationsMessage(usersForGroup.map { it.email })
     }
 
     fun save(event: UserAddedToGroupEvent) {
@@ -69,9 +76,16 @@ constructor(
 
         logger.info("Inserting invitation to the group {} for user {}", group.id, invitedUser.email)
         notificationRepository.save(notification)
+
+        updateNotificationsMessage(listOf(invitedUser.email!!))
     }
 
     fun findAllForUser(userId: Long): List<NotificationDto> =
             notificationRepository.findAllByUserEntityId(userId)
                     .map { n -> NotificationDto.fromEntity(n) }
+
+
+    private fun updateNotificationsMessage(usersNames: List<String>) {
+        eventPublisher.publish(UpdateNotificationsWebsocketEvent(this, usersNames))
+    }
 }

@@ -1,22 +1,21 @@
 import axios from "axios";
 import * as querystring from 'querystring';
+import { BACKEND_URL } from "../env/environment";
 
-const BASE_URL = "http://localhost:8080";
-
-export const httpPost = (path, args) => axios.post(`${BASE_URL}/${path}`, args, { withCredentials: true })
+export const httpPost = (path, args) => axios.post(`${BACKEND_URL}/${path}`, args, { withCredentials: true })
     .catch(e => {
         catchForbiddenError(e)
     })
-    .then(({data}) => data);
+    .then(({ data }) => data);
 
-export const httpPut = (path, args) => axios.put(`${BASE_URL}/${path}`, args, { withCredentials: true })
+export const httpPut = (path, args) => axios.put(`${BACKEND_URL}/${path}`, args, { withCredentials: true })
     .catch(e => {
         catchForbiddenError(e)
     })
-    .then(({data}) => data);
+    .then(({ data }) => data);
 
 
-export const httpPostForm = (path, args) => axios.post(`${BASE_URL}/${path}`, querystring.stringify(args), {
+export const httpPostForm = (path, args) => axios.post(`${BACKEND_URL}/${path}`, querystring.stringify(args), {
     withCredentials: true,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -28,15 +27,14 @@ export const httpPostForm = (path, args) => axios.post(`${BASE_URL}/${path}`, qu
 function catchForbiddenError(e) {
     if (!e.response) {
         alert("Wystąpił nieoczekiwany błąd - brak internetu lub niedostępny serwer")
-    }
-    else if (e.response.status === 403)
+    } else if (e.response.status === 403)
         window.location.href = '/auth/login';
     throw e;
 }
 
-export const httpGet = (path, args) => axios.get(`${BASE_URL}/${path}`, { withCredentials: true })
+export const httpGet = (path, args) => axios.get(`${BACKEND_URL}/${path}`, { withCredentials: true })
     .catch(e => {
         catchForbiddenError(e);
     })
-    .then(({data}) => data);
+    .then(({ data }) => data);
 

@@ -1,5 +1,8 @@
 package com.pwr.sharebook.spring.security
 
+import com.pwr.sharebook.environment.EnvironmentService
+import com.pwr.sharebook.environment.FRONTEND_ORIGIN_KEY
+import com.pwr.sharebook.user.auth.UserDetailsServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -10,8 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import com.pwr.sharebook.user.auth.UserDetailsServiceImpl
-import org.springframework.beans.factory.annotation.Value
 
 @Configuration
 @EnableWebSecurity
@@ -23,8 +24,7 @@ constructor(private val passwordEncoder: PasswordEncoder,
             private val userDetailsService: UserDetailsServiceImpl,
             private val jwtUtils: JwtUtils,
             private val jwtProvider: JwtProvider,
-            @Value("\${sharebook.frontend.origin}")
-            private val frontendOrigin: String
+            private val environmentService: EnvironmentService
             ) : WebSecurityConfigurerAdapter() {
 
 
@@ -49,7 +49,7 @@ constructor(private val passwordEncoder: PasswordEncoder,
                 .and()
                 .headers().frameOptions().sameOrigin()
                 .and()
-                .addFilterBefore(CorsFilter(frontendOrigin), UsernamePasswordAuthenticationFilter::class.java)
+                .addFilterBefore(CorsFilter(environmentService.getString(FRONTEND_ORIGIN_KEY)!!), UsernamePasswordAuthenticationFilter::class.java)
                 .addFilterBefore(JwtLoginFilter("/auth/login", userDetailsService, passwordEncoder, jwtUtils), UsernamePasswordAuthenticationFilter::class.java)
                 .addFilterBefore(JwtAuthTokenFilter(jwtProvider, userDetailsService, jwtUtils), UsernamePasswordAuthenticationFilter::class.java)
     }

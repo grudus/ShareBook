@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import NotificationIcon from "@material-ui/icons/Notifications";
 import React, { Component } from 'react';
+import { connectToWebsocket } from "../websocket/websocketClient";
 import SingleNotification from "./SingleNotification";
 import css from './notifications.module.scss'
 import * as NotificationsApi from './NotificationsApi'
@@ -21,6 +22,10 @@ class Notifications extends Component {
     componentDidMount() {
         console.log("Downloading notifications");
         this.downloadNotifications();
+
+        connectToWebsocket("/user/queue/notifications", (message) => {
+            this.downloadNotifications();
+        });
     }
 
     showNotificationsList = () => {
