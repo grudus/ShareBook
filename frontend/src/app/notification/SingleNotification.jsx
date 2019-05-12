@@ -1,4 +1,3 @@
-import Link from "@material-ui/core/Link";
 import * as PropTypes from "prop-types";
 import React, { Component } from 'react';
 
@@ -12,17 +11,16 @@ class SingleNotification extends Component {
             visited: PropTypes.bool,
             createdAt: PropTypes.string,
         }).isRequired,
+        onClick: PropTypes.func.isRequired,
     };
 
     render() {
-        const { notification } = this.props;
+        const { notification, onClick } = this.props;
 
         return (
-            <article>
-                <a href={notification.linkHref}>
-                    <h6>{notification.title}</h6>
-                    <p>{notification.text}</p>
-                </a>
+            <article onClick={onClick}>
+                <h6>{notification.title}</h6>
+                <p>{notification.text}</p>
             </article>
         );
     }

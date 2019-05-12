@@ -16,7 +16,7 @@ class NotificationEntity (
             @Column(name = "link_href")
             val linkHref: String?,
             val createdAt: LocalDateTime?,
-            val visited: Boolean?,
+            var visited: Boolean?,
             @ManyToOne(fetch = FetchType.LAZY)
             @JoinColumn(name = "user_id")
             val userEntity: UserEntity?

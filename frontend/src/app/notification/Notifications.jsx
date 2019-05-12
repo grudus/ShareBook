@@ -45,11 +45,17 @@ class Notifications extends Component {
         this.setState({ notifications, freshNotificationsCount })
     };
 
+    seeNotification = async (notification) => {
+        await NotificationsApi.seeNotification(notification.id);
+        document.location.href = notification.linkHref;
+    };
+
     displayNotifications = () => {
         return (<ul className={css.notificationList}>
             {this.state.notifications.map(notification => (
                 <li key={notification.id}>
                     <SingleNotification
+                        onClick={() => this.seeNotification(notification)}
                         notification={notification}
                     />
                 </li>

@@ -36,7 +36,7 @@ data class NotificationDto(val id: Long,
                     entity.title,
                     entity.text,
                     entity.linkHref,
-                    entity.visited,
+                    entity.visited!!,
                     entity.createdAt
             )
         }

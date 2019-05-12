@@ -12,6 +12,7 @@ import com.pwr.sharebook.user.UserService
 import com.pwr.sharebook.websocket.UpdateNotificationsWebsocketEvent
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import javax.transaction.Transactional
@@ -87,5 +88,11 @@ constructor(
 
     private fun updateNotificationsMessage(usersNames: List<String>) {
         eventPublisher.publish(UpdateNotificationsWebsocketEvent(this, usersNames))
+    }
+
+    fun visitNotification(id: Long) {
+        val notification: NotificationEntity = notificationRepository.findByIdOrNull(id) ?: throw CannotFindIdException()
+        notification.visited = true
+        notificationRepository.save(notification)
     }
 }
