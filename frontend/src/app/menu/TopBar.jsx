@@ -54,7 +54,6 @@ class TopBar extends Component {
                             <Link to="/">
                                 <h2 className={css.title}>Sharebook</h2>
                             </Link>
-
                             <div className={css.rightPart}>
                                 <div className={css.notificationButton}>
                                 <Notifications></Notifications>

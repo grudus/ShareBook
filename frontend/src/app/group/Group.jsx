@@ -112,7 +112,6 @@ class Group extends Component {
                                 </ul>}
                             </div>
                         </div>
-
                     </>
                 )}
 

@@ -18,10 +18,12 @@ class SingleNotification extends Component {
         const { notification, onClick } = this.props;
 
         return (
+            <div className={css.singleNotification}>
             <article onClick={onClick}>
-                <h5>{notification.title}</h5>
-                <p>{notification.text}</p>
+                <h5 className={css.notificationLabel}>{notification.title}</h5>
+                <p className={css.notificationText}>{notification.text}</p>
             </article>
+            </div>
         );
     }
 }
