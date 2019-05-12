@@ -65,7 +65,7 @@
 .addUserToGroupWrapper {
   position: absolute;
   right: 20px;
-  margin-right: 70px;
+  margin-right: 40px;
   color: #47445a;
   z-index: -1;
 }
@@ -73,8 +73,7 @@
 .userList {
   width: 250px;
   float: right;
-  margin-right: 45px;
-  margin-top: 80px;
+  margin-right: 10px;
   color: #47445a;
 }
 
@@ -82,6 +81,7 @@
   float: right;
   position: relative;
   width: auto;
+  margin-top: 150px;
 }
 
 @media (max-width: 768px) {

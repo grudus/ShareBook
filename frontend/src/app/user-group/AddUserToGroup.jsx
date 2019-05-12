@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as GroupApi from '../group/GroupApi'
 import css from './AddUserToGroup.scss'
+import TextField from "@material-ui/core/TextField";
+import { Button } from "@material-ui/core";
 
 class AddUserToGroup extends Component {
     static propTypes = {
@@ -26,15 +28,13 @@ class AddUserToGroup extends Component {
         const { email } = this.state;
 
         return (
-            <div className={css.addUser} >
+            <div className={css.addUsers}>
             <form onSubmit={this.addUser}>
-                <div>
-                <label>Dodaj urzytkownika do grupy:</label>
-                </div>
-                    <input value={email} onChange={this.onChange} />
-                <button type="submit">Dodaj</button>
+                <TextField label="Email użytkownika" value={email} onChange={this.onChange} /><br/><br/>
+                <Button variant="outlined" className={css.addButton} color="primary" type="submit">Dodaj</Button>
             </form>
             </div>
+
         );
     }
 }
