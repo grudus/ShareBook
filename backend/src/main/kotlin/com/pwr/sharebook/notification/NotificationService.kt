@@ -33,6 +33,7 @@ constructor(
         val notificationUrl = "${environmentService.getString(FRONTEND_ORIGIN_KEY)}/groups/${group.id}"
 
         val notifications = groupService.findUsersForGroup(event.groupId)
+                .filter { user -> user.id != userCreator.id }
                 .map { user ->
                     NotificationEntity(
                             null,
