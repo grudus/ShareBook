@@ -5,6 +5,7 @@ import com.pwr.sharebook.environment.EnvironmentService
 import com.pwr.sharebook.environment.FRONTEND_ORIGIN_KEY
 import com.pwr.sharebook.group.GroupService
 import com.pwr.sharebook.notification.event.NewPostInGroupEvent
+import com.pwr.sharebook.notification.event.UserAddedToGroupEvent
 import com.pwr.sharebook.user.UserEntity
 import com.pwr.sharebook.user.UserService
 import org.slf4j.LoggerFactory
@@ -46,5 +47,26 @@ constructor(
 
         logger.info("Inserting {} notifications for group {}", notifications.size, group.id)
         notificationRepository.saveAll(notifications)
+    }
+
+    fun save(event: UserAddedToGroupEvent) {
+        val userCreator = userService.findById(event.userCreated) ?: throw CannotFindIdException()
+        val invitedUser = userService.findByEmail(event.userAddedEmail) ?: throw CannotFindIdException()
+        val group = groupService.findById(event.groupId) ?: throw CannotFindIdException()
+
+        val notificationUrl = "${environmentService.getString(FRONTEND_ORIGIN_KEY)}/groups/${group.id}"
+
+        val notification =
+                NotificationEntity(
+                        null,
+                        "Zostałeś zaproszony do grupy ${group.name}!",
+                        "Użytkownik ${userCreator.firstName} ${userCreator.lastName} dodał Cię do groupy ${group.name}",
+                        notificationUrl,
+                        LocalDateTime.now(),
+                        false,
+                        invitedUser)
+
+        logger.info("Inserting invitation to the group {} for user {}", group.id, invitedUser.email)
+        notificationRepository.save(notification)
     }
 }

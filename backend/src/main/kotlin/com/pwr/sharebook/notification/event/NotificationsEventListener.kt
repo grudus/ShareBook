@@ -19,5 +19,8 @@ constructor(private val notificationService: NotificationService) : ApplicationL
         if (event is NewPostInGroupEvent) {
             notificationService.save(event)
         }
+        else if (event is UserAddedToGroupEvent) {
+            notificationService.save(event)
+        }
     }
 }
