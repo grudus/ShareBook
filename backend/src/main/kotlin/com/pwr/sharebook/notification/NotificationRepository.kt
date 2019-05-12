@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface NotificationRepository : JpaRepository<NotificationEntity, Long>{
+
+    fun findAllByUserEntityId(userId: Long): List<NotificationEntity>
 }

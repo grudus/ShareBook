@@ -2,6 +2,7 @@ import * as PropTypes from "prop-types";
 import React, { Component } from 'react';
 import { Link, withRouter } from "react-router-dom";
 import LetterAvatar from "../group/LetterAvatar";
+import Notifications from "../notification/Notifications";
 import { getCurrentUser } from "../user/UserApi";
 import css from "./menu.module.scss";
 import MenuList from "./UserDropdownMenu";
@@ -55,6 +56,7 @@ class TopBar extends Component {
                             </Link>
 
                             <div className={css.rightPart}>
+                                <Notifications/>
                                 <MenuList userName={user.firstName + " " + user.lastName}/>
                                 <LetterAvatar text={user.firstName[0] + user.lastName[0]}/>
                             </div>

@@ -40,7 +40,7 @@ const SinglePost = ({ post }) => {
 SinglePost.propTypes = {
     post: PropTypes.shape({
         text: PropTypes.string.isRequired,
-        createdAt: PropTypes.instanceOf(Date),
+        createdAt: PropTypes.string.isRequired,
         createdBy: PropTypes.shape({
             email: PropTypes.string,
             firstName: PropTypes.string,

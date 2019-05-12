@@ -69,4 +69,8 @@ constructor(
         logger.info("Inserting invitation to the group {} for user {}", group.id, invitedUser.email)
         notificationRepository.save(notification)
     }
+
+    fun findAllForUser(userId: Long): List<NotificationDto> =
+            notificationRepository.findAllByUserEntityId(userId)
+                    .map { n -> NotificationDto.fromEntity(n) }
 }
