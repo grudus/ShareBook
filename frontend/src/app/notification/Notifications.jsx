@@ -48,14 +48,7 @@ class Notifications extends Component {
 
     seeNotification = async (notification) => {
         await NotificationsApi.seeNotification(notification.id);
-        if (notification.linkHref.includes(document.location.origin)) {
-            const link = notification.linkHref.replace(document.location.origin, "");
-
-            if (!notification.visited)
-                this.setState(state => ({ freshNotificationsCount: state.freshNotificationsCount - 1 }));
-            this.props.history.push(link);
-        } else
-            document.location.href = notification.linkHref;
+        document.location.href = notification.linkHref;
     };
 
     displayNotifications = () => {

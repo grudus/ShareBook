@@ -21,10 +21,10 @@ class AddUserToGroup extends Component {
     addUser = async (e) => {
         e.preventDefault();
         try {
-            const response = await GroupApi.addUserToGroup(this.props.groupId, this.state.email);
-            console.log(response)
-        } catch (e) {
-            console.log("Błąd", e)
+            await GroupApi.addUserToGroup(this.props.groupId, this.state.email);
+        } catch (err) {
+            const errors = err.data.codes;
+            console.log("Error from server:", errors)
         }
         this.setState({ email: '' });
     };

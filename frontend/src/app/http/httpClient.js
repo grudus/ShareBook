@@ -29,7 +29,7 @@ function catchForbiddenError(e) {
         alert("Wystąpił nieoczekiwany błąd - brak internetu lub niedostępny serwer")
     } else if (e.response.status === 403)
         window.location.href = '/auth/login';
-    throw e;
+    throw e.response;
 }
 
 export const httpGet = (path, args) => axios.get(`${BACKEND_URL}/${path}`, { withCredentials: true })
