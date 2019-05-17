@@ -25,5 +25,6 @@ class PostEntity(
         @JoinColumn(name = "created_by")
         val userEntity: UserEntity?
 ) {
-    constructor() : this(null, null, null, null, null)
+    constructor() : this(null)
+    constructor(id: Long?): this(id, null, null, null, null)
 }
