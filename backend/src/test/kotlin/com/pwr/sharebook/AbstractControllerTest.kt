@@ -42,6 +42,10 @@ abstract class AbstractControllerTest : AbstractDatabaseTest() {
     protected fun toJson(o: Any): ByteArray =
             objectMapper.writeValueAsBytes(o)
 
+    protected fun <T> mapResponse(response: String, aClass: Class<T>): T {
+        return objectMapper.readValue(response, aClass)
+    }
+
     protected fun buildUrlEncodedFormEntity(vararg params: String): String {
         if (params.size % 2 > 0) {
             throw IllegalArgumentException("Need to give an even number of parameters")

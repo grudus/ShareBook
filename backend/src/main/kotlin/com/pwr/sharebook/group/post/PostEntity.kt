@@ -1,5 +1,6 @@
 package com.pwr.sharebook.group.post
 
+import com.pwr.sharebook.comment.CommentEntity
 import com.pwr.sharebook.group.GroupEntity
 import com.pwr.sharebook.user.UserEntity
 import java.time.LocalDateTime
@@ -23,8 +24,11 @@ class PostEntity(
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "created_by")
-        val userEntity: UserEntity?
+        val userEntity: UserEntity?,
+
+        @OneToMany(mappedBy = "postEntity", fetch = FetchType.LAZY)
+        val comments: List<CommentEntity>? = emptyList()
 ) {
     constructor() : this(null)
-    constructor(id: Long?): this(id, null, null, null, null)
+    constructor(id: Long?): this(id, null, null, null, null, null)
 }

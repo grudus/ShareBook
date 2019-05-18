@@ -1,17 +1,19 @@
 package com.pwr.sharebook.group.post
 
+import com.pwr.sharebook.comment.CommentDto
 import com.pwr.sharebook.common.exceptions.CannotObtainIdAfterSaveException
 import com.pwr.sharebook.group.GroupEntity
 import com.pwr.sharebook.user.UserEntity
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
 import java.time.LocalDateTime.now
 
 @Service
 class GroupPostService
 @Autowired
-constructor(private val postRepository: PostRepository)
+constructor(
+        private val postRepository: PostRepository
+        )
 {
 
     fun addPost(addPostRequest: AddPostRequest, groupId: Long, userId: Long): Long {
@@ -28,4 +30,13 @@ constructor(private val postRepository: PostRepository)
                 .map { GroupPostDto.fromEntity(it, groupId) }
     }
 
+
+    fun getPostsWithComments(groupId: Long): List<PostWithCommentsDto> =
+            postRepository
+                    .findAllPostsForGroupWithComments(groupId)
+                    .map { entity ->
+                        val post = GroupPostDto.fromEntity(entity, groupId)
+                        val comments = entity.comments?.map { CommentDto.fromEntity(it) } ?: listOf()
+                        PostWithCommentsDto(post, comments)
+                    }
 }

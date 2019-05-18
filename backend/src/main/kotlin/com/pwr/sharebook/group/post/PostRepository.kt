@@ -9,4 +9,7 @@ interface PostRepository: JpaRepository<PostEntity, Long> {
 
     @Query("SELECT p FROM post p JOIN FETCH p.userEntity WHERE p.groupEntity.id = ?1")
     fun findAllForGroupWithCreator(groupId: Long): List<PostEntity>
+
+    @Query("SELECT p FROM post p JOIN FETCH p.userEntity LEFT JOIN FETCH p.comments WHERE p.groupEntity.id = ?1")
+    fun findAllPostsForGroupWithComments(groupId: Long): List<PostEntity>
 }

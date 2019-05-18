@@ -37,6 +37,12 @@ constructor(
         return groupPostService.getPostsForGroup(groupId)
     }
 
+    @GetMapping(params = ["withComments"])
+    fun getPostsForGroupWithComments(@PathVariable("groupId") groupId: Long,
+                                     @RequestParam("withComments") withComments: Boolean): List<PostWithCommentsDto> {
+        return groupPostService.getPostsWithComments(groupId)
+    }
+
     @InitBinder("addPostRequest")
     protected fun initEditBinder(binder: WebDataBinder) {
         binder.validator = addPostRequestValidator
