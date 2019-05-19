@@ -8,6 +8,7 @@ import AddPostDialog from "./dialogs/AddPostDialog";
 import css from './group.module.scss';
 import * as GroupApi from './GroupApi';
 import * as PostApi from './posts/PostApi';
+import * as CommentApi from './comment/CommentApi';
 import SingleGroup from "./single/SingleGroup";
 import UserGroupList from "./UserGroupList";
 
@@ -19,7 +20,8 @@ class Group extends Component {
         showAddPostDialog: false,
         currentGroup: null,
         usersForCurrentGroup: [],
-        posts: []
+        posts: [],
+        comments: []
     };
 
 
@@ -55,6 +57,9 @@ class Group extends Component {
 
             PostApi.getPostsForGroup(currentGroupId)
                 .then(posts => this.setState({ posts }))
+
+            CommentApi.getCommentsForPost(currentGroupId)
+                .then(comments => this.setState({ comments }))
         }
 
     };
@@ -84,14 +89,14 @@ class Group extends Component {
     };
 
     render() {
-        const { currentGroup, groups, showAddGroupDialog, showAddPostDialog, usersForCurrentGroup, posts } = this.state;
+        const { currentGroup, groups, showAddGroupDialog, showAddPostDialog, usersForCurrentGroup, posts, comments } = this.state;
         return (
             <div className={css.mainPageWrapper}>
                 <div className={css.userGroupWrapper}>
                     <UserGroupList groups={groups}/>
                 </div>
                 <div className={css.singleGroupWrapper}>
-                    <SingleGroup currentGroup={currentGroup} posts={posts}/>
+                    <SingleGroup currentGroup={currentGroup} posts={posts} comments={comments}/>
                 </div>
 
                 {currentGroup && (

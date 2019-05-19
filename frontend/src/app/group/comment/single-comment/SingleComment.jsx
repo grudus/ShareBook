@@ -52,4 +52,4 @@ SingleComment.propTypes = {
 };
 
 
-export default SinglePost;
+export default SingleComment;
