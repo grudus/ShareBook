@@ -3,38 +3,25 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import SinglePost from "../posts/single-post/SinglePost";
 import css from "./single-group.module.scss";
-import SingleComment from "../comment/single-comment/SingleComment";
-import CommentForm from "../comment/CommentForm";
 
 
 class SingleGroup extends Component {
     static propTypes = {
         currentGroup: PropTypes.shape(),
-        posts: PropTypes.arrayOf(PropTypes.shape),
-        comments: PropTypes.arrayOf(PropTypes.shape),
+        posts: PropTypes.arrayOf(PropTypes.shape)
     };
 
     render() {
-        const { currentGroup, posts, comments } = this.props;
+        const { currentGroup, posts} = this.props;
+
 
         const postList = <ul className={css.posts}>
             {posts.map(post => (
                 <li key={post.id}>
                     <SinglePost post={post}/>
-
-                    <CommentForm></CommentForm>
-
                 </li>
             ))}
         </ul>;
-
-        const commentList = <ul>
-            {comments.map(comment => (
-                <li key={comment.id}>
-                    <SingleComment comment={comment}/>
-                </li>
-            ))}
-        </ul>
 
         const noPostsInfo = <h2 className={css.noPostsAvailable}>Brak postów w grupie :(</h2>;
         return (
