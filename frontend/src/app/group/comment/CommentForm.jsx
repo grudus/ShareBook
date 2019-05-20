@@ -5,6 +5,11 @@ import React, { Component } from 'react';
 import css from './comment-form.scss';
 
 class CommentForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {CommentText: ''};
+        this.submitComment = this.submitComment.bind(this);
+    }
 
     state = {
         CommentText: ''
@@ -13,9 +18,11 @@ class CommentForm extends Component {
     submitComment = (e) => {
         if (e && e.preventDefault)
             e.preventDefault();
-        this.props.onSubmit(this.state.CommentText);
+        this.setState({value: this.state.CommentText});
+       // this.props.onSubmit(this.state.CommentText);
         this.setState({ CommentText: '' });
     };
+
 
     render() {
         const updateText = ({ target }) => {
@@ -23,7 +30,7 @@ class CommentForm extends Component {
         };
 
         return (
-                    <form onSubmit={this.submitComment}>
+                    <form method="post" onSubmit={this.submitComment}>
                         <div className={css.addComments}>
                         <TextField
                             autoFocus
@@ -34,7 +41,7 @@ class CommentForm extends Component {
                             value={this.state.CommentText}
                             onChange={updateText}
                         />
-                        <Button onClick={this.submitComment} color="primary" variant="contained">
+                        <Button onClick={this.submitComment} type="submit" color="primary" variant="contained">
                             Dodaj
                         </Button>
 
