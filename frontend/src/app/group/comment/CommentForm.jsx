@@ -2,7 +2,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import * as PropTypes from "prop-types";
 import React, { Component } from 'react';
-
+import css from './comment-form.scss';
 
 class CommentForm extends Component {
 
@@ -10,7 +10,7 @@ class CommentForm extends Component {
         CommentText: ''
     };
 
-    submitPost = (e) => {
+    submitComment = (e) => {
         if (e && e.preventDefault)
             e.preventDefault();
         this.props.onSubmit(this.state.CommentText);
@@ -23,7 +23,8 @@ class CommentForm extends Component {
         };
 
         return (
-                    <form onSubmit={this.submitPost}>
+                    <form onSubmit={this.submitComment}>
+                        <div className={css.addComments}>
                         <TextField
                             autoFocus
                             margin="dense"
@@ -33,10 +34,13 @@ class CommentForm extends Component {
                             value={this.state.CommentText}
                             onChange={updateText}
                         />
-                        <Button onClick={this.submitPost} color="primary" variant="contained">
+                        <Button onClick={this.submitComment} color="primary" variant="contained">
                             Dodaj
                         </Button>
+
+                        </div>
                     </form>
+
         );
     }
 

@@ -5,15 +5,14 @@ import * as PropTypes from "prop-types";
 import React from 'react';
 import LetterAvatar from "../../LetterAvatar";
 import css from './single-post.module.scss';
-import CommentForm from "../../single/SingleGroup";
+import CommentForm from "../../comment/CommentForm";
 import SingleComment from "../../comment/single-comment/SingleComment";
 
 
-const SinglePost = ({ post}) => {
+const SinglePost = ({ post, comments}) => {
     const { firstName, lastName } = post.createdBy;
     const readableDate = formatRelative(new Date(post.createdAt), new Date());
     const initials = (firstName[0] + lastName[0]).toLocaleUpperCase();
-    const {comments} = post.comments;
 
     const avatar = post.createdBy.avatarUrl
         ? <Avatar alt="avatar"
@@ -44,6 +43,9 @@ const SinglePost = ({ post}) => {
                 </div>
                 <p className={css.postText}>{post.text}</p>
                 <p>{commentList}</p>
+                <div className={css.commentForm}>
+                <CommentForm></CommentForm>
+                </div>
             </article>
         </Card>
     );

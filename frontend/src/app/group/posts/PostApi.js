@@ -6,6 +6,6 @@ export const addPost = (groupId, text) => {
 };
 
 export const getPostsForGroup = (groupId) => {
-    return httpGet(`groups/${groupId}/posts`);
+    return httpGet(`groups/${groupId}/posts?withComments=true`);
 };
 

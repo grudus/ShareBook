@@ -8,17 +8,17 @@ import css from "./single-group.module.scss";
 class SingleGroup extends Component {
     static propTypes = {
         currentGroup: PropTypes.shape(),
-        posts: PropTypes.arrayOf(PropTypes.shape)
+        postWithComments: PropTypes.arrayOf(PropTypes.shape)
     };
 
     render() {
-        const { currentGroup, posts} = this.props;
+        const { currentGroup, postWithComments} = this.props;
 
 
         const postList = <ul className={css.posts}>
-            {posts.map(post => (
+            {postWithComments.map(({post, comments}) => (
                 <li key={post.id}>
-                    <SinglePost post={post}/>
+                    <SinglePost post={post} comments={comments}/>
                 </li>
             ))}
         </ul>;
@@ -30,7 +30,7 @@ class SingleGroup extends Component {
                     {currentGroup ? currentGroup.name : "Nie wybrano grupy"}
                 </h1>
 
-                {currentGroup ? (posts && posts.length ? postList : noPostsInfo) : ""}
+                {currentGroup ? (postWithComments && postWithComments.length ? postList : noPostsInfo) : ""}
 
             </>
         );
