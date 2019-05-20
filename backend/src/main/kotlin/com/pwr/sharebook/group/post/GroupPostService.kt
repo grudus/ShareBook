@@ -34,9 +34,10 @@ constructor(
     fun getPostsWithComments(groupId: Long): List<PostWithCommentsDto> =
             postRepository
                     .findAllPostsForGroupWithComments(groupId)
-                    .map { entity ->
-                        val post = GroupPostDto.fromEntity(entity, groupId)
-                        val comments = entity.comments?.map { CommentDto.fromEntity(it) } ?: listOf()
-                        PostWithCommentsDto(post, comments)
+                    .groupBy { it.id }
+                    .map { (_, post) ->
+                        val groupPost = GroupPostDto.fromEntity(post[0], groupId)
+                        val comments = post[0].comments?.map { CommentDto.fromEntity(it) } ?: listOf()
+                        PostWithCommentsDto(groupPost, comments)
                     }
 }
