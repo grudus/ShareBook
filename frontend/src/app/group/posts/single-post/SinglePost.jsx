@@ -10,7 +10,7 @@ import SingleComment from "../../comment/single-comment/SingleComment";
 import * as CommentApi from "../../comment/CommentApi";
 
 
-const SinglePost = ({ post, comments}) => {
+const SinglePost = ({ post, comments, afterCommentAdded }) => {
     const { firstName, lastName } = post.createdBy;
     const readableDate = formatRelative(new Date(post.createdAt), new Date());
     const initials = (firstName[0] + lastName[0]).toLocaleUpperCase();
@@ -31,9 +31,9 @@ const SinglePost = ({ post, comments}) => {
         ))}
     </ul>;
 
-     const addComment = async (commentText) => {
-        await CommentApi.addComment(post.groupId, post.postId ,commentText);
-         this.props.afterCommentAdded();
+    const addComment = async (commentText) => {
+        await CommentApi.addComment(post.groupId, post.postId, commentText);
+        afterCommentAdded();
     };
 
 
@@ -50,7 +50,7 @@ const SinglePost = ({ post, comments}) => {
                 <p className={css.postText}>{post.text}</p>
                 {commentList}
                 <div className={css.commentForm}>
-                <CommentForm actionWhenAddComment={(text) => addComment(text)}/>
+                    <CommentForm actionWhenAddComment={(text) => addComment(text)}/>
                 </div>
             </article>
         </Card>
