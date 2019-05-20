@@ -7,6 +7,7 @@ import LetterAvatar from "../../LetterAvatar";
 import css from './single-post.module.scss';
 import CommentForm from "../../comment/CommentForm";
 import SingleComment from "../../comment/single-comment/SingleComment";
+import * as CommentApi from "../../comment/CommentApi";
 
 
 const SinglePost = ({ post, comments}) => {
@@ -30,6 +31,11 @@ const SinglePost = ({ post, comments}) => {
         ))}
     </ul>;
 
+     const addComment = async (commentText) => {
+        await CommentApi.addComment(post.groupId, post.postId ,commentText);
+         this.props.afterCommentAdded();
+    };
+
 
     return (
         <Card className={css.postWrapper}>
@@ -42,9 +48,9 @@ const SinglePost = ({ post, comments}) => {
                     </div>
                 </div>
                 <p className={css.postText}>{post.text}</p>
-                <p>{commentList}</p>
+                {commentList}
                 <div className={css.commentForm}>
-                <CommentForm></CommentForm>
+                <CommentForm actionWhenAddComment={(text) => addComment(text)}/>
                 </div>
             </article>
         </Card>
@@ -53,6 +59,7 @@ const SinglePost = ({ post, comments}) => {
 
 
 SinglePost.propTypes = {
+    afterCommentAdded: PropTypes.func.isRequired,
     post: PropTypes.shape({
         text: PropTypes.string.isRequired,
         groupId: PropTypes.number.isRequired,

@@ -18,12 +18,13 @@ class SingleGroup extends Component {
         const postList = <ul className={css.posts}>
             {postWithComments.map(({post, comments}) => (
                 <li key={post.id}>
-                    <SinglePost post={post} comments={comments}/>
+                    <SinglePost post={post} comments={comments} afterCommentAdded={this.props.afterCommentAdded}/>
                 </li>
             ))}
         </ul>;
 
         const noPostsInfo = <h2 className={css.noPostsAvailable}>Brak postów w grupie :(</h2>;
+        window.scrollTo(0, 0)
         return (
             <>
                 <h1 className={css.groupNameInfo}>

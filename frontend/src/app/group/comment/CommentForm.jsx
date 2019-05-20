@@ -18,8 +18,8 @@ class CommentForm extends Component {
     submitComment = (e) => {
         if (e && e.preventDefault)
             e.preventDefault();
-        this.setState({value: this.state.CommentText});
-       // this.props.onSubmit(this.state.CommentText);
+        //this.setState({value: this.state.CommentText});
+        this.props.actionWhenAddComment(this.state.CommentText);
         this.setState({ CommentText: '' });
     };
 
@@ -30,7 +30,7 @@ class CommentForm extends Component {
         };
 
         return (
-                    <form method="post" onSubmit={this.submitComment}>
+                    <form onSubmit={this.submitComment}>
                         <div className={css.addComments}>
                         <TextField
                             autoFocus
@@ -53,7 +53,7 @@ class CommentForm extends Component {
 
 }
 CommentForm.propTypes = {
-    onSubmit: PropTypes.any,
+    actionWhenAddComment: PropTypes.any.isRequired,
 };
 
 

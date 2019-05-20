@@ -8,7 +8,8 @@ import css from './single-comment.scss';
 
 const SingleComment = ({ comment }) => {
     const { firstName, lastName } = comment.createdBy;
-    const readableDate = formatRelative(new Date(comment.createdAt), new Date());
+    const date = new Date(comment.cratedAt);
+    const readableDate = formatRelative(date, new Date());
     const initials = (firstName[0] + lastName[0]).toLocaleUpperCase();
 
     const avatar = comment.createdBy.avatarUrl
@@ -19,16 +20,16 @@ const SingleComment = ({ comment }) => {
         : <LetterAvatar text={initials}/>;
 
     return (
-        <Card>
-            <article>
-                <div>
+        <Card className="commentWrapper">
+            <article className="comment">
+                <div className="commentHeaderWrapper">
                     {avatar}
-                    <div >
-                        <p >{`${firstName} ${lastName}`}</p>
-                        <p >{readableDate}</p>
+                    <div className="commentCreatedInfo">
+                        <p className="createdByHeader">{`${firstName} ${lastName}`}</p>
+                        <p className="createdAtHeader">{readableDate}</p>
                     </div>
                 </div>
-                <p >{comment.text}</p>
+                <p className="textComment">{comment.text}</p>
             </article>
         </Card>
     );
@@ -39,7 +40,7 @@ SingleComment.propTypes = {
     comment: PropTypes.shape({
         id: PropTypes.number.isRequired,
         text: PropTypes.string.isRequired,
-        createdAt: PropTypes.string.isRequired,
+        cratatedAt: PropTypes.string.isRequired,
         createdBy: PropTypes.shape({
             id: PropTypes.number.isRequired,
             email: PropTypes.string,
