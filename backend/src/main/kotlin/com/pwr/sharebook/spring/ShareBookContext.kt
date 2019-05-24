@@ -1,8 +1,6 @@
 package com.pwr.sharebook.spring
 
 import com.pwr.sharebook.group.GroupRepository
-import com.pwr.sharebook.group.usergroup.UserGroupEntity
-import com.pwr.sharebook.group.usergroup.UserGroupRepository
 import com.pwr.sharebook.spring.security.JwtProvider
 import com.pwr.sharebook.user.UserEntity
 import com.pwr.sharebook.user.UserRepository
@@ -39,7 +37,7 @@ class ShareBookContext : WebMvcConfigurer {
                           passwordEncoder: PasswordEncoder,
                           roleRepository: RoleRepository,
                           groupRepository: GroupRepository
-                          ): CommandLineRunner {
+    ): CommandLineRunner {
         return CommandLineRunner {
 
             if (roleRepository.findAll().isEmpty()) {
