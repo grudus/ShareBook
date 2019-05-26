@@ -30,7 +30,8 @@ class CommentForm extends Component {
 
         return (
                     <form onSubmit={this.submitComment}>
-                        <div className={css.addComments}>
+                        <div className="addComments">
+                            <div className="commentText">
                         <TextField
                             autoFocus
                             margin="dense"
@@ -40,6 +41,7 @@ class CommentForm extends Component {
                             value={this.state.CommentText}
                             onChange={updateText}
                         />
+                            </div>
                         <Button onClick={this.submitComment} type="submit" color="primary" variant="contained">
                             Dodaj
                         </Button>
