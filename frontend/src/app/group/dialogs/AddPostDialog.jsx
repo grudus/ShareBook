@@ -4,6 +4,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
 import * as PropTypes from "prop-types";
 import React, { Component } from 'react';
+import Attachments from "../../group/attachment/Attachments"
+import css from './dialogs.module.scss'
 
 
 class AddPostDialog extends Component {
@@ -35,6 +37,7 @@ class AddPostDialog extends Component {
                 <DialogTitle>Dodaj wpis</DialogTitle>
                 <DialogContent>
                     <form onSubmit={this.submitPost}>
+                        <div className={css.postName}>
                         <TextField
                             autoFocus
                             margin="dense"
@@ -44,6 +47,10 @@ class AddPostDialog extends Component {
                             value={this.state.postText}
                             onChange={updateText}
                         />
+                        </div>
+                        <div className={css.attachment}>
+                        <Attachments/>
+                        </div>
                     </form>
                 </DialogContent>
 
