@@ -8,12 +8,15 @@ import Attachments from "../../group/attachment/Attachments"
 import css from './dialogs.module.scss'
 import CommentForm from "../posts/single-post/SinglePost";
 import {addAttachment} from "../attachment/AttachApi";
+import { FilePond } from 'react-filepond';
+import 'filepond/dist/filepond.min.css';
 
 
 class AddPostDialog extends Component {
 
     state = {
-        postText: ''
+        postText: '',
+        file: null
     };
 
     submitPost = (e) => {
@@ -39,6 +42,7 @@ class AddPostDialog extends Component {
                 <DialogTitle>Dodaj wpis</DialogTitle>
                 <DialogContent>
                     <form onSubmit={this.submitPost}>
+                        <div>
                         <div className={css.postName}>
                         <TextField
                             autoFocus
@@ -52,6 +56,10 @@ class AddPostDialog extends Component {
                         </div>
                         <div className={css.attachment}>
                         <Attachments actionWhenAddAttachment={(file) => addAttachment(file)}/>
+                        </div>
+                        <div className={css.files}>
+                        <FilePond/>
+                        </div>
                         </div>
                     </form>
                 </DialogContent>
