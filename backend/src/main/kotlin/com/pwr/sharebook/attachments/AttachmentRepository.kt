@@ -1,9 +1,7 @@
 package com.pwr.sharebook.attachments
 
-import java.io.File
+import org.springframework.data.jpa.repository.JpaRepository
 
-interface AttachmentRepository {
-    fun upload(file: File): String
-    fun download(path: String)
-    fun getAll()
+interface AttachmentRepository: JpaRepository<AttachmentEntity, Long> {
+    fun findByLocation(location: String): AttachmentEntity?
 }
