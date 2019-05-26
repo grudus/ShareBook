@@ -23,10 +23,11 @@ constructor(
     fun addAttachmentToPost(file: MultipartFile, groupId: Long, postId: Long, user: AuthenticatedUser): String {
         val fileName = "${user.email}_${groupId}_${postId}_${LocalDateTime.now().nano}.${FilenameUtils.getExtension(file.originalFilename)}"
         val id = attachmentIoService.upload(file, fileName)
+        val originalFilename = file.originalFilename
 
-        logger.info("Successfully uploaded file ${file.originalFilename}. Get id: $id")
+        logger.info("Successfully uploaded file $originalFilename. Get id: $id")
 
-        val attachment = AttachmentEntity(null, PostEntity(postId), id, file.originalFilename)
+        val attachment = AttachmentEntity(null, PostEntity(postId), id, originalFilename)
         attachmentRepository.save(attachment)
         return id
     }
