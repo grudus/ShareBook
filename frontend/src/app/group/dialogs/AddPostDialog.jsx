@@ -6,6 +6,8 @@ import * as PropTypes from "prop-types";
 import React, { Component } from 'react';
 import Attachments from "../../group/attachment/Attachments"
 import css from './dialogs.module.scss'
+import CommentForm from "../posts/single-post/SinglePost";
+import {addAttachment} from "../attachment/AttachApi";
 
 
 class AddPostDialog extends Component {
@@ -49,7 +51,7 @@ class AddPostDialog extends Component {
                         />
                         </div>
                         <div className={css.attachment}>
-                        <Attachments/>
+                        <Attachments actionWhenAddAttachment={(file) => addAttachment(file)}/>
                         </div>
                     </form>
                 </DialogContent>

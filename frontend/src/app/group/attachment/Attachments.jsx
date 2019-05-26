@@ -2,6 +2,8 @@ import { withStyles } from '@material-ui/core/styles/index';
 import React from 'react';
 import { Link, withRouter } from "react-router-dom";
 import AttachFile from "@material-ui/icons/AttachFile";
+import * as PropTypes from "prop-types";
+import CommentForm from "../comment/CommentForm";
 
 
 const styles = theme => ({
@@ -15,21 +17,24 @@ const styles = theme => ({
 
 class Attachments extends React.Component {
     state = {
-        open: false,
+        file: '',
+    };
+
+    addAttachment = (e) => {
+        if (e && e.preventDefault)
+            e.preventDefault();
+        this.props.actionWhenAddAttachment(this.state.file);
+        this.setState({ file: '' });
     };
 
     render() {
-        const { open } = this.state;
 
         return (
             <div>
                 <div>
                     <AttachFile
-                        buttonRef={node => {
-                            this.anchorEl = node;
-                        }}
-                        aria-owns={open ? 'attach' : undefined}
-                        aria-haspopup="true"
+                        onClick={this.addAttachment}
+                        value={this.state.file}
                     >
                     </AttachFile>
                 </div>
@@ -38,5 +43,8 @@ class Attachments extends React.Component {
     }
 }
 
+Attachments.propTypes = {
+    actionWhenAddAttachment: PropTypes.any,
+};
 
 export default withStyles(styles)(withRouter(Attachments));
