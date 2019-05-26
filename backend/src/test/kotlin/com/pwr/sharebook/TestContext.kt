@@ -2,6 +2,8 @@ package com.pwr.sharebook
 
 
 
+import com.pwr.sharebook.attachments.AttachmentIoService
+import com.pwr.sharebook.attachments.MockAttachmentIoService
 import com.pwr.sharebook.spring.ShareBookContext
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.jdbc.DataSourceBuilder
@@ -26,4 +28,9 @@ class TestContext {
                     .url(url)
                     .driverClassName(driver)
                     .build()
+
+    @Bean
+    @Primary
+    fun mockAttachmentIoService(): AttachmentIoService<String> =
+            MockAttachmentIoService()
 }

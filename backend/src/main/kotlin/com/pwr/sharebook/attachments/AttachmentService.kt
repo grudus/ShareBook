@@ -21,7 +21,7 @@ constructor(
 
 
     fun addAttachmentToPost(file: MultipartFile, groupId: Long, postId: Long, user: AuthenticatedUser): String {
-        val fileName = "${user.email}_${groupId}_${postId}_${LocalDateTime.now().nano}.${FilenameUtils.getExtension(file.originalFilename)}"
+        val fileName = createFilename(user, groupId, postId, file)
         val id = attachmentIoService.upload(file, fileName)
         val originalFilename = file.originalFilename
 
@@ -39,5 +39,8 @@ constructor(
     fun findFilenameByLocation(attachmentId: String): String? =
             attachmentRepository.findByLocation(attachmentId)
                     ?.originalFilename
+
+    private fun createFilename(user: AuthenticatedUser, groupId: Long, postId: Long, file: MultipartFile) =
+            "${user.email}_${groupId}_${postId}_${LocalDateTime.now().nano}.${FilenameUtils.getExtension(file.originalFilename)}"
 
 }
