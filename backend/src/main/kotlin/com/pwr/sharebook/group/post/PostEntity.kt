@@ -1,5 +1,6 @@
 package com.pwr.sharebook.group.post
 
+import com.pwr.sharebook.attachments.AttachmentEntity
 import com.pwr.sharebook.comment.CommentEntity
 import com.pwr.sharebook.group.GroupEntity
 import com.pwr.sharebook.user.UserEntity
@@ -27,8 +28,12 @@ class PostEntity(
         val userEntity: UserEntity?,
 
         @OneToMany(mappedBy = "postEntity", fetch = FetchType.LAZY)
-        val comments: List<CommentEntity>? = emptyList()
+        val comments: List<CommentEntity>? = emptyList(),
+
+        @OneToMany(mappedBy = "postEntity", fetch = FetchType.LAZY)
+        val attachments: List<AttachmentEntity>? = emptyList()
+
 ) {
     constructor() : this(null)
-    constructor(id: Long?): this(id, null, null, null, null, null)
+    constructor(id: Long?): this(id, null, null, null, null, null, null)
 }
