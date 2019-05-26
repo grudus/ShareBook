@@ -18,7 +18,6 @@ class CommentForm extends Component {
     submitComment = (e) => {
         if (e && e.preventDefault)
             e.preventDefault();
-        //this.setState({value: this.state.CommentText});
         this.props.actionWhenAddComment(this.state.CommentText);
         this.setState({ CommentText: '' });
     };

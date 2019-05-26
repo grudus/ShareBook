@@ -8,6 +8,7 @@ import css from './single-post.module.scss';
 import CommentForm from "../../comment/CommentForm";
 import SingleComment from "../../comment/single-comment/SingleComment";
 import * as CommentApi from "../../comment/CommentApi";
+import Attachments from "../../attachment/Attachments"
 
 
 const SinglePost = ({ post, comments, afterCommentAdded }) => {
@@ -51,6 +52,7 @@ const SinglePost = ({ post, comments, afterCommentAdded }) => {
                 {commentList}
                 <div className={css.commentForm}>
                     <CommentForm actionWhenAddComment={(text) => addComment(text)}/>
+                    <Attachments/>
                 </div>
             </article>
         </Card>
