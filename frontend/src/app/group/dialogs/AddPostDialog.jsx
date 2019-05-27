@@ -10,6 +10,7 @@ import CommentForm from "../posts/single-post/SinglePost";
 import {addAttachment} from "../attachment/AttachApi";
 import { FilePond } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
+import {BACKEND_URL} from "../../env/environment";
 
 
 class AddPostDialog extends Component {
@@ -58,7 +59,7 @@ class AddPostDialog extends Component {
                         <Attachments actionWhenAddAttachment={(file) => addAttachment(file)}/>
                         </div>
                         <div className={css.files}>
-                        <FilePond/>
+                        <FilePond server={`${BACKEND_URL}/attachments`}/>
                         </div>
                         </div>
                     </form>
