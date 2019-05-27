@@ -30,10 +30,15 @@ class PostEntity(
         @OneToMany(mappedBy = "postEntity", fetch = FetchType.LAZY)
         val comments: List<CommentEntity>? = emptyList(),
 
-        @OneToMany(mappedBy = "postEntity", fetch = FetchType.LAZY)
+        @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+        @JoinTable(
+                name = "post_attachment",
+                joinColumns = [JoinColumn(name = "post_id")],
+                inverseJoinColumns = [JoinColumn(name = "attachment_id")]
+        )
         val attachments: List<AttachmentEntity>? = emptyList()
 
 ) {
     constructor() : this(null)
-    constructor(id: Long?): this(id, null, null, null, null, null, null)
+    constructor(id: Long?) : this(id, null, null, null, null, null, null)
 }

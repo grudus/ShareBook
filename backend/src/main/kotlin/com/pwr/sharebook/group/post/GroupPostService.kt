@@ -1,5 +1,7 @@
 package com.pwr.sharebook.group.post
 
+import com.pwr.sharebook.attachments.AttachmentEntity
+import com.pwr.sharebook.attachments.AttachmentService
 import com.pwr.sharebook.comment.CommentDto
 import com.pwr.sharebook.common.exceptions.CannotObtainIdAfterSaveException
 import com.pwr.sharebook.group.GroupEntity
@@ -12,12 +14,14 @@ import java.time.LocalDateTime.now
 class GroupPostService
 @Autowired
 constructor(
-        private val postRepository: PostRepository
+        private val postRepository: PostRepository,
+        private val attachmentService: AttachmentService
         )
 {
 
     fun addPost(addPostRequest: AddPostRequest, groupId: Long, userId: Long): Long {
-        val postEntity = PostEntity(null, now(), addPostRequest.text, GroupEntity(groupId), UserEntity(userId))
+        val attachment: AttachmentEntity? = addPostRequest.attachmentId?.let { attachmentService.findAttachmentByLocation(it) }
+        val postEntity = PostEntity(null, now(), addPostRequest.text, GroupEntity(groupId), UserEntity(userId), null, if (attachment == null) null else listOf(attachment))
 
         postRepository.save(postEntity)
 

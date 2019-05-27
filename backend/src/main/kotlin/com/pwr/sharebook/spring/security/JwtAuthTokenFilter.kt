@@ -16,7 +16,7 @@ internal class JwtAuthTokenFilter(private val jwtProvider: JwtProvider,
                                   private val jwtUtils: JwtUtils) : OncePerRequestFilter() {
     private val jwtLogger = LoggerFactory.getLogger(JwtAuthTokenFilter::class.java)
 
-    private val whiteListRegex = Regex(".*auth.*")
+    private val whiteListRegex = Regex(".*auth.*|.*attachment.*")
 
     override fun doFilterInternal(httpServletRequest: HttpServletRequest, httpServletResponse: HttpServletResponse, filterChain: FilterChain) {
         if (httpServletRequest.requestURI.matches(whiteListRegex)) {

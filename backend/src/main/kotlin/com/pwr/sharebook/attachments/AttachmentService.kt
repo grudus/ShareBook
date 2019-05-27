@@ -1,8 +1,9 @@
 package com.pwr.sharebook.attachments
 
-import com.pwr.sharebook.group.post.PostEntity
+import com.pwr.sharebook.common.exceptions.CannotFindIdException
 import com.pwr.sharebook.user.AuthenticatedUser
 import org.apache.commons.io.FilenameUtils
+import org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -20,17 +21,20 @@ constructor(
     private val logger = LoggerFactory.getLogger(javaClass)
 
 
-    fun addAttachmentToPost(file: MultipartFile, groupId: Long, postId: Long, user: AuthenticatedUser): String {
-        val fileName = createFilename(user, groupId, postId, file)
-        val id = attachmentIoService.upload(file, fileName)
+    fun addAttachment(file: MultipartFile): String {
+        val fileName = createFilename(file)
+        val locationId = attachmentIoService.upload(file, fileName)
         val originalFilename = file.originalFilename
 
-        logger.info("Successfully uploaded file $originalFilename. Get id: $id")
+        logger.info("Successfully uploaded file $originalFilename. Get id: $locationId")
 
-        val attachment = AttachmentEntity(null, PostEntity(postId), id, originalFilename)
+        val attachment = AttachmentEntity(null, locationId, originalFilename)
         attachmentRepository.save(attachment)
-        return id
+        return locationId
     }
+
+    fun findAttachmentByLocation(location: String): AttachmentEntity? =
+            attachmentRepository.findByLocation(location)
 
     fun downloadById(id: String, outputStream: OutputStream) {
         attachmentIoService.downloadById(id, outputStream)
@@ -40,7 +44,7 @@ constructor(
             attachmentRepository.findByLocation(attachmentId)
                     ?.originalFilename
 
-    private fun createFilename(user: AuthenticatedUser, groupId: Long, postId: Long, file: MultipartFile) =
-            "${user.email}_${groupId}_${postId}_${LocalDateTime.now().nano}.${FilenameUtils.getExtension(file.originalFilename)}"
+    private fun createFilename(file: MultipartFile) =
+            "${randomAlphabetic(5)}_${LocalDateTime.now().nano}.${FilenameUtils.getExtension(file.originalFilename)}"
 
 }

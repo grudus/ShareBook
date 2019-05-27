@@ -5,6 +5,7 @@ import com.pwr.sharebook.environment.FRONTEND_ORIGIN_KEY
 import com.pwr.sharebook.user.auth.UserDetailsServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -42,6 +43,7 @@ constructor(private val passwordEncoder: PasswordEncoder,
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/h2/**").permitAll() // todo remove when deploys
+                .antMatchers(HttpMethod.POST,"/attachments").permitAll() // todo remove when deploys
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

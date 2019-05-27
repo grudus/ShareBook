@@ -1,11 +1,8 @@
 package com.pwr.sharebook.attachments
 
 import com.pwr.sharebook.AbstractDatabaseTest
-import com.pwr.sharebook.group.CreateGroupRequest
 import com.pwr.sharebook.group.GroupService
-import com.pwr.sharebook.group.post.AddPostRequest
 import com.pwr.sharebook.group.post.GroupPostService
-import com.pwr.sharebook.user.AuthenticatedUser
 import com.pwr.sharebook.utils.RandomUtils.randomEmail
 import com.pwr.sharebook.utils.RandomUtils.randomText
 import org.junit.Before
@@ -21,29 +18,18 @@ class AttachmentServiceTest: AbstractDatabaseTest() {
     private lateinit var attachmentService: AttachmentService
 
     @Autowired
-    private lateinit var postService: GroupPostService
-
-    @Autowired
-    private lateinit var groupService: GroupService
-
-    @Autowired
     private lateinit var attachmentIoService: AttachmentIoService<String>
 
-
-    private var postId: Long? = null
-    private var groupId: Long? = null
     private var userId: Long? = null
 
     @Before
     fun init() {
         userId = addUser(randomEmail()).id!!
-        groupId = groupService.create(CreateGroupRequest(randomText()), userId!!)
-        postId = postService.addPost(AddPostRequest(randomText()), groupId!!, userId!!)
     }
 
     @Test
     fun shouldUploadAttachment() {
-        val id = attachmentService.addAttachmentToPost(randomFile(randomText()), groupId!!, postId!!, AuthenticatedUser(userId!!, ""))
+        val id = attachmentService.addAttachment(randomFile(randomText()))
 
         val containsFile = (attachmentIoService as MockAttachmentIoService).containsFile(id)
 
@@ -53,7 +39,7 @@ class AttachmentServiceTest: AbstractDatabaseTest() {
     @Test
     fun shouldSaveAttachmentAndReturnId() {
         val originalFilename = randomText()
-        val id = attachmentService.addAttachmentToPost(randomFile(originalFilename), groupId!!, postId!!, AuthenticatedUser(userId!!, ""))
+        val id = attachmentService.addAttachment(randomFile(originalFilename))
         flush()
 
         val filename = attachmentService.findFilenameByLocation(id)

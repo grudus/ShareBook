@@ -17,7 +17,7 @@ class Group extends Component {
     state = {
         groups: [],
         showAddGroupDialog: false,
-        showAddPostDialog: false,
+        showAddPostDialog: true,
         currentGroup: null,
         usersForCurrentGroup: [],
         postWithComments: [],
@@ -71,8 +71,8 @@ class Group extends Component {
         }));
     };
 
-    addPost = async (postText) => {
-        await PostApi.addPost(this.state.currentGroup.id, postText);
+    addPost = async (postText, attachmentId) => {
+        await PostApi.addPost(this.state.currentGroup.id, postText, attachmentId);
 
         PostApi.getPostsForGroup(this.state.currentGroup.id)
             .then(posts => this.setState({ posts }))
@@ -140,7 +140,7 @@ class Group extends Component {
                 <AddPostDialog
                     open={showAddPostDialog}
                     onClose={() => this.hideDialog('showAddPostDialog')}
-                    onSubmit={(text) => this.addPost(text)}
+                    onSubmit={(text, attachmentId) => this.addPost(text, attachmentId)}
                 />
 
             </div>
