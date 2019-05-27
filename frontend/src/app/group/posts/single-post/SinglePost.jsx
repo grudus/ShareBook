@@ -1,14 +1,15 @@
 import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
+import IconButton from "@material-ui/core/IconButton";
+import SaveAlt from "@material-ui/icons/SaveAlt";
 import { formatRelative } from 'date-fns'
 import * as PropTypes from "prop-types";
 import React from 'react';
-import LetterAvatar from "../../LetterAvatar";
-import css from './single-post.module.scss';
+import * as CommentApi from "../../comment/CommentApi";
 import CommentForm from "../../comment/CommentForm";
 import SingleComment from "../../comment/single-comment/SingleComment";
-import * as CommentApi from "../../comment/CommentApi";
-import SaveAlt from "@material-ui/icons/SaveAlt";
+import LetterAvatar from "../../LetterAvatar";
+import css from './single-post.module.scss';
 import * as AttachApi from "../../attachment/AttachApi";
 
 
@@ -38,6 +39,10 @@ const SinglePost = ({ post, comments, afterCommentAdded }) => {
         afterCommentAdded();
     };
 
+    const downloadAttachment = () => {
+        AttachApi.download(post.attachmentId)
+    };
+
 
     return (
         <Card className={css.postWrapper}>
@@ -48,7 +53,11 @@ const SinglePost = ({ post, comments, afterCommentAdded }) => {
                         <p className={css.createdByHeader}>{`${firstName} ${lastName}`}</p>
                         <p className={css.createdAtHeader}>{readableDate}</p>
                     </div>
-                    <SaveAlt className={css.download} fontSize="large"/>
+                    {post.attachmentId && (
+                        <IconButton aria-label="Download" className={css.download} onClick={downloadAttachment}>
+                            <SaveAlt fontSize="large"/>
+                        </IconButton>)
+                    }
                 </div>
                 <p className={css.postText}>{post.text}</p>
                 {commentList}
@@ -67,6 +76,7 @@ SinglePost.propTypes = {
         text: PropTypes.string.isRequired,
         groupId: PropTypes.number.isRequired,
         postId: PropTypes.number.isRequired,
+        attachmentId: PropTypes.string,
         createdBy: PropTypes.shape({
             email: PropTypes.string,
             firstName: PropTypes.string,

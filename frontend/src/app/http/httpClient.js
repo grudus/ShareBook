@@ -24,6 +24,10 @@ export const httpPostForm = (path, args) => axios.post(`${BACKEND_URL}/${path}`,
     catchForbiddenError(e)
 });
 
+export const downloadFile = (path) => {
+    window.open(`${BACKEND_URL}/${path}`);
+};
+
 function catchForbiddenError(e) {
     if (!e.response) {
         alert("Wystąpił nieoczekiwany błąd - brak internetu lub niedostępny serwer")
