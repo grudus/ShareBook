@@ -8,6 +8,8 @@ import css from './single-post.module.scss';
 import CommentForm from "../../comment/CommentForm";
 import SingleComment from "../../comment/single-comment/SingleComment";
 import * as CommentApi from "../../comment/CommentApi";
+import SaveAlt from "@material-ui/icons/SaveAlt";
+import * as AttachApi from "../../attachment/AttachApi";
 
 
 const SinglePost = ({ post, comments, afterCommentAdded }) => {
@@ -46,6 +48,7 @@ const SinglePost = ({ post, comments, afterCommentAdded }) => {
                         <p className={css.createdByHeader}>{`${firstName} ${lastName}`}</p>
                         <p className={css.createdAtHeader}>{readableDate}</p>
                     </div>
+                    <SaveAlt className={css.download} fontSize="large"/>
                 </div>
                 <p className={css.postText}>{post.text}</p>
                 {commentList}

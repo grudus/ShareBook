@@ -55,9 +55,6 @@ class AddPostDialog extends Component {
                             onChange={updateText}
                         />
                         </div>
-                        <div className={css.attachment}>
-                        <Attachments actionWhenAddAttachment={(file) => addAttachment(file)}/>
-                        </div>
                         <div className={css.files}>
                         <FilePond server={`${BACKEND_URL}/attachments`}/>
                         </div>
