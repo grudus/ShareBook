@@ -17,7 +17,7 @@ class Group extends Component {
     state = {
         groups: [],
         showAddGroupDialog: false,
-        showAddPostDialog: true,
+        showAddPostDialog: false,
         currentGroup: null,
         usersForCurrentGroup: [],
         postWithComments: [],
