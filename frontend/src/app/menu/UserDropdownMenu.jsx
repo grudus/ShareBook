@@ -12,6 +12,7 @@ import { Link, withRouter } from "react-router-dom";
 import * as AuthApi from '../auth/AuthApi'
 import css from './menu.module.scss';
 
+
 const styles = theme => ({
     root: {
         display: 'flex',
@@ -72,6 +73,7 @@ class MenuListComposition extends React.Component {
                                 <Paper>
                                     <ClickAwayListener onClickAway={this.handleClose}>
                                         <MenuList>
+                                            <MenuItem onClick={() => { document.location.href = "../user-account/UserAccount"; }}>Konto użytkownika</MenuItem>
                                             <MenuItem onClick={this.logout}>Wyloguj</MenuItem>
                                         </MenuList>
                                     </ClickAwayListener>
