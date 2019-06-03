@@ -38,14 +38,12 @@
   margin-top: 3%;
 }
 
-.firstName{
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-right: 5px;
+
+.fieldWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
 }
-
-.lastName{}
-
 .label{
   margin-top: 10%;
   margin-right: 5px;

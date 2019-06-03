@@ -77,7 +77,7 @@ class UserAccount extends Component {
             </div>
                 <div className={css.date}>
                     <h3>Twoje dane: </h3>
-                <div className={css.firstName}>
+                <div className={css.fieldWrapper}>
                     <div className={css.label}>
                     <label>Imię: </label>
                     </div>
@@ -91,7 +91,7 @@ class UserAccount extends Component {
                         variant="outlined"
                     />
                 </div>
-                <div className={css.lastName}>
+                <div className={css.fieldWrapper}>
                     <div className={css.label}>
                         <label>Nazwisko: </label>
                     </div>
@@ -105,7 +105,7 @@ class UserAccount extends Component {
                         variant="outlined"
                     />
                 </div>
-                <div className={css.email}>
+                <div className={css.fieldWrapper}>
                     <div className={css.label}>
                         <label>Email: </label>
                     </div>
