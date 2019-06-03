@@ -14,7 +14,7 @@ data class UserDto(val id: Long,
             require(entity.firstName != null) { "User first name cannot be null!" }
             require(entity.lastName != null) { "User last name cannot be null!" }
 
-            return UserDto(entity.id, entity.email, entity.firstName, entity.lastName, entity.avatarUrl)
+            return UserDto(entity.id, entity.email!!, entity.firstName, entity.lastName, entity.avatarUrl)
         }
     }
 }
