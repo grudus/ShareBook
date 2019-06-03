@@ -10,14 +10,14 @@
 }
 
 .avatar{
-  margin-top: 5%;
+  margin-top: 3%;
   text-align: center;
   height: 150px;
 }
 
 .date{
   font-size: large;
-  margin-top: 30%;
+  margin-top: 10%;
   text-align: left;
 
 }
@@ -35,14 +35,25 @@
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 5%;
+  margin-top: 3%;
 }
 
 .firstName{
-  padding-bottom: 3%;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 5px;
 }
 
-.lastName{
-  padding-bottom: 3%;
+.lastName{}
+
+.label{
+  margin-top: 10%;
+  margin-right: 5px;
+  float: left;
+}
+
+.TextField{
+  text-align: right;
+  margin-left: 10%;
 }
 

@@ -35,16 +35,40 @@ class UserAccount extends Component {
                 <div className={css.date}>
                     <h3>Twoje dane: </h3>
                 <div className={css.firstName}>
+                    <div className={css.label}>
                     <label>Imię: </label>
-                    <strong>{this.state.user.firstName}</strong>
+                    </div>
+                    <TextField
+                        id="outlined-name"
+                        className={css.textField}
+                        value={this.state.user.firstName}
+                        margin="normal"
+                        variant="outlined"
+                    />
                 </div>
                 <div className={css.lastName}>
-                    <label>Nazwisko: </label>
-                    <strong>{this.state.user.lastName}</strong>
+                    <div className={css.label}>
+                        <label>Nazwisko: </label>
+                    </div>
+                    <TextField
+                        id="outlined-name"
+                        className={css.textField}
+                        value={this.state.user.lastName}
+                        margin="normal"
+                        variant="outlined"
+                    />
                 </div>
                 <div className={css.email}>
-                    <label>Email: </label>
-                    <strong>{this.state.user.email}</strong>
+                    <div className={css.label}>
+                        <label>Email: </label>
+                    </div>
+                    <TextField
+                        id="outlined-name"
+                        className={css.textField}
+                        value={this.state.user.email}
+                        margin="normal"
+                        variant="outlined"
+                    />
                 </div><br/><br/>
                     <Button variant="outlined" color="primary" type="submit" >Edytuj dane</Button>
             </div>
