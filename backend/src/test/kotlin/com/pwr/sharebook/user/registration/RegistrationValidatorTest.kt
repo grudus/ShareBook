@@ -6,6 +6,7 @@ import com.pwr.sharebook.common.RestKeys.EMPTY_NAME
 import com.pwr.sharebook.common.RestKeys.EMPTY_PASSWORD
 import com.pwr.sharebook.common.RestKeys.INVALID_EMAIL
 import com.pwr.sharebook.common.RestKeys.PASSWORD_NOT_MATCHES
+import com.pwr.sharebook.common.validator.EmailValidator
 import com.pwr.sharebook.utils.RandomUtils.randomEmail
 import com.pwr.sharebook.utils.RandomUtils.randomText
 import com.pwr.sharebook.utils.ValidatorUtils.assertErrorCodes
@@ -24,12 +25,12 @@ class RegistrationValidatorTest {
     lateinit var validator: RegistrationValidator
 
     @Mock
-    lateinit var userRegistrationService: UserRegistrationService
+    lateinit var emailValidator: EmailValidator
 
     @Before
     fun init() {
-        Mockito.`when`(userRegistrationService.emailExists(anyString())).thenReturn(false)
-        validator = RegistrationValidator(userRegistrationService)
+        Mockito.`when`(emailValidator.validateEmail(anyString())).thenReturn(emptyList())
+        validator = RegistrationValidator(emailValidator)
     }
 
     @Test
@@ -45,6 +46,7 @@ class RegistrationValidatorTest {
 
     @Test
     fun `should fail validation when invalid email`() {
+        Mockito.`when`(emailValidator.validateEmail(anyString())).thenCallRealMethod()
         val password = randomText()
         val request = CreateUserRequest(randomText(), password, password, randomText(), randomText())
 
@@ -55,6 +57,7 @@ class RegistrationValidatorTest {
 
     @Test
     fun `should fail validation when no email`() {
+        Mockito.`when`(emailValidator.validateEmail(anyString())).thenCallRealMethod()
         val password = randomText()
         val request = CreateUserRequest("", password, password, randomText(), randomText())
 
@@ -94,7 +97,7 @@ class RegistrationValidatorTest {
 
     @Test
     fun `should fail validation when email exists`() {
-        Mockito.`when`(userRegistrationService.emailExists(anyString())).thenReturn(true)
+        Mockito.`when`(emailValidator.validateEmail(anyString())).thenReturn(listOf(EMAIL_EXISTS))
         val password = randomText()
         val request = CreateUserRequest(randomEmail(), password, password, randomText(), randomText())
 
@@ -105,6 +108,7 @@ class RegistrationValidatorTest {
 
     @Test
     fun `should fail validation when no data`() {
+        Mockito.`when`(emailValidator.validateEmail(anyString())).thenCallRealMethod()
         val request = CreateUserRequest("", "", "", "", "")
 
         val errors = validator.validate(request)
