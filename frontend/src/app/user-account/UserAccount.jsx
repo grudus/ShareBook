@@ -6,21 +6,65 @@ import LetterAvatar from "../group/LetterAvatar";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
+import {updateUser} from "../user/UserApi";
 
 
 class UserAccount extends Component {
 
-    state = { user: {} };
-
+    state = { user: null };
+    // state = {user: {firstName: '', lastName: '', email: ''}}
     async componentDidMount() {
         const user = await getCurrentUser();
         this.setState({ user })
     }
 
+    submitForm = async (e) => {
+        e.preventDefault();
+        try {
+            await  updateUser(this.state.user);
+        } catch (e) {
+            alert("Invalid credentials")
+        }
+
+    };
+
+   updateFirstName = (event) => {
+       const newUsername = event.target.value;
+       this.setState(state => ({
+           ...state,
+           user: {
+               ...state.user,
+               firstName: newUsername,
+           }
+       }))
+   }
+
+    updateLastName = (event) => {
+        const newUsername = event.target.value;
+        this.setState(state => ({
+            ...state,
+            user: {
+                ...state.user,
+                lastName: newUsername,
+            }
+        }))
+    }
+
+    updateEmail = (event) => {
+        const newUsername = event.target.value;
+        this.setState(state => ({
+            ...state,
+            user: {
+                ...state.user,
+                firstName: newUsername,
+            }
+        }))
+    }
+
     render(){
         const { user } = this.state;
 
-        if (!user || !user.firstName) {
+        if (!user) {
             return <div/>
         }
 
@@ -42,7 +86,9 @@ class UserAccount extends Component {
                         id="outlined-name"
                         className={css.textField}
                         value={this.state.user.firstName}
+                        onChange={this.updateFirstName}
                         margin="normal"
+                        type="text"
                         variant="outlined"
                     />
                 </div>
@@ -54,7 +100,9 @@ class UserAccount extends Component {
                         id="outlined-name"
                         className={css.textField}
                         value={this.state.user.lastName}
+                        onChange={this.updateLastName}
                         margin="normal"
+                        type="text"
                         variant="outlined"
                     />
                 </div>
@@ -66,11 +114,13 @@ class UserAccount extends Component {
                         id="outlined-name"
                         className={css.textField}
                         value={this.state.user.email}
+                        onChange={this.updateEmail}
                         margin="normal"
+                        type="text"
                         variant="outlined"
                     />
                 </div><br/><br/>
-                    <Button variant="outlined" color="primary" type="submit" >Edytuj dane</Button>
+                    <Button variant="outlined" color="primary" onSubmit={this.submitForm} type="submit" >Edytuj dane</Button>
             </div>
                 </div>
             </Card>
