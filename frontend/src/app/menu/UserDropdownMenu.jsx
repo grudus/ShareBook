@@ -45,6 +45,11 @@ class MenuListComposition extends React.Component {
         this.props.history.push("/auth/login");
     };
 
+    goToUserPage = (event) => {
+        this.handleClose(event);
+        this.props.history.push("/user");
+    };
+
     render() {
         const { open } = this.state;
         const { userName } = this.props;
@@ -73,7 +78,7 @@ class MenuListComposition extends React.Component {
                                 <Paper>
                                     <ClickAwayListener onClickAway={this.handleClose}>
                                         <MenuList>
-                                            <MenuItem onClick={() => { document.location.href = "../user-account/UserAccount"; }}>Konto użytkownika</MenuItem>
+                                            <MenuItem onClick={this.goToUserPage}>Konto użytkownika</MenuItem>
                                             <MenuItem onClick={this.logout}>Wyloguj</MenuItem>
                                         </MenuList>
                                     </ClickAwayListener>

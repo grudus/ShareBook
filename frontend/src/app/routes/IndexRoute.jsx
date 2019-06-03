@@ -13,7 +13,7 @@ const IndexRoute = () => (
         <Route path="/groups/:id?" component={Group}/>
         <Route exact path="/auth/login" component={Login} />
         <Route exact path="/auth/register" component={Register} />
-        <Route exact path="/user-account/UserAccount" component={UserAccount} />
+        <Route exact path="/user" component={UserAccount} />
     </>
 );
 
