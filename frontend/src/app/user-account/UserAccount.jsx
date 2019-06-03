@@ -12,7 +12,6 @@ import {updateUser} from "../user/UserApi";
 class UserAccount extends Component {
 
     state = { user: null };
-    // state = {user: {firstName: '', lastName: '', email: ''}}
     async componentDidMount() {
         const user = await getCurrentUser();
         this.setState({ user })
@@ -120,7 +119,7 @@ class UserAccount extends Component {
                         variant="outlined"
                     />
                 </div><br/><br/>
-                    <Button variant="outlined" color="primary" onSubmit={this.submitForm} type="submit" >Edytuj dane</Button>
+                    <Button variant="outlined" color="primary" onClick={this.submitForm} type="submit" >Edytuj dane</Button>
             </div>
                 </div>
             </Card>
