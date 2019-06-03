@@ -42,6 +42,7 @@ class TopBar extends Component {
         this.setState({ user });
     }
 
+
     render() {
         let { children } = this.props;
         const { user, shouldRender } = this.state;
@@ -51,7 +52,7 @@ class TopBar extends Component {
                 ? (
                     <div>
                         <nav className={css.topBar}>
-                            <Link to="/">
+                            <Link to="/groups">
                                 <h2 className={css.title}>Sharebook</h2>
                             </Link>
                             <div className={css.rightPart}>
