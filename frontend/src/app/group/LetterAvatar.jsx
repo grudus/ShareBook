@@ -22,9 +22,9 @@ const styles = {
     },
 };
 
-const LetterAvatar = ({ classes, text }) => (
+const LetterAvatar = ({ classes, text, className, ...props }) => (
     <div className={css.Avatar}>
-        <Avatar className={classes.orangeAvatar}>{text}</Avatar>
+        <Avatar className={classes.orangeAvatar + " " + className} {...props}>{text}</Avatar>
     </div>
 );
 
