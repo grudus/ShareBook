@@ -132,7 +132,7 @@ class UserAccount extends Component {
                             dane</Button>
                         </div>
                         <div className={css.charts}>
-                            <Button variant="outlined" color="primary" type="submit" onClick={this.goToChartsPage}>Twoje wykresy</Button>
+                            <Button variant="outlined" color="primary" type="submit" onClick={this.goToChartsPage}>Twoja aktywność</Button>
                         </div>
                     </div>
                 </div>
