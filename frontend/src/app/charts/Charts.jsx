@@ -2,6 +2,7 @@ import { withRouter } from "react-router-dom";
 import React, { Component } from "react";
 import Card from "@material-ui/core/Card";
 import Chart from "./Chart";
+import css from "./charts.module.scss";
 
 class Charts extends Component {
     constructor(){
@@ -57,6 +58,25 @@ class Charts extends Component {
                         'rgba(54, 162, 235, 0.8)',
                         'rgba(54, 162, 235, 0.8)'
                     ]
+                },{
+                    label: 'Pliki',
+                    data:[
+                        11, 8, 5, 1, 13, 6, 7, 2, 11, 9, 6, 3,
+                    ],
+                    backgroundColor:[
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(255, 206, 86, 0.8))',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(255, 206, 86, 0.8)'
+                    ]
                 }]
             }
         });
@@ -64,11 +84,9 @@ class Charts extends Component {
 
     render() {
         return (
-            <Card>
-                <div >
-                    <h3>Wykresy:</h3>
+            <Card className={css.chartsWrapper}>
+                <div className={css.chart}>
                     <Chart chartData={this.state.chartData}/>
-
                 </div>
 
             </Card>

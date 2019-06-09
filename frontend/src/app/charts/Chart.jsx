@@ -20,6 +20,8 @@ class Chart extends Component{
             <div className="chart">
                 <Bar
                     data={this.state.chartData}
+                    width={490}
+                    height={200}
                     options={{
                         title:{
                             display: this.props.displayTitle,
