@@ -63,6 +63,10 @@ class UserAccount extends Component {
         }))
     }
 
+    goToChartsPage = (event) => {
+        this.props.history.push("/charts");
+    };
+
     render() {
         const { user } = this.state;
 
@@ -123,8 +127,13 @@ class UserAccount extends Component {
                             />
                         </div>
                         <br/><br/>
+                        <div className={css.edit}>
                         <Button variant="outlined" color="primary" onClick={this.submitForm} type="submit">Edytuj
                             dane</Button>
+                        </div>
+                        <div className={css.charts}>
+                            <Button variant="outlined" color="primary" type="submit" onClick={this.goToChartsPage}>Twoje wykresy</Button>
+                        </div>
                     </div>
                 </div>
 
