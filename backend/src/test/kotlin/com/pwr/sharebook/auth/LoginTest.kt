@@ -1,12 +1,14 @@
 package com.pwr.sharebook.auth
 
 import com.pwr.sharebook.AbstractControllerTest
+import org.junit.Ignore
 import org.junit.Test
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
+@Ignore
 class LoginTest: AbstractControllerTest() {
 
 

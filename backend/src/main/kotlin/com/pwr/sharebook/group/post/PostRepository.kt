@@ -14,5 +14,5 @@ interface PostRepository: JpaRepository<PostEntity, Long> {
     @Query("SELECT p FROM post p JOIN FETCH p.userEntity LEFT JOIN FETCH p.comments WHERE p.groupEntity.id = ?1")
     fun findAllPostsForGroupWithComments(groupId: Long): List<PostEntity>
 
-    fun findAllByUserEntityIdAndCreatedAtBetween(userId: Long, dateFrom: LocalDateTime, dateTo: LocalDateTime): List<PostEntity>
+    fun findAllByUserEntityIdAndCreatedAtBetween(userId: Long, dateFrom: LocalDateTime?, dateTo: LocalDateTime?): List<PostEntity>
 }

@@ -15,7 +15,6 @@ import javax.transaction.Transactional
 class ActivityService
 @Autowired
 constructor(
-        private val activityRepository: ActivityRepository,
         private val postRepository: PostRepository,
         private val commentRepository: CommentRepository
 ) {

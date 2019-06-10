@@ -8,5 +8,5 @@ import java.time.LocalDateTime
 interface CommentRepository : JpaRepository<CommentEntity, Long> {
 
     fun findAllByPostEntityId(postId: Long): List<CommentEntity>
-    fun findAllByCreatedByIdAndCreatedAtBetween(userId: Long, dateFrom: LocalDateTime, dateTo: LocalDateTime): List<CommentEntity>
+    fun findAllByCreatedByIdAndCreatedAtBetween(userId: Long, dateFrom: LocalDateTime?, dateTo: LocalDateTime?): List<CommentEntity>
 }
