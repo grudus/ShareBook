@@ -7,6 +7,8 @@ import com.pwr.sharebook.common.exceptions.CannotObtainIdAfterSaveException
 import com.pwr.sharebook.group.GroupEntity
 import com.pwr.sharebook.user.UserEntity
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime.now
 
@@ -16,9 +18,9 @@ class GroupPostService
 constructor(
         private val postRepository: PostRepository,
         private val attachmentService: AttachmentService
-        )
-{
+) {
 
+    @CacheEvict(value = ["posts"], key = "#groupId")
     fun addPost(addPostRequest: AddPostRequest, groupId: Long, userId: Long): Long {
         val attachment: AttachmentEntity? = addPostRequest.attachmentId?.let { attachmentService.findAttachmentByLocation(it) }
         val postEntity = PostEntity(null, now(), addPostRequest.text, GroupEntity(groupId), UserEntity(userId), null, if (attachment == null) null else listOf(attachment))
@@ -35,6 +37,7 @@ constructor(
     }
 
 
+    @Cacheable(value = ["posts"], key = "#groupId")
     fun getPostsWithComments(groupId: Long): List<PostWithCommentsDto> =
             postRepository
                     .findAllPostsForGroupWithComments(groupId)
