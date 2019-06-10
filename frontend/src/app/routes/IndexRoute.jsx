@@ -6,7 +6,7 @@ import Group from "../group/Group";
 import User from "../user/User";
 import UserAccount from "../user-account/UserAccount"
 import Groups from "../group/Group";
-import Charts from "../charts/Charts";
+import Charts from "../activity/Activity";
 
 
 const IndexRoute = () => (
@@ -17,7 +17,7 @@ const IndexRoute = () => (
         <Route exact path="/auth/register" component={Register} />
         <Route exact path="/user" component={UserAccount} />
         <Route exact path="/groups" component={Groups} />
-        <Route exact path="/charts" component={Charts} />
+        <Route exact path="/activity" component={Charts} />
     </>
 );
 

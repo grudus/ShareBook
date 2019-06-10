@@ -64,7 +64,7 @@ class UserAccount extends Component {
     }
 
     goToChartsPage = (event) => {
-        this.props.history.push("/charts");
+        this.props.history.push("/activity");
     };
 
     render() {
